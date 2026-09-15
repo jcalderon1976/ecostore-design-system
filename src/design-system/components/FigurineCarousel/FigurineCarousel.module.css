@@ -1,0 +1,151 @@
+.hero {
+  position: relative;
+  width: 100%;
+  height: var(--fc-height);
+  min-height: 560px;
+  overflow: hidden;
+  background-color: var(--fc-bg);
+  color: var(--eco-neutral-0);
+  font-family: var(--eco-font-body);
+  transition: background-color var(--fc-duration) var(--eco-ease-standard);
+}
+
+/* Grano */
+.grain {
+  position: absolute; inset: 0; z-index: 50; pointer-events: none;
+  opacity: 0.4;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.08'/></svg>");
+  background-size: 200px 200px;
+  background-repeat: repeat;
+}
+
+/* Texto fantasma gigante */
+.ghost {
+  position: absolute; left: 0; right: 0; top: 18%; z-index: 2;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none; user-select: none;
+  font-family: var(--eco-font-heading);
+  font-weight: var(--eco-weight-extrabold);
+  font-size: clamp(90px, 22vw, 340px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Etiqueta superior izquierda */
+.label {
+  position: absolute; top: var(--eco-space-6); left: var(--eco-space-4); z-index: 60;
+  font-size: var(--eco-text-xs);
+  font-weight: var(--eco-weight-semibold);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+/* Escenario */
+.stage { position: absolute; inset: 0; z-index: 3; }
+.item {
+  position: absolute;
+  aspect-ratio: 0.6 / 1;
+  left: 50%;
+  will-change: transform, filter, opacity, left;
+  transition:
+    transform var(--fc-duration) var(--eco-ease-standard),
+    filter var(--fc-duration) var(--eco-ease-standard),
+    opacity var(--fc-duration) var(--eco-ease-standard),
+    left var(--fc-duration) var(--eco-ease-standard),
+    height var(--fc-duration) var(--eco-ease-standard),
+    bottom var(--fc-duration) var(--eco-ease-standard);
+}
+.item img {
+  width: 100%; height: 100%;
+  object-fit: contain; object-position: bottom center;
+  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.28));
+}
+
+/* Fotografías sin transparencia: tarjeta redondeada a sangre con anillo interior */
+.photo { aspect-ratio: 0.78 / 1; }
+.photo img {
+  object-fit: cover;
+  border-radius: var(--eco-radius-xl);
+  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3), var(--eco-ring-inset);
+  filter: none;
+}
+
+/* Los productos son más anchos que una figura (0.6:1); escalas ajustadas para no tapar texto ni vecinos */
+.center { transform: translateX(-50%) scale(1.18); filter: blur(0); opacity: 1; z-index: 20; height: 74%; bottom: 4%; }
+.left   { left: 22%; transform: translateX(-50%) scale(1); filter: blur(2px); opacity: 0.8; z-index: 10; height: 30%; bottom: 14%; }
+.right  { left: 78%; transform: translateX(-50%) scale(1); filter: blur(2px); opacity: 0.8; z-index: 10; height: 30%; bottom: 14%; }
+.back   { transform: translateX(-50%) scale(1); filter: blur(4px); opacity: 0.9; z-index: 5; height: 24%; bottom: 16%; }
+.hidden { transform: translateX(-50%) scale(0.6); filter: blur(6px); opacity: 0; z-index: 1; height: 18%; bottom: 16%; pointer-events: none; }
+
+.mobile .center { transform: translateX(-50%) scale(1.05); height: 50%; bottom: 26%; }
+.mobile .left   { left: 18%; height: 16%; bottom: 34%; }
+.mobile .right  { left: 82%; height: 16%; bottom: 34%; }
+.mobile .back   { height: 13%; bottom: 34%; }
+
+/* Texto inferior izquierdo y flechas */
+.caption {
+  position: absolute; bottom: var(--eco-space-6); left: var(--eco-space-4); z-index: 60;
+  max-width: 320px;
+}
+.name {
+  font-family: var(--eco-font-heading);
+  font-weight: var(--eco-weight-bold);
+  font-size: var(--eco-text-md);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  opacity: 0.95;
+  margin-bottom: var(--eco-space-2);
+  animation: fc-fade var(--fc-duration) var(--eco-ease-out);
+}
+.desc { display: none; font-size: var(--eco-text-sm); line-height: 1.6; opacity: 0.85; margin-bottom: var(--eco-space-5); }
+.nav { display: flex; align-items: center; gap: var(--eco-space-3); }
+.arrow {
+  width: 48px; height: 48px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--eco-radius-full);
+  border: 2px solid var(--eco-neutral-0);
+  color: var(--eco-neutral-0);
+  background: transparent;
+  transition: transform 150ms var(--eco-ease-standard), background-color 150ms var(--eco-ease-standard);
+}
+.arrow:hover { transform: scale(1.08); background: rgba(255, 255, 255, 0.12); }
+.arrow:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.35); }
+.counter { margin-left: var(--eco-space-2); font-variant-numeric: tabular-nums; font-size: var(--eco-text-sm); opacity: 0.8; }
+
+/* Enlace inferior derecho */
+.link {
+  position: absolute; bottom: var(--eco-space-6); right: var(--eco-space-4); z-index: 60;
+  display: inline-flex; align-items: center; gap: var(--eco-space-2);
+  font-family: var(--eco-font-heading);
+  font-weight: var(--eco-weight-bold);
+  font-size: clamp(20px, 4vw, 56px);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--eco-neutral-0);
+  opacity: 0.95;
+  transition: opacity 200ms var(--eco-ease-standard), transform 200ms var(--eco-ease-out);
+}
+.link:hover { opacity: 1; transform: translateX(2px); }
+.link:focus-visible { outline: none; text-decoration: underline; text-underline-offset: 6px; }
+.linkIcon { width: 20px; height: 20px; }
+
+@keyframes fc-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 0.95; transform: none; } }
+
+@media (min-width: 640px) {
+  .label { left: var(--eco-space-8); }
+  .caption { bottom: var(--eco-space-20); left: var(--eco-space-24); }
+  .name { font-size: 22px; margin-bottom: var(--eco-space-3); }
+  .desc { display: block; }
+  .arrow { width: 64px; height: 64px; }
+  .link { bottom: var(--eco-space-20); right: var(--eco-space-10); }
+  .linkIcon { width: 32px; height: 32px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero, .item, .name { transition: none; animation: none; }
+}

@@ -60,6 +60,9 @@ export const LockIcon = (p: IconProps) =>
 export const CheckIcon = (p: IconProps) =>
   base(p, <path d="M20 6 9 17l-5-5" />)
 
+export const ArrowLeftIcon = (p: IconProps) =>
+  base(p, <path d="M19 12H5M11 18l-6-6 6-6" />)
+
 export const ArrowRightIcon = (p: IconProps) =>
   base(p, <path d="M5 12h14M13 6l6 6-6 6" />)
 

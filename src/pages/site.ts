@@ -26,20 +26,40 @@ export const SITE = {
  */
 export const ROUTES = {
   inicio: '#inicio',
+  designSystem: '#design-system',
   productos: '#productos',
-  productosEnergia: '#productos',
-  productosAgua: '#productos',
+  productosEnergia: '#productos-energia',
+  productosAgua: '#productos-agua',
   servicios: '#servicios',
   ingenieria: '#ingenieria',
   nosotros: '#nosotros',
   contacto: '#contacto',
 } as const
 
-export type PageKey = 'inicio' | 'productos' | 'servicios' | 'ingenieria' | 'nosotros' | 'contacto'
+export type PageKey =
+  | 'inicio' | 'productos' | 'productosEnergia' | 'productosAgua'
+  | 'servicios' | 'ingenieria' | 'nosotros' | 'contacto'
 
-/** Navegación principal; `active` marca la página actual. "Servicios" despliega dos opciones. */
+/** Navegación principal; `active` marca la página actual. "Productos" y "Servicios" despliegan dos opciones. */
 export const NAV = (active: PageKey): NavItem[] => [
-  { label: 'Productos', href: ROUTES.productos, active: active === 'productos' },
+  {
+    label: 'Productos',
+    active: active === 'productos',
+    children: [
+      {
+        label: 'Conservación de energía',
+        description: 'Climatización, solar y baterías, iluminación, agua caliente',
+        href: ROUTES.productosEnergia,
+        active: active === 'productosEnergia',
+      },
+      {
+        label: 'Conservación de agua',
+        description: 'Duchas eficientes, tratamiento, cisternas y captación de lluvia',
+        href: ROUTES.productosAgua,
+        active: active === 'productosAgua',
+      },
+    ],
+  },
   {
     label: 'Servicios',
     children: [

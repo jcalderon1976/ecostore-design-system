@@ -96,3 +96,9 @@ export type { MapEmbedProps } from './components/MapEmbed/MapEmbed'
 
 export { CategoryBand, SolutionCard } from './components/Catalog/Catalog'
 export type { CategoryBandProps, SolutionCardProps, CategoryTone } from './components/Catalog/Catalog'
+
+export { FigurineCarousel } from './components/FigurineCarousel/FigurineCarousel'
+export type { FigurineCarouselProps, FigurineItem } from './components/FigurineCarousel/FigurineCarousel'
+
+export { ParallaxHero } from './components/ParallaxHero/ParallaxHero'
+export type { ParallaxHeroProps, ParallaxLayer } from './components/ParallaxHero/ParallaxHero'

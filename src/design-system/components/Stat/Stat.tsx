@@ -15,7 +15,8 @@ function useCountUp(target: number, duration = 1400) {
       io.disconnect()
       const start = performance.now()
       const tick = (now: number) => {
-        const t = Math.min(1, (now - start) / duration)
+        // El timestamp del primer frame puede ser anterior a `start`: acotar a [0, 1]
+        const t = Math.min(1, Math.max(0, (now - start) / duration))
         const eased = 1 - Math.pow(1 - t, 3)
         setValue(Math.round(target * eased))
         if (t < 1) raf = requestAnimationFrame(tick)
