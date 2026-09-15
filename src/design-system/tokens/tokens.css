@@ -1,0 +1,205 @@
+/* ==========================================================================
+   EcoStore Design Tokens
+   Fuente de verdad visual. Todo componente consume estas variables.
+   ========================================================================== */
+:root {
+  /* ---------- Color: marca ---------- */
+  --eco-green-50:  #EEF7F0;
+  --eco-green-100: #D5EEDC;
+  --eco-green-200: #A9DDB9;
+  --eco-green-300: #6FC98B;
+  --eco-green-400: #3DB35F;
+  --eco-green-500: #2E9E3E;   /* verde del logo */
+  --eco-green-600: #1E7F35;   /* botón primario */
+  --eco-green-700: #176A2C;
+  --eco-green-800: #124F22;
+  --eco-green-900: #0D3A19;   /* footer */
+  --eco-green-950: #072A11;
+
+  --eco-lime-300: #C6F27A;
+  --eco-lime-400: #A8E84A;    /* acento hero "Personalizada" */
+  --eco-lime-500: #8CD62E;
+
+  --eco-orange-50:  #FFF5E8;  /* pastel: fondo de burbujas / badges */
+  --eco-orange-100: #FDEBC8;
+  --eco-orange-200: #FBD79C;
+  --eco-orange-400: #F7B733;
+  --eco-orange-500: #F5A623;  /* sol del logo, teléfono footer */
+  --eco-orange-600: #E88F1A;  /* íconos naranja sobre blanco (ilustración) */
+  --eco-orange-700: #C9740F;
+
+  /* ---------- Color: celeste (pastel, ilustración / fondos) ---------- */
+  --eco-sky-50:  #EEF6FC;     /* fondo de sección pastel */
+  --eco-sky-100: #DCEDF9;
+  --eco-sky-200: #B9DCF3;
+  --eco-sky-300: #8CC7EC;     /* líneas de plano / ilustración */
+  --eco-sky-400: #5BB4E5;
+  --eco-sky-500: #3A9FD9;
+  --eco-sky-600: #2A80B3;
+
+  /* ---------- Color: neutrales ---------- */
+  --eco-neutral-0:   #FFFFFF;
+  --eco-neutral-50:  #F7FAF7;
+  --eco-neutral-100: #F1F5F1;
+  --eco-neutral-200: #E3E9E4;
+  --eco-neutral-300: #CBD3CC;
+  --eco-neutral-400: #9AA5A0;
+  --eco-neutral-500: #6B7772;
+  --eco-neutral-600: #4B5651;
+  --eco-neutral-700: #343C39;
+  --eco-neutral-800: #1F2624;
+  --eco-neutral-900: #111615;
+
+  /* ---------- Color: estado ---------- */
+  --eco-success-500: #2E9E3E;
+  --eco-warning-500: #F5A623;
+  --eco-danger-500:  #D93F3F;
+  --eco-danger-50:   #FCEBEB;
+  --eco-info-500:    #2B7FD9;
+
+  /* ---------- Color semántico ---------- */
+  --eco-color-bg:            var(--eco-neutral-0);
+  --eco-color-bg-subtle:     var(--eco-neutral-50);
+  --eco-color-bg-mint:       var(--eco-green-50);
+  --eco-color-bg-sky:        var(--eco-sky-50);
+  --eco-color-bg-peach:      var(--eco-orange-50);
+  --eco-color-bg-inverse:    var(--eco-green-900);
+  --eco-color-surface:       var(--eco-neutral-0);
+  --eco-color-border:        var(--eco-neutral-200);
+  --eco-color-border-soft:   var(--eco-neutral-100);
+  --eco-color-border-strong: var(--eco-neutral-300);
+
+  --eco-ink:                 #0F2216;   /* verde-negro: títulos y texto fuerte */
+  --eco-color-text:          var(--eco-ink);
+  --eco-color-text-body:     var(--eco-neutral-600);
+  --eco-color-text-muted:    var(--eco-neutral-500);
+  --eco-color-text-subtle:   var(--eco-neutral-400);
+  --eco-color-text-inverse:  var(--eco-neutral-0);
+  --eco-color-text-brand:    var(--eco-green-600);
+  --eco-color-text-accent:   var(--eco-orange-500);
+
+  --eco-color-primary:        var(--eco-green-600);
+  --eco-color-primary-hover:  var(--eco-green-700);
+  --eco-color-primary-active: var(--eco-green-800);
+  --eco-color-primary-fg:     var(--eco-neutral-0);
+  --eco-color-accent:         var(--eco-orange-500);
+  --eco-color-accent-hover:   var(--eco-orange-600);
+  --eco-color-accent-strong:  var(--eco-orange-600);
+  --eco-color-secondary:      var(--eco-sky-400);
+  --eco-color-highlight:      var(--eco-lime-400);
+
+  --eco-color-focus-ring:     rgba(46, 158, 62, 0.35);
+
+  /* Hairlines y cristal */
+  --eco-hairline:            rgba(15, 34, 22, 0.08);
+  --eco-hairline-inverse:    rgba(255, 255, 255, 0.12);
+  --eco-glass-bg:            rgba(255, 255, 255, 0.72);
+  --eco-glass-bg-inverse:    rgba(255, 255, 255, 0.08);
+  --eco-glass-border:        rgba(255, 255, 255, 0.55);
+  --eco-glass-border-inverse: rgba(255, 255, 255, 0.16);
+  --eco-glass-blur:          16px;
+
+  /* Malla de degradados de marca (fondos hero / CTA) */
+  --eco-mesh-dark:
+    radial-gradient(1100px 600px at 85% 20%, rgba(46, 158, 62, 0.45), transparent 60%),
+    radial-gradient(700px 500px at 15% 90%, rgba(168, 232, 74, 0.18), transparent 60%),
+    radial-gradient(600px 400px at 60% 110%, rgba(245, 166, 35, 0.18), transparent 60%),
+    linear-gradient(160deg, #0F3D22 0%, #0B2E1A 55%, #072A11 100%);
+  --eco-mesh-light:
+    radial-gradient(800px 500px at 10% 10%, rgba(255, 255, 255, 0.95), transparent 60%),
+    radial-gradient(700px 500px at 90% 30%, var(--eco-sky-100), transparent 60%),
+    radial-gradient(600px 400px at 60% 100%, var(--eco-green-100), transparent 60%),
+    var(--eco-sky-50);
+
+  /* ---------- Tipografía ---------- */
+  --eco-font-heading: 'Outfit', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --eco-font-body:    'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --eco-font-script:  'Caveat', 'Segoe Script', cursive;
+  --eco-font-accent:  'Instrument Serif', 'Georgia', 'Times New Roman', serif; /* palabra clave en itálica */
+
+  --eco-text-xs:   0.75rem;   /* 12px */
+  --eco-text-sm:   0.875rem;  /* 14px */
+  --eco-text-md:   1rem;      /* 16px */
+  --eco-text-lg:   1.125rem;  /* 18px */
+  --eco-text-xl:   1.25rem;   /* 20px */
+  --eco-text-2xl:  1.5rem;    /* 24px */
+  --eco-text-3xl:  1.875rem;  /* 30px */
+  --eco-text-4xl:  2.75rem;   /* 44px */
+  --eco-text-5xl:  3.5rem;    /* 56px */
+  --eco-text-6xl:  4.5rem;    /* 72px */
+  --eco-text-7xl:  5.5rem;    /* 88px */
+
+  --eco-leading-none:    1.0;
+  --eco-leading-tight:   1.1;
+  --eco-leading-snug:    1.3;
+  --eco-leading-normal:  1.5;
+  --eco-leading-relaxed: 1.65;
+
+  --eco-weight-regular:   400;
+  --eco-weight-medium:    500;
+  --eco-weight-semibold:  600;
+  --eco-weight-bold:      700;
+  --eco-weight-extrabold: 800;
+
+  --eco-tracking-wide:  0.12em;
+  --eco-tracking-tight: -0.02em;
+  --eco-tracking-display: -0.03em;
+
+  /* ---------- Espaciado (base 4px) ---------- */
+  --eco-space-0:  0;
+  --eco-space-1:  0.25rem;  /* 4  */
+  --eco-space-2:  0.5rem;   /* 8  */
+  --eco-space-3:  0.75rem;  /* 12 */
+  --eco-space-4:  1rem;     /* 16 */
+  --eco-space-5:  1.25rem;  /* 20 */
+  --eco-space-6:  1.5rem;   /* 24 */
+  --eco-space-8:  2rem;     /* 32 */
+  --eco-space-10: 2.5rem;   /* 40 */
+  --eco-space-12: 3rem;     /* 48 */
+  --eco-space-16: 4rem;     /* 64 */
+  --eco-space-20: 5rem;     /* 80 */
+  --eco-space-24: 6rem;     /* 96 */
+  --eco-space-32: 8rem;     /* 128 */
+
+  --eco-container-max: 1200px;
+  --eco-container-pad: var(--eco-space-6);
+
+  /* ---------- Bordes (un radio por nivel: control / tarjeta / contenedor) ---------- */
+  --eco-radius-sm:   8px;    /* chips, checkboxes */
+  --eco-radius-md:   12px;   /* controles y botones */
+  --eco-radius-lg:   20px;   /* tarjetas */
+  --eco-radius-xl:   28px;   /* contenedores de sección, imágenes */
+  --eco-radius-full: 9999px;
+  --eco-border-width: 1px;
+
+  /* ---------- Elevación (sombras teñidas con el verde de marca, dos capas) ---------- */
+  --eco-shadow-xs: 0 1px 2px rgba(13, 58, 25, 0.04);
+  --eco-shadow-sm: 0 1px 2px rgba(13, 58, 25, 0.04), 0 6px 16px rgba(13, 58, 25, 0.05);
+  --eco-shadow-md: 0 1px 2px rgba(13, 58, 25, 0.04), 0 12px 32px rgba(13, 58, 25, 0.08);
+  --eco-shadow-lg: 0 2px 4px rgba(13, 58, 25, 0.04), 0 24px 56px rgba(13, 58, 25, 0.14);
+  --eco-shadow-brand: 0 8px 20px rgba(30, 127, 53, 0.26);
+  --eco-shadow-brand-hover: 0 12px 28px rgba(30, 127, 53, 0.34);
+  --eco-shadow-sky: 0 2px 4px rgba(42, 128, 179, 0.05), 0 16px 40px rgba(42, 128, 179, 0.12);
+  --eco-ring-inset: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+
+  /* ---------- Motion ---------- */
+  --eco-duration-fast:   120ms;
+  --eco-duration-normal: 200ms;
+  --eco-duration-slow:   320ms;
+  --eco-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --eco-ease-out:      cubic-bezier(0, 0, 0.2, 1);
+
+  /* ---------- Z-index ---------- */
+  --eco-z-header:  100;
+  --eco-z-overlay: 200;
+  --eco-z-modal:   300;
+  --eco-z-toast:   400;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --eco-duration-fast:   0ms;
+    --eco-duration-normal: 0ms;
+    --eco-duration-slow:   0ms;
+  }
+}

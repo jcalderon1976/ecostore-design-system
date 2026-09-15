@@ -1,0 +1,76 @@
+/* ===== Campo base compartido por Input / Select / Textarea ===== */
+.control {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--eco-space-3) var(--eco-space-4);
+  font-size: var(--eco-text-sm);
+  color: var(--eco-color-text);
+  background: var(--eco-color-surface);
+  border: var(--eco-border-width) solid var(--eco-color-border);
+  border-radius: var(--eco-radius-md);
+  transition:
+    border-color var(--eco-duration-normal) var(--eco-ease-standard),
+    box-shadow var(--eco-duration-normal) var(--eco-ease-standard);
+}
+.control::placeholder { color: var(--eco-color-text-subtle); }
+.control:hover:not(:disabled) { border-color: var(--eco-color-border-strong); }
+.control:focus { outline: none; border-color: var(--eco-green-500); box-shadow: 0 0 0 4px var(--eco-color-focus-ring); }
+.control:disabled { background: var(--eco-neutral-100); color: var(--eco-color-text-muted); cursor: not-allowed; }
+.control[aria-invalid='true'] { border-color: var(--eco-danger-500); }
+.control[aria-invalid='true']:focus { box-shadow: 0 0 0 4px rgba(217, 63, 63, 0.2); }
+
+/* ===== Textarea ===== */
+.textarea { min-height: 112px; resize: vertical; line-height: var(--eco-leading-normal); }
+
+/* ===== Select ===== */
+.selectWrap { position: relative; }
+.select { appearance: none; padding-right: var(--eco-space-10); cursor: pointer; }
+.selectChevron {
+  position: absolute; right: var(--eco-space-4); top: 50%;
+  transform: translateY(-50%);
+  color: var(--eco-color-text-muted);
+  pointer-events: none;
+}
+
+/* ===== Checkbox ===== */
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--eco-space-2);
+  font-size: var(--eco-text-sm);
+  font-weight: var(--eco-weight-semibold);
+  color: var(--eco-color-text);
+  cursor: pointer;
+  user-select: none;
+}
+.checkbox input {
+  position: absolute; opacity: 0; width: 0; height: 0;
+}
+.checkboxBox {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; flex-shrink: 0;
+  border: 1.5px solid var(--eco-color-border-strong);
+  border-radius: var(--eco-radius-sm);
+  background: var(--eco-color-surface);
+  color: var(--eco-neutral-0);
+  transition:
+    background-color var(--eco-duration-fast) var(--eco-ease-standard),
+    border-color var(--eco-duration-fast) var(--eco-ease-standard);
+}
+.checkboxBox svg { opacity: 0; transform: scale(0.6); transition: all var(--eco-duration-fast) var(--eco-ease-out); }
+.checkbox input:checked + .checkboxBox { background: var(--eco-color-primary); border-color: var(--eco-color-primary); }
+.checkbox input:checked + .checkboxBox svg { opacity: 1; transform: scale(1); }
+.checkbox input:focus-visible + .checkboxBox { box-shadow: 0 0 0 4px var(--eco-color-focus-ring); }
+.checkbox input:disabled + .checkboxBox { background: var(--eco-neutral-100); border-color: var(--eco-color-border); }
+.checkbox:has(input:disabled) { cursor: not-allowed; color: var(--eco-color-text-muted); }
+
+/* ===== FormField ===== */
+.field { display: flex; flex-direction: column; gap: var(--eco-space-2); }
+.label { font-size: var(--eco-text-sm); font-weight: var(--eco-weight-semibold); color: var(--eco-color-text); }
+.required { color: var(--eco-danger-500); margin-left: 2px; }
+.hint { font-size: var(--eco-text-xs); color: var(--eco-color-text-muted); }
+.error { font-size: var(--eco-text-xs); color: var(--eco-danger-500); font-weight: var(--eco-weight-medium); }
+
+/* ===== Inline group (ej. "Me interesa: [ ] [ ] [ ]") ===== */
+.inlineGroup { display: flex; flex-wrap: wrap; align-items: center; gap: var(--eco-space-3) var(--eco-space-4); }
+.inlineGroupLabel { font-size: var(--eco-text-sm); color: var(--eco-color-text); }

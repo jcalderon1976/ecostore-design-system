@@ -1,0 +1,134 @@
+/* ===== Heading ===== */
+.heading {
+  font-family: var(--eco-font-heading);
+  font-weight: var(--eco-weight-bold);
+  line-height: var(--eco-leading-tight);
+  color: var(--eco-color-text);
+  letter-spacing: var(--eco-tracking-tight);
+  text-wrap: balance;
+}
+/* Saltos grandes entre niveles: la jerarquía se lee a primera vista. */
+.display {
+  font-size: clamp(var(--eco-text-4xl), 5.2vw, var(--eco-text-6xl));
+  font-weight: var(--eco-weight-bold);
+  line-height: 0.98;
+  letter-spacing: var(--eco-tracking-display);
+}
+.h1 { font-size: clamp(var(--eco-text-3xl), 4vw, var(--eco-text-5xl)); line-height: 1.05; letter-spacing: var(--eco-tracking-display); }
+.h2 { font-size: clamp(var(--eco-text-2xl), 3vw, var(--eco-text-4xl)); }
+.h3 { font-size: var(--eco-text-2xl); }
+.h4 { font-size: var(--eco-text-lg); }
+.h5 { font-size: var(--eco-text-md); letter-spacing: 0; }
+
+.toneDefault { color: var(--eco-color-text); }
+.toneBrand   { color: var(--eco-green-800); }
+.toneInverse { color: var(--eco-color-text-inverse); }
+.toneAccent  { color: var(--eco-color-accent-strong); }
+.toneSky     { color: var(--eco-sky-600); }
+
+.alignCenter { text-align: center; }
+
+/* Palabra destacada, ej. "Personalizada" en lima */
+.highlight { color: var(--eco-color-highlight); }
+.highlightBrand { color: var(--eco-green-600); }
+
+/* Acento editorial: serif itálica, un poco más grande que el sans que la rodea */
+.em {
+  font-family: var(--eco-font-accent);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.08em;
+  letter-spacing: 0;
+  line-height: 0.9;
+}
+.emHighlight { color: var(--eco-color-highlight); }
+.emBrand { color: var(--eco-green-600); }
+.emAccent { color: var(--eco-orange-500); }
+
+/* Lead: párrafo de apertura */
+.lead {
+  font-size: clamp(var(--eco-text-lg), 1.4vw, var(--eco-text-xl));
+  line-height: var(--eco-leading-relaxed);
+  color: var(--eco-color-text-body);
+  max-width: 52ch;
+  text-wrap: pretty;
+}
+.leadInverse { color: rgba(255, 255, 255, 0.82); }
+
+/* Label: etiqueta pequeña en mayúsculas sin pill */
+.label {
+  font-family: var(--eco-font-body);
+  font-size: var(--eco-text-xs);
+  font-weight: var(--eco-weight-semibold);
+  letter-spacing: var(--eco-tracking-wide);
+  text-transform: uppercase;
+  color: var(--eco-color-text-muted);
+}
+.labelInverse { color: rgba(255, 255, 255, 0.6); }
+
+/* ===== Text ===== */
+.text { font-family: var(--eco-font-body); line-height: var(--eco-leading-relaxed); }
+.sizeXs { font-size: var(--eco-text-xs); }
+.sizeSm { font-size: var(--eco-text-sm); }
+.sizeMd { font-size: var(--eco-text-md); }
+.sizeLg { font-size: var(--eco-text-lg); }
+.sizeXl { font-size: var(--eco-text-xl); line-height: var(--eco-leading-normal); }
+
+/* El cuerpo por defecto va un paso más claro que los títulos para no competir. */
+.textDefault { color: var(--eco-color-text-body); }
+.textStrong  { color: var(--eco-color-text); }
+.textMuted   { color: var(--eco-color-text-muted); }
+.textInverse { color: var(--eco-color-text-inverse); }
+.textInverseMuted { color: rgba(255, 255, 255, 0.78); }
+.textBrand   { color: var(--eco-color-text-brand); }
+.textAccent  { color: var(--eco-color-text-accent); }
+
+.wRegular  { font-weight: var(--eco-weight-regular); }
+.wMedium   { font-weight: var(--eco-weight-medium); }
+.wSemibold { font-weight: var(--eco-weight-semibold); }
+.wBold     { font-weight: var(--eco-weight-bold); }
+
+/* ===== Eyebrow: pill con barra lima a la izquierda ===== */
+.eyebrow {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: var(--eco-space-3);
+  padding: var(--eco-space-2) var(--eco-space-4) var(--eco-space-2) var(--eco-space-3);
+  border-radius: var(--eco-radius-full);
+  background: var(--eco-green-50);
+  border: 1px solid var(--eco-green-100);
+  font-family: var(--eco-font-body);
+  font-size: var(--eco-text-xs);
+  font-weight: var(--eco-weight-semibold);
+  letter-spacing: var(--eco-tracking-wide);
+  text-transform: uppercase;
+  color: var(--eco-green-800);
+  line-height: 1;
+}
+.eyebrowInverse {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: var(--eco-color-text-inverse);
+  backdrop-filter: blur(6px);
+}
+.eyebrowBar {
+  display: block;
+  width: 20px;
+  height: 3px;
+  border-radius: var(--eco-radius-full);
+  background: var(--eco-color-highlight);
+}
+.eyebrowPlain {
+  padding: 0; background: transparent; border: 0;
+}
+
+/* ===== Script (Caveat) ===== */
+.script {
+  font-family: var(--eco-font-script);
+  font-weight: var(--eco-weight-bold);
+  font-size: var(--eco-text-2xl);
+  color: var(--eco-color-highlight);
+  transform: rotate(-6deg);
+  display: inline-block;
+}

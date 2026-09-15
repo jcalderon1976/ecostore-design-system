@@ -1,0 +1,59 @@
+/* Hero con la fotografía de la van: la imagen ancla a la derecha para que la van quede visible */
+.hero {
+  min-height: 600px;
+  background-position: right center !important;
+}
+.hero > div > div { padding-block: var(--eco-space-20) var(--eco-space-16); }
+
+/* Formulario + foto */
+.formSection { padding-top: var(--eco-space-6); }
+.formLayout {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: var(--eco-space-6);
+  align-items: stretch;
+}
+.formCard { border-radius: var(--eco-radius-xl); }
+.formGrid { gap: var(--eco-space-4); }
+.secure { display: inline-flex; align-items: center; justify-content: center; gap: var(--eco-space-2); }
+
+.aside { position: relative; min-height: 640px; }
+.asideImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: var(--eco-radius-xl);
+  box-shadow: var(--eco-shadow-md), var(--eco-ring-inset);
+}
+.checklist {
+  position: absolute;
+  left: var(--eco-space-6);
+  right: var(--eco-space-6);
+  bottom: var(--eco-space-6);
+}
+
+@media (max-width: 1023px) {
+  .hero { min-height: 520px; }
+  .formLayout { grid-template-columns: 1fr; }
+  .formGrid { grid-template-columns: 1fr !important; }
+  .aside { min-height: 0; }
+  .asideImage { position: relative; height: auto; aspect-ratio: 4 / 3; border-radius: var(--eco-radius-xl) var(--eco-radius-xl) 0 0; }
+  .checklist { position: relative; left: auto; right: auto; bottom: auto; margin: calc(-1 * var(--eco-space-10)) var(--eco-space-4) 0; }
+}
+@media (max-width: 639px) {
+  .hero { min-height: 0; }
+  .checklist { margin: calc(-1 * var(--eco-space-6)) var(--eco-space-3) 0; }
+}
+
+/* Enlace dentro de la tarjeta Visítanos hacia el mapa */
+.mapLink {
+  color: var(--eco-green-600);
+  font-weight: var(--eco-weight-semibold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--eco-green-200);
+}
+.mapLink:hover { color: var(--eco-green-700); text-decoration-color: currentColor; }

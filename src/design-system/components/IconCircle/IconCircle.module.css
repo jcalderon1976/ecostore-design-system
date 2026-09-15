@@ -1,0 +1,46 @@
+.circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: var(--eco-radius-full);
+  transition:
+    background-color var(--eco-duration-normal) var(--eco-ease-standard),
+    color var(--eco-duration-normal) var(--eco-ease-standard),
+    box-shadow var(--eco-duration-normal) var(--eco-ease-standard),
+    transform var(--eco-duration-normal) var(--eco-ease-standard);
+}
+
+.sm { width: 36px; height: 36px; }
+.md { width: 48px; height: 48px; }
+.lg { width: 64px; height: 64px; }
+.xl { width: 80px; height: 80px; }
+
+/* ---- Verde ---- */
+.solid { background: var(--eco-color-primary); color: var(--eco-neutral-0); }
+.soft  { background: var(--eco-green-50); color: var(--eco-green-600); }
+.ring  { background: rgba(255, 255, 255, 0.06); border: 2px solid var(--eco-color-highlight); color: var(--eco-color-highlight); }
+.outline { background: transparent; border: 1.5px solid var(--eco-green-500); color: var(--eco-green-600); }
+.outlineInverse { background: transparent; border: 1.5px solid rgba(255, 255, 255, 0.85); color: var(--eco-neutral-0); }
+
+/* ---- Naranja ---- */
+.accent { background: var(--eco-color-accent); color: var(--eco-neutral-900); }
+.peach  { background: var(--eco-orange-50); color: var(--eco-orange-600); }
+
+/* ---- Celeste pastel ---- */
+.skySoft { background: var(--eco-sky-100); color: var(--eco-sky-600); }
+
+/* ---- Burbuja de ilustración: blanco con sombra celeste, ícono naranja (como en el plano) ---- */
+.bubble {
+  background: var(--eco-neutral-0);
+  color: var(--eco-orange-600);
+  box-shadow: var(--eco-shadow-sky);
+  border: 1px solid var(--eco-sky-100);
+}
+.bubbleGreen { composes: bubble; color: var(--eco-green-600); }
+
+/* Hover "cambia a sólido" cuando un padre marca data-icon-hover */
+:global([data-icon-hover]:hover) .soft   { background: var(--eco-color-primary); color: var(--eco-neutral-0); transform: scale(1.04); }
+:global([data-icon-hover]:hover) .peach  { background: var(--eco-orange-500); color: var(--eco-neutral-900); transform: scale(1.04); }
+:global([data-icon-hover]:hover) .skySoft{ background: var(--eco-sky-400); color: var(--eco-neutral-0); transform: scale(1.04); }
+:global([data-icon-hover]:hover) .bubble { transform: translateY(-2px); box-shadow: var(--eco-shadow-lg); }

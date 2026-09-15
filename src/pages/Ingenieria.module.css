@@ -1,0 +1,25 @@
+/* Hero: el técnico está a la derecha; el atardecer a la izquierda pide un degradado más ligero */
+.hero { min-height: 600px; background-position: center !important; }
+.hero > div > div { padding-block: var(--eco-space-16); }
+
+.heroChecks { gap: var(--eco-space-2); }
+.heroChecks li { font-size: var(--eco-text-md); color: rgba(255, 255, 255, 0.92); }
+.heroChecks svg { color: var(--eco-lime-400); }
+
+.discipline { display: flex; flex-direction: column; gap: var(--eco-space-4); height: 100%; }
+
+.scope { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: var(--eco-space-8); align-items: center; }
+.scopeList { gap: var(--eco-space-4) var(--eco-space-8); }
+
+.guarantees { justify-content: center; gap: var(--eco-space-4) var(--eco-space-8); }
+.guarantees span { display: inline-flex; align-items: center; gap: var(--eco-space-2); font-size: var(--eco-text-sm); font-weight: var(--eco-weight-medium); color: var(--eco-color-text-body); }
+.guarantees svg { color: var(--eco-green-500); }
+
+@media (max-width: 1023px) {
+  .hero { min-height: 540px; }
+  .scope { grid-template-columns: 1fr; gap: var(--eco-space-6); }
+}
+@media (max-width: 639px) {
+  .hero { min-height: 0; }
+  .heroChecks li { font-size: var(--eco-text-sm); }
+}

@@ -1,0 +1,41 @@
+.steps {
+  display: grid;
+  grid-template-columns: repeat(var(--steps-count, 4), minmax(0, 1fr));
+  gap: var(--eco-space-8);
+}
+.step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--eco-space-4);
+  padding-top: var(--eco-space-6);
+  border-top: 1px solid var(--eco-hairline);
+}
+/* Progreso: el primer tramo en verde, el resto hairline */
+.step::before {
+  content: '';
+  position: absolute; left: 0; top: -1px;
+  width: 40px; height: 2px;
+  background: var(--eco-green-500);
+  border-radius: var(--eco-radius-full);
+}
+.head { display: flex; align-items: center; justify-content: space-between; gap: var(--eco-space-3); }
+.number {
+  font-family: var(--eco-font-heading);
+  font-size: var(--eco-text-sm);
+  font-weight: var(--eco-weight-semibold);
+  color: var(--eco-green-600);
+  font-variant-numeric: tabular-nums;
+}
+.duration {
+  font-size: var(--eco-text-xs);
+  color: var(--eco-color-text-muted);
+  padding: 2px var(--eco-space-2);
+  border-radius: var(--eco-radius-full);
+  background: var(--eco-neutral-100);
+}
+.title { font-family: var(--eco-font-heading); font-size: var(--eco-text-xl); font-weight: var(--eco-weight-bold); letter-spacing: var(--eco-tracking-tight); line-height: 1.2; }
+.body { font-size: var(--eco-text-sm); color: var(--eco-color-text-body); line-height: var(--eco-leading-relaxed); }
+
+@media (max-width: 1023px) { .steps { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 639px) { .steps { grid-template-columns: 1fr; gap: var(--eco-space-6); } }

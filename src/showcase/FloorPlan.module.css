@@ -1,0 +1,19 @@
+.wrap { position: relative; width: 100%; max-width: 460px; margin-inline: auto; aspect-ratio: 420 / 320; }
+.plan { position: absolute; inset: 0; width: 100%; height: 100%; }
+.b1, .b2, .b3, .b4, .b5 { position: absolute; }
+.b1 { left: 14%; top: 14%; }
+.b2 { left: 74%; top: 22%; }
+.b3 { left: 22%; top: 68%; }
+.b4 { left: 72%; top: 66%; }
+.b5 { left: 47%; top: 46%; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .b1, .b2, .b3, .b4 { animation: eco-float 5s ease-in-out infinite; }
+  .b2 { animation-delay: -1.2s; }
+  .b3 { animation-delay: -2.4s; }
+  .b4 { animation-delay: -3.6s; }
+}
+@keyframes eco-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}

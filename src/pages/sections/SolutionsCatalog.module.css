@@ -1,0 +1,14 @@
+.ctaStrip {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--eco-space-6); flex-wrap: wrap;
+  padding: var(--eco-space-5) var(--eco-space-8);
+  border-radius: var(--eco-radius-full);
+  background: var(--eco-color-bg-mint);
+  border: 1px solid var(--eco-green-100);
+}
+.ctaText { display: inline-flex; align-items: center; gap: var(--eco-space-3); font-style: italic; font-family: var(--eco-font-accent); font-size: var(--eco-text-xl); color: var(--eco-green-800); }
+.ctaText svg { color: var(--eco-green-500); }
+
+@media (max-width: 639px) {
+  .ctaStrip { border-radius: var(--eco-radius-lg); padding: var(--eco-space-5); }
+  .ctaText { font-size: var(--eco-text-lg); }
+}

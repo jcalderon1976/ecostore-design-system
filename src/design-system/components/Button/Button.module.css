@@ -1,0 +1,122 @@
+.button {
+  --btn-bg: var(--eco-color-primary);
+  --btn-bg-hover: var(--eco-color-primary-hover);
+  --btn-bg-active: var(--eco-color-primary-active);
+  --btn-fg: var(--eco-color-primary-fg);
+  --btn-border: transparent;
+  --btn-shadow: none;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--eco-space-2);
+  font-family: var(--eco-font-body);
+  font-weight: var(--eco-weight-semibold);
+  letter-spacing: -0.005em;
+  line-height: 1;
+  white-space: nowrap;
+  border-radius: var(--eco-radius-full);
+  border: var(--eco-border-width) solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  box-shadow: var(--btn-shadow);
+  transition:
+    background-color var(--eco-duration-normal) var(--eco-ease-standard),
+    color var(--eco-duration-normal) var(--eco-ease-standard),
+    border-color var(--eco-duration-normal) var(--eco-ease-standard),
+    box-shadow var(--eco-duration-normal) var(--eco-ease-standard),
+    transform var(--eco-duration-fast) var(--eco-ease-standard);
+  user-select: none;
+}
+
+.button:hover:not(:disabled) { background: var(--btn-bg-hover); box-shadow: var(--btn-shadow-hover, var(--btn-shadow)); transform: translateY(-1px); }
+.button:active:not(:disabled) { background: var(--btn-bg-active); transform: translateY(0); box-shadow: var(--btn-shadow); }
+.button:disabled { opacity: 0.5; cursor: not-allowed; }
+.button:focus-visible { box-shadow: 0 0 0 4px var(--eco-color-focus-ring); outline: none; }
+
+/* ---- Forma ---- */
+.rounded { border-radius: var(--eco-radius-md); }
+
+/* ---- Tamaños ---- */
+.sm { height: 38px; padding: 0 var(--eco-space-4); font-size: var(--eco-text-sm); }
+.md { height: 48px; padding: 0 var(--eco-space-6); font-size: var(--eco-text-md); }
+.lg { height: 58px; padding: 0 var(--eco-space-8); font-size: var(--eco-text-lg); }
+
+/* ---- Variantes ---- */
+.primary {
+  --btn-shadow: var(--eco-shadow-brand);
+  --btn-shadow-hover: var(--eco-shadow-brand-hover);
+}
+.secondary {
+  --btn-bg: var(--eco-green-50);
+  --btn-bg-hover: var(--eco-green-100);
+  --btn-bg-active: var(--eco-green-200);
+  --btn-fg: var(--eco-green-800);
+}
+.outline {
+  --btn-bg: transparent;
+  --btn-bg-hover: var(--eco-green-50);
+  --btn-bg-active: var(--eco-green-100);
+  --btn-fg: var(--eco-green-800);
+  --btn-border: var(--eco-green-200);
+}
+.ghost {
+  --btn-bg: transparent;
+  --btn-bg-hover: var(--eco-neutral-100);
+  --btn-bg-active: var(--eco-neutral-200);
+  --btn-fg: var(--eco-color-text);
+}
+.accent {
+  --btn-bg: var(--eco-orange-50);
+  --btn-bg-hover: var(--eco-orange-100);
+  --btn-bg-active: var(--eco-orange-200);
+  --btn-fg: var(--eco-orange-700);
+  --btn-border: var(--eco-orange-200);
+}
+.sky {
+  --btn-bg: var(--eco-sky-100);
+  --btn-bg-hover: var(--eco-sky-200);
+  --btn-bg-active: var(--eco-sky-300);
+  --btn-fg: var(--eco-sky-600);
+}
+.inverse {
+  --btn-bg: var(--eco-neutral-0);
+  --btn-bg-hover: var(--eco-green-50);
+  --btn-bg-active: var(--eco-green-100);
+  --btn-fg: var(--eco-green-800);
+  --btn-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+/* Cristal sobre fondos oscuros o fotográficos */
+.glass {
+  --btn-bg: var(--eco-glass-bg-inverse);
+  --btn-bg-hover: rgba(255, 255, 255, 0.14);
+  --btn-bg-active: rgba(255, 255, 255, 0.2);
+  --btn-fg: var(--eco-neutral-0);
+  --btn-border: var(--eco-glass-border-inverse);
+  backdrop-filter: blur(var(--eco-glass-blur));
+}
+
+.fullWidth { width: 100%; }
+
+.icon { display: inline-flex; flex-shrink: 0; }
+.label { display: inline-block; }
+
+/* Flecha que se desplaza en hover */
+.arrow { display: inline-flex; transition: transform var(--eco-duration-normal) var(--eco-ease-out); }
+.button:hover:not(:disabled) .arrow { transform: translateX(3px); }
+
+/* ---- Loading ---- */
+.loading .label,
+.loading .icon,
+.loading .arrow { visibility: hidden; }
+.spinner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--eco-radius-full);
+  animation: eco-spin 0.7s linear infinite;
+}
+@keyframes eco-spin { to { transform: rotate(360deg); } }

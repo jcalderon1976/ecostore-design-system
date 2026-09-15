@@ -1,0 +1,6 @@
+.list { display: flex; gap: var(--eco-space-3); }
+.link { display: inline-flex; border-radius: var(--eco-radius-full); }
+.link:hover > span { background: var(--eco-color-primary); color: var(--eco-neutral-0); border-color: var(--eco-color-primary); }
+.link:focus-visible { outline: none; }
+.link:focus-visible > span { box-shadow: 0 0 0 4px var(--eco-color-focus-ring); }
+.square { border-radius: var(--eco-radius-sm); }

@@ -1,0 +1,90 @@
+.footer {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--eco-green-950);
+  background-image:
+    radial-gradient(900px 400px at 85% 10%, rgba(46, 158, 62, 0.22), transparent 60%),
+    linear-gradient(180deg, #0B2E1A, #061E0D);
+  color: var(--eco-color-text-inverse);
+  padding-block: var(--eco-space-24) var(--eco-space-8);
+}
+/* Grano sutil */
+.footer::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 0.6px, transparent 0.6px);
+  background-size: 6px 6px;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Marca + 3 columnas. Menos columnas, más aire. */
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1.3fr;
+  gap: var(--eco-space-12);
+}
+.brand { display: flex; flex-direction: column; gap: var(--eco-space-6); }
+.brandText { max-width: 30ch; color: rgba(255, 255, 255, 0.82); line-height: var(--eco-leading-relaxed); }
+
+.colTitle {
+  font-family: var(--eco-font-heading);
+  font-size: var(--eco-text-md);
+  font-weight: var(--eco-weight-bold);
+  letter-spacing: 0;
+  margin-bottom: var(--eco-space-5);
+  color: var(--eco-neutral-0);
+}
+.links { display: flex; flex-direction: column; gap: var(--eco-space-3); }
+.link {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: var(--eco-text-sm);
+  transition: color var(--eco-duration-fast) var(--eco-ease-standard), transform var(--eco-duration-fast) var(--eco-ease-standard);
+  display: inline-block;
+}
+.link:hover { color: var(--eco-color-highlight); transform: translateX(3px); }
+
+.contactList { display: flex; flex-direction: column; gap: var(--eco-space-4); }
+.contactItem { display: flex; gap: var(--eco-space-3); align-items: flex-start; }
+.contactIcon { margin-top: 2px; }
+.contactPhone {
+  font-family: var(--eco-font-heading);
+  font-size: var(--eco-text-2xl);
+  font-weight: var(--eco-weight-bold);
+  color: var(--eco-color-accent);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.contactLabel { font-weight: var(--eco-weight-semibold); font-size: var(--eco-text-sm); }
+.contactValue { color: rgba(255, 255, 255, 0.78); font-size: var(--eco-text-sm); line-height: var(--eco-leading-snug); }
+
+/* Cierre: firma manuscrita centrada sobre la línea de copyright */
+.signature {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: var(--eco-space-20);
+  margin-bottom: var(--eco-space-6);
+}
+.bottom {
+  position: relative;
+  padding-top: var(--eco-space-6);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--eco-space-3);
+  font-size: var(--eco-text-xs);
+  color: rgba(255, 255, 255, 0.55);
+}
+
+@media (max-width: 1023px) {
+  .grid { grid-template-columns: 1fr 1fr; gap: var(--eco-space-10); }
+  .brand { grid-column: 1 / -1; }
+}
+@media (max-width: 639px) {
+  .grid { grid-template-columns: 1fr; gap: var(--eco-space-8); }
+  .footer { padding-block: var(--eco-space-16) var(--eco-space-6); }
+  .signature { margin-top: var(--eco-space-12); }
+}

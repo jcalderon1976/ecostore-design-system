@@ -1,0 +1,11 @@
+.list { display: flex; flex-direction: column; gap: var(--eco-space-3); }
+.item { display: flex; align-items: flex-start; gap: var(--eco-space-3); font-size: var(--eco-text-sm); line-height: var(--eco-leading-snug); }
+.icon { color: var(--eco-green-500); flex-shrink: 0; margin-top: -1px; }
+.card { position: relative; }
+.badge {
+  position: absolute;
+  right: calc(-1 * var(--eco-space-4));
+  bottom: calc(-1 * var(--eco-space-4));
+  box-shadow: var(--eco-shadow-brand), var(--eco-ring-inset);
+  outline: 4px solid var(--eco-neutral-0);
+}

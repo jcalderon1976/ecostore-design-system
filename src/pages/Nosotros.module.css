@@ -1,0 +1,64 @@
+/* Hero con la foto del equipo: la escena importante está a la derecha */
+.hero { min-height: 620px; background-position: right center !important; }
+.hero > div > div { padding-block: var(--eco-space-20) var(--eco-space-16); }
+
+/* 20+ años · All-in-One */
+.pillars { padding-top: var(--eco-space-10); padding-bottom: var(--eco-space-6); }
+.pillar { display: flex; flex-direction: column; gap: var(--eco-space-5); height: 100%; }
+.pillarNumber {
+  font-family: var(--eco-font-heading);
+  font-size: var(--eco-text-5xl);
+  font-weight: var(--eco-weight-bold);
+  line-height: 0.95;
+  letter-spacing: var(--eco-tracking-display);
+  color: var(--eco-green-600);
+  font-variant-numeric: tabular-nums;
+}
+.pillarBar { display: block; width: 40px; height: 3px; border-radius: var(--eco-radius-full); background: var(--eco-green-500); }
+
+/* Historia */
+.story { display: flex; flex-direction: column; gap: var(--eco-space-4); height: 100%; }
+
+/* Servicios profesionales */
+.services { border-radius: var(--eco-radius-xl); padding-block: var(--eco-space-16); }
+.servicesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: var(--eco-space-12);
+  width: 100%;
+  max-width: 900px;
+  align-items: center;
+}
+.servicesGrid::before {
+  content: '';
+  grid-column: 2;
+  grid-row: 1;
+  height: 100%;
+  background: var(--eco-hairline);
+}
+.service { display: flex; align-items: center; gap: var(--eco-space-6); }
+.service:first-of-type { grid-column: 1; grid-row: 1; }
+.service:last-of-type { grid-column: 3; grid-row: 1; }
+.service > div { display: flex; flex-direction: column; gap: var(--eco-space-2); }
+
+/* Cita de sostenibilidad */
+.quote { max-width: 760px; }
+.quote blockquote { text-align: center; max-width: none; }
+.quote figcaption { justify-content: center; }
+
+@media (max-width: 1023px) {
+  .hero { min-height: 540px; }
+  .pillarGrid { grid-template-columns: 1fr !important; }
+  .servicesGrid { grid-template-columns: 1fr; gap: var(--eco-space-8); }
+  .servicesGrid::before { display: none; }
+  .service:first-of-type, .service:last-of-type { grid-column: 1; grid-row: auto; }
+}
+@media (max-width: 639px) {
+  .hero { min-height: 0; }
+  .services { padding-block: var(--eco-space-10); }
+  .service { flex-direction: column; align-items: flex-start; }
+}
+
+/* Cuatro pilares del hero en una sola fila */
+.pillarsHero { gap: var(--eco-space-4) var(--eco-space-6); }
+.pillarsHero > * { min-width: 0; }

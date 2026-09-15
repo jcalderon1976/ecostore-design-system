@@ -1,0 +1,33 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+  border-radius: var(--eco-radius-xl);
+  overflow: hidden;
+  background: var(--eco-sky-50);
+  box-shadow: var(--eco-shadow-md), var(--eco-ring-inset);
+}
+.frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  /* Suaviza la paleta de Google Maps hacia los neutrales del sistema */
+  filter: saturate(0.85);
+}
+.overlay {
+  position: absolute;
+  left: var(--eco-space-6);
+  bottom: var(--eco-space-6);
+  max-width: 360px;
+  z-index: 1;
+}
+.overlayRight { left: auto; right: var(--eco-space-6); }
+
+@media (max-width: 767px) {
+  .wrap { aspect-ratio: auto !important; min-height: 0; display: flex; flex-direction: column; border-radius: var(--eco-radius-lg); }
+  .frame { position: relative; height: 280px; }
+  .overlay, .overlayRight { position: relative; left: auto; right: auto; bottom: auto; max-width: none; padding: var(--eco-space-4); }
+}

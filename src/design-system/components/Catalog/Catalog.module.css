@@ -1,0 +1,94 @@
+/* ===== CategoryBand: cabecera de categoría (Energía / Agua) ===== */
+.band {
+  display: flex;
+  align-items: center;
+  gap: var(--eco-space-5);
+  padding: var(--eco-space-4) var(--eco-space-6);
+  border-radius: var(--eco-radius-lg);
+  background: var(--band-bg, var(--eco-green-50));
+  border: 1px solid var(--band-border, var(--eco-green-100));
+}
+.bandGreen { --band-bg: var(--eco-green-50); --band-border: var(--eco-green-100); --band-fg: var(--eco-green-800); --band-icon: var(--eco-color-primary); }
+.bandSky   { --band-bg: var(--eco-sky-50);   --band-border: var(--eco-sky-100);   --band-fg: var(--eco-sky-600);   --band-icon: var(--eco-sky-500); }
+.bandIcon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 52px; height: 52px; flex-shrink: 0;
+  border-radius: var(--eco-radius-full);
+  background: var(--band-icon);
+  color: var(--eco-neutral-0);
+  box-shadow: var(--eco-shadow-sm);
+}
+.bandTitle {
+  font-family: var(--eco-font-heading);
+  font-size: var(--eco-text-2xl);
+  font-weight: var(--eco-weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--band-fg);
+  line-height: 1;
+}
+.bandSep { width: 1px; align-self: stretch; background: var(--eco-hairline); margin-inline: var(--eco-space-2); }
+.bandTagline { font-size: var(--eco-text-sm); color: var(--eco-color-text-body); }
+.bandNote {
+  margin-left: auto;
+  display: inline-flex; align-items: center; gap: var(--eco-space-2);
+  font-size: var(--eco-text-sm);
+  color: var(--eco-color-text-body);
+}
+.bandNote svg { color: var(--eco-green-500); flex-shrink: 0; }
+
+@media (max-width: 767px) {
+  .band { flex-wrap: wrap; gap: var(--eco-space-3); }
+  .bandSep { display: none; }
+  .bandNote { margin-left: 0; width: 100%; }
+}
+
+/* ===== SolutionCard: producto/solución con imagen y lista ===== */
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background: var(--eco-color-surface);
+  border-radius: var(--eco-radius-lg);
+  border: 1px solid var(--eco-color-border-soft);
+  box-shadow: var(--eco-shadow-sm);
+  transition: box-shadow var(--eco-duration-normal) var(--eco-ease-standard), transform var(--eco-duration-normal) var(--eco-ease-standard);
+}
+.card:hover { box-shadow: var(--eco-shadow-md); transform: translateY(-3px); }
+.media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  display: flex; align-items: center; justify-content: center;
+  padding: var(--eco-space-4);
+  background:
+    radial-gradient(60% 50% at 50% 65%, rgba(255, 255, 255, 0.9), transparent 70%),
+    linear-gradient(160deg, var(--media-a, var(--eco-green-50)), var(--media-b, var(--eco-sky-50)));
+}
+.mediaSky { --media-a: var(--eco-sky-50); --media-b: var(--eco-green-50); }
+.img {
+  position: absolute; inset: var(--eco-space-4);
+  width: calc(100% - var(--eco-space-8)); height: calc(100% - var(--eco-space-8));
+  object-fit: contain;
+  filter: drop-shadow(0 12px 18px rgba(13, 58, 25, 0.16));
+  transition: transform var(--eco-duration-slow) var(--eco-ease-out);
+}
+.card:hover .img { transform: scale(1.04); }
+/* Fotografía a sangre (sin transparencia) */
+.imgCover { inset: 0; width: 100%; height: 100%; object-fit: cover; filter: none; }
+.compact .imgCover { inset: 0; width: 100%; height: 100%; }
+.mediaIcon { color: var(--eco-green-600); }
+.leaf { position: absolute; right: var(--eco-space-3); bottom: var(--eco-space-3); color: var(--eco-green-500); opacity: 0.9; }
+.body { display: flex; flex-direction: column; gap: var(--eco-space-3); padding: var(--eco-space-5); }
+.title { font-family: var(--eco-font-heading); font-size: var(--eco-text-lg); font-weight: var(--eco-weight-bold); letter-spacing: var(--eco-tracking-tight); line-height: 1.2; }
+.list { display: flex; flex-direction: column; gap: var(--eco-space-2); }
+.item { display: flex; align-items: flex-start; gap: var(--eco-space-2); font-size: var(--eco-text-sm); color: var(--eco-color-text-body); line-height: 1.35; }
+.item svg { color: var(--eco-green-500); flex-shrink: 0; margin-top: 1px; }
+
+/* Variante compacta: filas de 6–7 tarjetas */
+.compact .media { padding: var(--eco-space-3); }
+.compact .img { inset: var(--eco-space-3); width: calc(100% - var(--eco-space-6)); height: calc(100% - var(--eco-space-6)); }
+.compact .body { padding: var(--eco-space-4); gap: var(--eco-space-2); }
+.compact .title { font-size: var(--eco-text-sm); hyphens: auto; overflow-wrap: normal; }
+.compact .item { font-size: var(--eco-text-xs); gap: 6px; }
+.compact .item svg { width: 14px; height: 14px; }

@@ -1,0 +1,41 @@
+.band {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--eco-radius-xl);
+  background-image: var(--eco-mesh-dark);
+  color: var(--eco-neutral-0);
+  padding: var(--eco-space-16) var(--eco-space-12);
+  box-shadow: var(--eco-shadow-lg), var(--eco-ring-inset);
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) auto;
+  align-items: center;
+  gap: var(--eco-space-10);
+}
+.band::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 0.6px, transparent 0.6px);
+  background-size: 5px 5px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+/* Hoja gigante recortada como marca de agua */
+.leaf {
+  position: absolute;
+  right: -40px; bottom: -80px;
+  width: 340px; height: 340px;
+  color: rgba(168, 232, 74, 0.10);
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+.content { position: relative; display: flex; flex-direction: column; gap: var(--eco-space-4); align-items: flex-start; }
+.actions { position: relative; display: flex; flex-direction: column; gap: var(--eco-space-3); align-items: flex-end; }
+.note { font-size: var(--eco-text-sm); color: rgba(255, 255, 255, 0.62); }
+
+@media (max-width: 1023px) {
+  .band { grid-template-columns: 1fr; padding: var(--eco-space-12) var(--eco-space-8); }
+  .actions { align-items: flex-start; }
+}
+@media (max-width: 639px) {
+  .band { padding: var(--eco-space-10) var(--eco-space-6); border-radius: var(--eco-radius-lg); }
+}

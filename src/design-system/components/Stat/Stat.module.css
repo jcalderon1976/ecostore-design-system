@@ -1,0 +1,37 @@
+.stat { display: flex; flex-direction: column; gap: var(--eco-space-1); min-width: 0; }
+.value {
+  font-family: var(--eco-font-heading);
+  font-weight: var(--eco-weight-bold);
+  font-size: clamp(var(--eco-text-3xl), 3vw, var(--eco-text-5xl));
+  line-height: 1;
+  letter-spacing: var(--eco-tracking-display);
+  font-variant-numeric: tabular-nums;
+  color: var(--eco-color-text);
+  display: inline-flex; align-items: baseline; gap: 2px;
+}
+.suffix { font-size: 0.55em; font-weight: var(--eco-weight-semibold); color: var(--eco-green-600); }
+.label { font-size: var(--eco-text-sm); color: var(--eco-color-text-muted); }
+.inverse .value { color: var(--eco-neutral-0); }
+.inverse .suffix { color: var(--eco-color-highlight); }
+.inverse .label { color: rgba(255, 255, 255, 0.62); }
+
+/* Barra de stats separada por hairlines */
+.bar {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  border-top: 1px solid var(--eco-hairline);
+  border-bottom: 1px solid var(--eco-hairline);
+}
+.bar > * { padding: var(--eco-space-8) var(--eco-space-8); border-left: 1px solid var(--eco-hairline); }
+.bar > :first-child { border-left: 0; padding-left: 0; }
+.barInverse { border-color: var(--eco-hairline-inverse); }
+.barInverse > * { border-color: var(--eco-hairline-inverse); }
+
+@media (max-width: 767px) {
+  .bar { grid-auto-flow: row; grid-template-columns: 1fr 1fr; }
+  .bar > * { padding: var(--eco-space-5) var(--eco-space-5); border-left: 0; border-top: 1px solid var(--eco-hairline); }
+  .bar > :nth-child(-n + 2) { border-top: 0; }
+  .bar > :nth-child(odd) { padding-left: 0; }
+  .barInverse > * { border-color: var(--eco-hairline-inverse); }
+}
