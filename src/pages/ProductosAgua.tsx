@@ -1,6 +1,5 @@
-import { Navbar, FigurineCarousel } from '@ds'
-import { SITE, NAV, ROUTES } from './site'
-import { SiteClose } from './sections/SiteClose'
+import { Navbar, Footer, FigurineCarousel } from '@ds'
+import { SITE, NAV, SOCIAL, FOOTER, ROUTES } from './site'
 
 const agua = (name: string) => `${SITE.base}images/agua/${name}`
 
@@ -26,7 +25,7 @@ export function ProductosAgua() {
         linkHref={ROUTES.contacto}
       />
 
-      <SiteClose />
+      <Footer {...FOOTER} social={SOCIAL} />
     </>
   )
 }

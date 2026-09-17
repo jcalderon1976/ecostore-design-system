@@ -99,7 +99,7 @@ export const FOOTER: { description: string; columns: FooterColumn[]; contact: Fo
       { label: 'Contáctanos', href: ROUTES.contacto },
     ] },
   ],
-  copyright: `© ${new Date().getFullYear()} ECOSTORE`,
+  copyright: `© ${new Date().getFullYear()} ECOSTORE · Tu tienda de Eficiencia Energética y agua`,
   contact: {
     phone: '787-664-7676',
     phoneHref: SITE.phoneHref,

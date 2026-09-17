@@ -1,5 +1,6 @@
 import {
   Navbar,
+  Footer,
   Em,
   Reveal,
   Eyebrow,
@@ -30,8 +31,8 @@ import {
   ArrowRightIcon,
   PhoneIcon,
 } from "@ds";
-import { SITE, NAV, ROUTES } from "./site";
-import { SiteClose } from "./sections/SiteClose";
+import { SITE, NAV, SOCIAL, FOOTER, ROUTES } from "./site";
+import { SolutionsCatalog } from "./sections/SolutionsCatalog";
 import styles from "./Inicio.module.css";
 
 const img = (p: string) => `${SITE.base}images/${p}`;
@@ -244,6 +245,13 @@ export function Inicio() {
         </Container>
       </Section>
 
+      {/* ---------- CATÁLOGO ---------- */}
+      <Section>
+        <Container>
+          <SolutionsCatalog />
+        </Container>
+      </Section>
+
       {/* ---------- TESTIMONIO ---------- */}
       <Section background="subtle">
         <Container narrow>
@@ -302,7 +310,7 @@ export function Inicio() {
         </Container>
       </Section>
 
-      <SiteClose />
+      <Footer {...FOOTER} social={SOCIAL} />
     </>
   );
 }

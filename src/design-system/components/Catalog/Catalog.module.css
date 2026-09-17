@@ -89,6 +89,6 @@
 .compact .media { padding: var(--eco-space-3); }
 .compact .img { inset: var(--eco-space-3); width: calc(100% - var(--eco-space-6)); height: calc(100% - var(--eco-space-6)); }
 .compact .body { padding: var(--eco-space-4); gap: var(--eco-space-2); }
-.compact .title { font-size: var(--eco-text-xs); hyphens: auto; overflow-wrap: anywhere; }
+.compact .title { font-size: var(--eco-text-sm); hyphens: auto; overflow-wrap: normal; }
 .compact .item { font-size: var(--eco-text-xs); gap: 6px; }
 .compact .item svg { width: 14px; height: 14px; }

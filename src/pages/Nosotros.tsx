@@ -1,5 +1,6 @@
 import {
   Navbar,
+  Footer,
   Hero,
   Em,
   TrustItem,
@@ -35,8 +36,7 @@ import {
   BuildingIcon,
   ShieldIcon,
 } from "@ds";
-import { SITE, NAV } from "./site";
-import { SiteClose } from "./sections/SiteClose";
+import { SITE, NAV, SOCIAL, FOOTER } from "./site";
 import styles from "./Nosotros.module.css";
 
 const IMG = { equipo: `${SITE.base}images/nosotros.jpg` };
@@ -348,7 +348,7 @@ export function Nosotros() {
         </Container>
       </Section>
 
-      <SiteClose />
+      <Footer {...FOOTER} social={SOCIAL} />
     </>
   );
 }

@@ -1,5 +1,6 @@
 import {
   Navbar,
+  Footer,
   Hero,
   Em,
   Reveal,
@@ -28,8 +29,8 @@ import {
   ShieldIcon,
   CheckCircleIcon,
 } from "@ds";
-import { SITE, NAV, ROUTES } from "./site";
-import { SiteClose } from "./sections/SiteClose";
+import { SITE, NAV, SOCIAL, FOOTER, ROUTES } from "./site";
+import { SolutionsCatalog } from "./sections/SolutionsCatalog";
 import styles from "./Auditoria.module.css";
 
 const img = (name: string) => `${SITE.base}images/${name}`;
@@ -186,6 +187,13 @@ export function Auditoria() {
         </Container>
       </Section>
 
+      {/* ---------- SOLUCIONES PRINCIPALES ---------- */}
+      <Section>
+        <Container>
+          <SolutionsCatalog heading={false} />
+        </Container>
+      </Section>
+
       {/* ---------- POR QUÉ UNA AUDITORÍA ---------- */}
       <Section background="inverse" size="sm">
         <Container>
@@ -225,7 +233,7 @@ export function Auditoria() {
         </Container>
       </Section>
 
-      <SiteClose />
+      <Footer {...FOOTER} social={SOCIAL} />
     </>
   );
 }

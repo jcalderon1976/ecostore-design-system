@@ -1,13 +1,12 @@
 import { useState, type FormEvent } from 'react'
 import {
-  Navbar, Hero, Em, TrustItem, TrustList, Reveal,
+  Navbar, Footer, Hero, Em, TrustItem, TrustList, Reveal,
   Section, Container, Grid, Stack, Row,
-  SectionTitle, ContactCard, ContactMetaStrong, SocialLinks, ChecklistCard, MapEmbed,
+  SectionTitle, ContactCard, ContactMetaStrong, SocialLinks, ChecklistCard, MapEmbed, SectionHeader, Accordion,
   Heading, Text, Button, Input, Select, Textarea, Checkbox, FormField, InlineGroup, Card, IconCircle,
   LeafIcon, ShieldIcon, ClockIcon, PhoneIcon, MailIcon, MapPinIcon, ChatIcon, CalendarIcon, LockIcon, ArrowUpRightIcon,
 } from '@ds'
-import { SITE, NAV, SOCIAL } from './site'
-import { SiteClose } from './sections/SiteClose'
+import { SITE, NAV, SOCIAL, FOOTER } from './site'
 import styles from './Contacto.module.css'
 
 const IMG = {
@@ -16,6 +15,29 @@ const IMG = {
 }
 const CONTACT = SITE
 const NAV_ITEMS = NAV('contacto')
+
+const FAQ = [
+  {
+    question: '¿La evaluación tiene algún costo?',
+    answer: 'No. La evaluación inicial es 100% gratuita y sin compromiso. Uno de nuestros especialistas analiza tu consumo y te presenta opciones.',
+  },
+  {
+    question: '¿Trabajan con propiedades comerciales?',
+    answer: 'Sí. Atendemos proyectos residenciales y comerciales en todo Puerto Rico, desde auditorías hasta diseño, permisología y construcción.',
+  },
+  {
+    question: '¿Qué incluye una auditoría energética?',
+    answer: 'Análisis de consumo, evaluación de sistemas y equipos, diagnóstico de eficiencia, recomendaciones personalizadas y análisis de costos y retorno de inversión.',
+  },
+  {
+    question: '¿Ayudan con el reembolso de eficiencia energética de LUMA?',
+    answer: 'Sí. Te orientamos en el programa de reembolso y en opciones de financiamiento como parte del servicio.',
+  },
+  {
+    question: '¿Venden e instalan los equipos?',
+    answer: 'Somos All-in-One: evaluación, equipos, diseño, instalación y asesoría en un solo lugar.',
+  },
+]
 
 /**
  * Página de contacto de EcoStore.
@@ -198,7 +220,32 @@ export function Contacto() {
         </Container>
       </Section>
 
-      <SiteClose />
+      {/* ---------- PREGUNTAS FRECUENTES ---------- */}
+      <Section background="subtle" id="faq">
+        <Container narrow>
+          <Stack gap={10}>
+            <Reveal>
+              <SectionHeader
+                align="center"
+                label="Preguntas frecuentes"
+                title={<>¿Preguntas? Tenemos <Em tone="brand">respuestas</Em></>}
+                lead="Lo que más nos consultan antes de agendar una evaluación. Si tu duda no está aquí, llámanos o escríbenos."
+              />
+            </Reveal>
+            <Reveal delay={80}>
+              <Accordion items={FAQ} />
+            </Reveal>
+            <Reveal delay={120}>
+              <Row justify="center" gap={3}>
+                <Button href="#formulario" arrow>Agenda tu evaluación</Button>
+                <Button variant="outline" href={CONTACT.phoneHref} leadingIcon={<PhoneIcon size={18} />}>{CONTACT.phone}</Button>
+              </Row>
+            </Reveal>
+          </Stack>
+        </Container>
+      </Section>
+
+      <Footer {...FOOTER} social={SOCIAL} />
     </>
   )
 }

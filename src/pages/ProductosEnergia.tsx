@@ -1,6 +1,5 @@
-import { Navbar, FigurineCarousel } from "@ds";
-import { SITE, NAV, ROUTES } from "./site";
-import { SiteClose } from "./sections/SiteClose";
+import { Navbar, Footer, FigurineCarousel } from "@ds";
+import { SITE, NAV, SOCIAL, FOOTER, ROUTES } from "./site";
 
 const energia = (name: string) => `${SITE.base}images/energia/${name}`;
 
@@ -67,7 +66,7 @@ export function ProductosEnergia() {
         linkHref={ROUTES.contacto}
       />
 
-      <SiteClose />
+      <Footer {...FOOTER} social={SOCIAL} />
     </>
   );
 }
