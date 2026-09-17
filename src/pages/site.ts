@@ -9,7 +9,7 @@ const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL :
 export const SITE = {
   base,
   name: 'EcoStore',
-  tagline: 'Tu tienda de conservación de energía y agua',
+  tagline: 'Tu tienda de Eficiencia Energética y agua',
   phone: '(787) 664-7676',
   phoneHref: 'tel:+17876647676',
   email: 'info@ecostorepr.com',
@@ -47,7 +47,7 @@ export const NAV = (active: PageKey): NavItem[] => [
     active: active === 'productos',
     children: [
       {
-        label: 'Conservación de energía',
+        label: 'Eficiencia Energética',
         description: 'Climatización, solar y baterías, iluminación, agua caliente',
         href: ROUTES.productosEnergia,
         active: active === 'productosEnergia',
@@ -100,7 +100,7 @@ export const FOOTER: { description: string; columns: FooterColumn[]; contact: Fo
       { label: 'Contáctanos', href: ROUTES.contacto },
     ] },
   ],
-  copyright: `© ${new Date().getFullYear()} ECOSTORE · Tu tienda de conservación de energía y agua`,
+  copyright: `© ${new Date().getFullYear()} ECOSTORE · Tu tienda de Eficiencia Energética y agua`,
   contact: {
     phone: '787-664-7676',
     phoneHref: SITE.phoneHref,

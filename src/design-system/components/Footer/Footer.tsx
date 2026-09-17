@@ -1,32 +1,51 @@
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
-import { cx } from '../../utils/cx'
-import { Container } from '../Layout/Layout'
-import { Logo, LOGO_INVERSE_STACKED_SRC } from '../Logo/Logo'
-import { SocialLinks, type SocialLink } from '../SocialLinks/SocialLinks'
-import { ArrowUpIcon, ClockIcon, LeafIcon, MailIcon, MapPinIcon, PhoneIcon } from '../../icons'
-import styles from './Footer.module.css'
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
+import { cx } from "../../utils/cx";
+import { Container } from "../Layout/Layout";
+import { Logo, LOGO_INVERSE_STACKED_SRC } from "../Logo/Logo";
+import { SocialLinks, type SocialLink } from "../SocialLinks/SocialLinks";
+import {
+  ArrowUpIcon,
+  ClockIcon,
+  LeafIcon,
+  MailIcon,
+  MapPinIcon,
+  PhoneIcon,
+} from "../../icons";
+import styles from "./Footer.module.css";
 
-export interface FooterLink { label: string; href: string }
-export interface FooterColumn { title: string; links: FooterLink[] }
+export interface FooterLink {
+  label: string;
+  href: string;
+}
+export interface FooterColumn {
+  title: string;
+  links: FooterLink[];
+}
 
 export interface FooterContact {
-  phone: string
-  phoneHref?: string
-  email: string
-  addressLabel?: string
-  address: string
-  hours: string
+  phone: string;
+  phoneHref?: string;
+  email: string;
+  addressLabel?: string;
+  address: string;
+  hours: string;
 }
 
 export interface FooterProps {
-  description: ReactNode
+  description: ReactNode;
   /** Hasta dos columnas de enlaces. */
-  columns: FooterColumn[]
-  contact: FooterContact
-  social: SocialLink[]
+  columns: FooterColumn[];
+  contact: FooterContact;
+  social: SocialLink[];
   /** Enlaces legales de la última línea. */
-  legal?: FooterLink[]
-  copyright?: ReactNode
+  legal?: FooterLink[];
+  copyright?: ReactNode;
 }
 
 /**
@@ -35,25 +54,42 @@ export interface FooterProps {
  * que respira; hoja flotante.
  */
 export function Footer({
-  description, columns, contact, social,
-  legal = [{ label: 'Privacidad', href: '#privacidad' }, { label: 'Términos', href: '#terminos' }],
+  description,
+  columns,
+  contact,
+  social,
+  legal = [
+    { label: "Privacidad", href: "#privacidad" },
+    { label: "Términos", href: "#terminos" },
+  ],
   copyright,
 }: FooterProps) {
-  const ref = useRef<HTMLElement | null>(null)
-  const [visible, setVisible] = useState(false)
+  const ref = useRef<HTMLElement | null>(null);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const el = ref.current
-    if (!el || typeof IntersectionObserver === 'undefined') { setVisible(true); return }
-    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); io.disconnect() } }, { threshold: 0.12 })
-    io.observe(el)
-    return () => io.disconnect()
-  }, [])
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.12 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
-  const tel = contact.phoneHref ?? `tel:${contact.phone.replace(/\D/g, '')}`
-  const toTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
-  const d = (i: number) => ({ '--d': `${i * 90}ms` } as CSSProperties)
-  const cols = columns.slice(0, 2)
+  const tel = contact.phoneHref ?? `tel:${contact.phone.replace(/\D/g, "")}`;
+  const toTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  const d = (i: number) => ({ "--d": `${i * 90}ms` }) as CSSProperties;
+  const cols = columns.slice(0, 2);
 
   return (
     <footer ref={ref} className={styles.footer} data-visible={visible}>
@@ -64,9 +100,16 @@ export function Footer({
 
       <Container className={styles.inner}>
         {/* ---- Marca + columnas ---- */}
-        <div className={styles.grid} style={{ '--cols': cols.length } as CSSProperties}>
+        <div
+          className={styles.grid}
+          style={{ "--cols": cols.length } as CSSProperties}
+        >
           <div className={cx(styles.brand, styles.rise)} style={d(0)}>
-            <Logo height={84} src={LOGO_INVERSE_STACKED_SRC} className={styles.brandLogo} />
+            <Logo
+              height={84}
+              src={LOGO_INVERSE_STACKED_SRC}
+              className={styles.brandLogo}
+            />
             <p className={styles.brandText}>{description}</p>
           </div>
 
@@ -76,7 +119,9 @@ export function Footer({
               <ul className={styles.links}>
                 {col.links.map((l) => (
                   <li key={l.label}>
-                    <a href={l.href} className={styles.link}><span>{l.label}</span></a>
+                    <a href={l.href} className={styles.link}>
+                      <span>{l.label}</span>
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -94,7 +139,9 @@ export function Footer({
               </li>
               <li className={styles.contactItem}>
                 <MailIcon size={16} className={styles.contactIcon} />
-                <a href={`mailto:${contact.email}`} className={styles.link}><span>{contact.email}</span></a>
+                <a href={`mailto:${contact.email}`} className={styles.link}>
+                  <span>{contact.email}</span>
+                </a>
               </li>
               <li className={styles.contactItem}>
                 <MapPinIcon size={16} className={styles.contactIcon} />
@@ -106,24 +153,43 @@ export function Footer({
               </li>
             </ul>
             <div className={styles.social}>
-              <SocialLinks links={social} tone="outlineInverse" shape="square" />
+              <SocialLinks
+                links={social}
+                tone="outlineInverse"
+                shape="square"
+              />
             </div>
           </div>
         </div>
 
         {/* ---- Línea legal ---- */}
-        <div className={cx(styles.bottom, styles.rise)} style={d(2 + cols.length)}>
-          <span className={styles.copy}>{copyright ?? `© ${new Date().getFullYear()} ECOSTORE · Tu tienda de conservación de energía y agua`}</span>
+        <div
+          className={cx(styles.bottom, styles.rise)}
+          style={d(2 + cols.length)}
+        >
+          <span className={styles.copy}>
+            {copyright ??
+              `© ${new Date().getFullYear()} ECOSTORE · Tu tienda de Eficiencia Energética y agua`}
+          </span>
           <ul className={styles.legal}>
             {legal.map((l) => (
-              <li key={l.label}><a href={l.href} className={styles.legalLink}>{l.label}</a></li>
+              <li key={l.label}>
+                <a href={l.href} className={styles.legalLink}>
+                  {l.label}
+                </a>
+              </li>
             ))}
           </ul>
-          <button type="button" className={styles.toTop} onClick={toTop} aria-label="Volver arriba">
+          <button
+            type="button"
+            className={styles.toTop}
+            onClick={toTop}
+            aria-label="Volver arriba"
+          >
             <ArrowUpIcon size={18} />
           </button>
         </div>
       </Container>
     </footer>
-  )
+  );
 }
