@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { Container } from '../Layout/Layout'
-import { Logo } from '../Logo/Logo'
+import { Logo, LOGO_INVERSE_STACKED_SRC } from '../Logo/Logo'
 import { IconCircle } from '../IconCircle/IconCircle'
 import { SocialLinks, type SocialLink } from '../SocialLinks/SocialLinks'
 import { Script } from '../Typography/Typography'
@@ -38,7 +38,7 @@ export function Footer({ description, columns, contact, social, tagline = 'Un fu
       <Container>
         <div className={styles.grid}>
           <div className={styles.brand}>
-            <Logo height={44} inverse />
+            <Logo height={80} src={LOGO_INVERSE_STACKED_SRC} className={styles.brandLogo} />
             <p className={styles.brandText}>{description}</p>
             <SocialLinks links={social} tone="outlineInverse" shape="square" />
           </div>

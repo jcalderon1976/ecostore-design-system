@@ -26,6 +26,8 @@
   gap: var(--eco-space-12);
 }
 .brand { display: flex; flex-direction: column; gap: var(--eco-space-6); }
+/* Evita que el flex en columna estire el logo y deforme su proporción. */
+.brandLogo { align-self: flex-start; }
 .brandText { max-width: 30ch; color: rgba(255, 255, 255, 0.82); line-height: var(--eco-leading-relaxed); }
 
 .colTitle {

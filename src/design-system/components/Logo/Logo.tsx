@@ -17,6 +17,8 @@ export interface LogoProps {
 const BASE = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/'
 export const LOGO_SRC = `${BASE}logo.png`
 export const LOGO_INVERSE_SRC = `${BASE}logo-inverse.png`
+/** Versión apilada en dos líneas para fondos oscuros (≈ 1.9 : 1). */
+export const LOGO_INVERSE_STACKED_SRC = `${BASE}logo-inverse-stacked.png`
 
 /* Colores del logotipo (no son tokens: el logo no cambia con el tema). */
 const BRAND = { green: '#1E9E2E', greenDark: '#0E4D1F', orange: '#F7941D', yellow: '#FFD500' }
