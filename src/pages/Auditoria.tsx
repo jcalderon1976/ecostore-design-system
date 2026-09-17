@@ -112,7 +112,7 @@ export function Auditoria() {
       {/* ---------- SOLUCIONES PRINCIPALES ---------- */}
       <Section>
         <Container>
-          <SolutionsCatalog />
+          <SolutionsCatalog heading={false} />
         </Container>
       </Section>
 

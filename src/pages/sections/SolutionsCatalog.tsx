@@ -31,20 +31,24 @@ export const AGUA: Solution[] = [
 export interface SolutionsCatalogProps {
   /** Muestra la franja de CTA al final. */
   cta?: boolean
+  /** Muestra el título de sección. Las páginas de Servicios ya tienen su propio encabezado. */
+  heading?: boolean
 }
 
 /** "Nuestras soluciones principales": bandas Energía y Agua con sus tarjetas y franja de CTA. */
-export function SolutionsCatalog({ cta = true }: SolutionsCatalogProps) {
+export function SolutionsCatalog({ cta = true, heading = true }: SolutionsCatalogProps) {
   return (
     <Stack gap={10}>
-      <Reveal>
-        <SectionTitle
-          leaves
-          level="h1"
-          title={<>Nuestras soluciones <Em tone="brand">principales</Em></>}
-          subtitle="Hogar y negocio más eficiente, sostenible y económico"
-        />
-      </Reveal>
+      {heading && (
+        <Reveal>
+          <SectionTitle
+            leaves
+            level="h1"
+            title={<>Nuestras soluciones <Em tone="brand">principales</Em></>}
+            subtitle="Hogar y negocio más eficiente, sostenible y económico"
+          />
+        </Reveal>
+      )}
 
       <Stack gap={5}>
         <Reveal>

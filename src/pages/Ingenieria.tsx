@@ -124,7 +124,7 @@ export function Ingenieria() {
       {/* ---------- CATÁLOGO ---------- */}
       <Section background="subtle">
         <Container>
-          <SolutionsCatalog />
+          <SolutionsCatalog heading={false} />
         </Container>
       </Section>
 
