@@ -1,10 +1,9 @@
-import type { ReactNode } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
+import { cx } from '../../utils/cx'
 import { Container } from '../Layout/Layout'
 import { Logo, LOGO_INVERSE_STACKED_SRC } from '../Logo/Logo'
-import { IconCircle } from '../IconCircle/IconCircle'
 import { SocialLinks, type SocialLink } from '../SocialLinks/SocialLinks'
-import { Script } from '../Typography/Typography'
-import { ClockIcon, MailIcon, MapPinIcon, PhoneIcon } from '../../icons'
+import { ArrowUpIcon, ClockIcon, LeafIcon, MailIcon, MapPinIcon, PhoneIcon } from '../../icons'
 import styles from './Footer.module.css'
 
 export interface FooterLink { label: string; href: string }
@@ -25,74 +24,104 @@ export interface FooterProps {
   columns: FooterColumn[]
   contact: FooterContact
   social: SocialLink[]
-  /** Frase manuscrita de cierre, centrada sobre el copyright. */
-  tagline?: string
+  /** Enlaces legales de la última línea. */
+  legal?: FooterLink[]
   copyright?: ReactNode
-  /** Texto a la derecha de la línea de copyright. Vacío para omitirlo. */
-  bottomNote?: ReactNode
 }
 
-export function Footer({ description, columns, contact, social, tagline = 'Un futuro más verde', copyright, bottomNote }: FooterProps) {
+/**
+ * Footer premium: marca + columnas de enlaces + contacto y línea legal.
+ * Entra con animación escalonada al llegar al viewport; halo ambiental
+ * que respira; hoja flotante.
+ */
+export function Footer({
+  description, columns, contact, social,
+  legal = [{ label: 'Privacidad', href: '#privacidad' }, { label: 'Términos', href: '#terminos' }],
+  copyright,
+}: FooterProps) {
+  const ref = useRef<HTMLElement | null>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el || typeof IntersectionObserver === 'undefined') { setVisible(true); return }
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); io.disconnect() } }, { threshold: 0.12 })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
+  const tel = contact.phoneHref ?? `tel:${contact.phone.replace(/\D/g, '')}`
+  const toTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+  const d = (i: number) => ({ '--d': `${i * 90}ms` } as CSSProperties)
+  const cols = columns.slice(0, 2)
+
   return (
-    <footer className={styles.footer}>
-      <Container>
-        <div className={styles.grid}>
-          <div className={styles.brand}>
-            <Logo height={80} src={LOGO_INVERSE_STACKED_SRC} className={styles.brandLogo} />
+    <footer ref={ref} className={styles.footer} data-visible={visible}>
+      <div className={styles.glow} aria-hidden="true" />
+      <div className={styles.grain} aria-hidden="true" />
+      <LeafIcon className={styles.leaf} size={520} />
+      <span className={styles.topline} aria-hidden="true" />
+
+      <Container className={styles.inner}>
+        {/* ---- Marca + columnas ---- */}
+        <div className={styles.grid} style={{ '--cols': cols.length } as CSSProperties}>
+          <div className={cx(styles.brand, styles.rise)} style={d(0)}>
+            <Logo height={84} src={LOGO_INVERSE_STACKED_SRC} className={styles.brandLogo} />
             <p className={styles.brandText}>{description}</p>
-            <SocialLinks links={social} tone="outlineInverse" shape="square" />
           </div>
 
-          {columns.slice(0, 2).map((col) => (
-            <div key={col.title}>
+          {cols.map((col, ci) => (
+            <div key={col.title} className={styles.rise} style={d(1 + ci)}>
               <h3 className={styles.colTitle}>{col.title}</h3>
               <ul className={styles.links}>
                 {col.links.map((l) => (
                   <li key={l.label}>
-                    <a href={l.href} className={styles.link}>{l.label}</a>
+                    <a href={l.href} className={styles.link}><span>{l.label}</span></a>
                   </li>
                 ))}
               </ul>
             </div>
           ))}
 
-          <div>
+          <div className={styles.rise} style={d(1 + cols.length)}>
             <h3 className={styles.colTitle}>Contacto</h3>
             <ul className={styles.contactList}>
-              <li className={styles.contactItem}>
-                <IconCircle tone="accent" size="sm" className={styles.contactIcon}><PhoneIcon size={16} /></IconCircle>
-                <a href={contact.phoneHref ?? `tel:${contact.phone.replace(/\D/g, '')}`} className={styles.contactPhone}>
-                  {contact.phone}
+              <li>
+                <a href={tel} className={styles.phone}>
+                  <PhoneIcon size={18} className={styles.contactIcon} />
+                  <span>{contact.phone}</span>
                 </a>
               </li>
               <li className={styles.contactItem}>
-                <IconCircle tone="solid" size="sm" className={styles.contactIcon}><MailIcon size={16} /></IconCircle>
-                <a href={`mailto:${contact.email}`} className={styles.contactValue}>{contact.email}</a>
+                <MailIcon size={16} className={styles.contactIcon} />
+                <a href={`mailto:${contact.email}`} className={styles.link}><span>{contact.email}</span></a>
               </li>
               <li className={styles.contactItem}>
-                <IconCircle tone="accent" size="sm" className={styles.contactIcon}><MapPinIcon size={16} /></IconCircle>
-                <div>
-                  <div className={styles.contactLabel}>{contact.addressLabel ?? 'Dirección'}</div>
-                  <div className={styles.contactValue}>{contact.address}</div>
-                </div>
+                <MapPinIcon size={16} className={styles.contactIcon} />
+                <span className={styles.contactValue}>{contact.address}</span>
               </li>
               <li className={styles.contactItem}>
-                <IconCircle tone="solid" size="sm" className={styles.contactIcon}><ClockIcon size={16} /></IconCircle>
+                <ClockIcon size={16} className={styles.contactIcon} />
                 <span className={styles.contactValue}>{contact.hours}</span>
               </li>
             </ul>
+            <div className={styles.social}>
+              <SocialLinks links={social} tone="outlineInverse" shape="square" />
+            </div>
           </div>
         </div>
 
-        {tagline && (
-          <div className={styles.signature}>
-            <Script>{tagline}</Script>
-          </div>
-        )}
-
-        <div className={styles.bottom}>
-          <span>{copyright ?? `© ${new Date().getFullYear()} ECOSTORE · Tu tienda de conservación de energía y agua`}</span>
-          {bottomNote && <span>{bottomNote}</span>}
+        {/* ---- Línea legal ---- */}
+        <div className={cx(styles.bottom, styles.rise)} style={d(2 + cols.length)}>
+          <span className={styles.copy}>{copyright ?? `© ${new Date().getFullYear()} ECOSTORE · Tu tienda de conservación de energía y agua`}</span>
+          <ul className={styles.legal}>
+            {legal.map((l) => (
+              <li key={l.label}><a href={l.href} className={styles.legalLink}>{l.label}</a></li>
+            ))}
+          </ul>
+          <button type="button" className={styles.toTop} onClick={toTop} aria-label="Volver arriba">
+            <ArrowUpIcon size={18} />
+          </button>
         </div>
       </Container>
     </footer>

@@ -140,7 +140,7 @@ Todas las sombras van teñidas con `green-900` (o `sky-600` en `sky`), nunca neg
 | `SectionTitle` | Hojas + Heading + subtítulo | "Múltiples formas de contactarnos" |
 | `ContactCard` | Card + IconCircle soft + valor verde + meta | 4 tarjetas de contacto |
 | `Checklist` / `ChecklistCard` | Card floating + checks verdes + sello hoja | "¿Qué incluye tu evaluación gratuita?" |
-| `Footer` | Logo inverso + 2 columnas + contacto + redes; firma manuscrita centrada sobre el copyright | Footer verde oscuro |
+| `Footer` | Marca (logo apilado inverso + descripción) + hasta 2 columnas de enlaces + contacto y redes, línea legal con enlaces y botón "volver arriba". La rejilla se adapta al número de columnas vía `--cols`. Animaciones: entrada escalonada al entrar en viewport, línea lima que se dibuja, halo que respira (14 s), hoja flotante (9 s), subrayado deslizante en enlaces. Todo respeta reduced-motion. Props `columns`, `contact`, `social`, `legal`, `copyright` | Cierre de todas las páginas |
 
 ## 4. Estados y accesibilidad
 

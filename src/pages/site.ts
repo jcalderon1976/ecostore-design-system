@@ -64,7 +64,7 @@ export const NAV = (active: PageKey): NavItem[] => [
     label: 'Servicios',
     children: [
       {
-        label: 'Auditoría energética',
+        label: 'Servicios de Auditoría',
         description: 'Análisis de consumo, diagnóstico y retorno de inversión',
         href: ROUTES.servicios,
         active: active === 'servicios',
@@ -98,13 +98,6 @@ export const FOOTER: { description: string; columns: FooterColumn[]; contact: Fo
       { label: 'Ingeniería', href: ROUTES.ingenieria },
       { label: 'Nosotros', href: ROUTES.nosotros },
       { label: 'Contáctanos', href: ROUTES.contacto },
-    ] },
-    { title: 'Soluciones', links: [
-      { label: 'Energía Solar', href: ROUTES.productosEnergia },
-      { label: 'Calentadores Solares', href: ROUTES.productosEnergia },
-      { label: 'Cisternas y Filtración', href: ROUTES.productosAgua },
-      { label: 'Eficiencia Energética', href: ROUTES.productosEnergia },
-      { label: 'Auditorías', href: ROUTES.servicios },
     ] },
   ],
   copyright: `© ${new Date().getFullYear()} ECOSTORE · Tu tienda de conservación de energía y agua`,
