@@ -8,6 +8,7 @@ import {
   ShieldIcon, ClockIcon, PhoneIcon, MailIcon, MapPinIcon, ChatIcon, CalendarIcon, LockIcon,
   SunIcon, DropletIcon, ZapIcon, IconCircle, LeafIcon,
 } from '@ds'
+import { FOOTER } from '../pages/site'
 import { FloorPlan } from './FloorPlan'
 import { HeroVisual } from './HeroVisual'
 import styles from './ContactPage.module.css'
@@ -279,27 +280,7 @@ export function ContactPage() {
         </Container>
       </Section>
 
-      <Footer
-        description="Más de 20 años ayudando a hogares y negocios en Puerto Rico a reducir su consumo de energía y agua."
-        columns={[
-          { title: 'Enlaces rápidos', links: [
-            { label: 'Inicio', href: '#' }, { label: 'Productos', href: '#productos' }, { label: 'Servicios', href: '#servicios' },
-            { label: 'Nosotros', href: '#nosotros' }, { label: 'Contáctanos', href: '#contacto' },
-          ] },
-          { title: 'Soluciones', links: [
-            { label: 'Energía Solar', href: '#' }, { label: 'Calentadores Solares', href: '#' }, { label: 'Cisternas y Filtración', href: '#' },
-            { label: 'Eficiencia Energética', href: '#' }, { label: 'Auditorías', href: '#' },
-          ] },
-        ]}
-        contact={{
-          phone: '787-664-7676',
-          email: 'info@ecostorepr.com',
-          addressLabel: 'Dirección',
-          address: '1354 Ave. F.D. Roosevelt, San Juan, PR 00920',
-          hours: 'Lun - Vie · 8:00am - 5:00pm',
-        }}
-        social={SOCIAL}
-      />
+      <Footer {...FOOTER} social={SOCIAL} />
     </>
   )
 }

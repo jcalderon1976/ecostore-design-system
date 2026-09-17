@@ -95,7 +95,6 @@ export const FOOTER: { description: string; columns: FooterColumn[]; contact: Fo
       { label: 'Inicio', href: ROUTES.inicio },
       { label: 'Productos', href: ROUTES.productos },
       { label: 'Servicios', href: ROUTES.servicios },
-      { label: 'Ingeniería', href: ROUTES.ingenieria },
       { label: 'Nosotros', href: ROUTES.nosotros },
       { label: 'Contáctanos', href: ROUTES.contacto },
     ] },
