@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { cx } from '@ds'
 import { Inicio } from './pages/Inicio'
 import { Contacto } from './pages/Contacto'
 import { Nosotros } from './pages/Nosotros'
@@ -9,20 +8,19 @@ import { ProductosEnergia } from './pages/ProductosEnergia'
 import { ProductosAgua } from './pages/ProductosAgua'
 import { ContactPage } from './showcase/ContactPage'
 import { SystemPage } from './showcase/SystemPage'
-import styles from './App.module.css'
 
 type View = 'inicio' | 'contacto' | 'nosotros' | 'servicios' | 'ingenieria' | 'productosEnergia' | 'productosAgua' | 'system' | 'demo'
 
-const VIEWS: Array<{ id: View; label: string; hash: string }> = [
-  { id: 'inicio', label: 'Inicio', hash: 'inicio' },
-  { id: 'productosEnergia', label: 'Energía', hash: 'productos-energia' },
-  { id: 'productosAgua', label: 'Agua', hash: 'productos-agua' },
-  { id: 'servicios', label: 'Auditoría', hash: 'servicios' },
-  { id: 'ingenieria', label: 'Ingeniería', hash: 'ingenieria' },
-  { id: 'nosotros', label: 'Nosotros', hash: 'nosotros' },
-  { id: 'contacto', label: 'Contacto', hash: 'contacto' },
-  { id: 'system', label: 'Design System', hash: 'design-system' },
-  { id: 'demo', label: 'Demo premium', hash: 'page' },
+const VIEWS: Array<{ id: View; hash: string }> = [
+  { id: 'inicio', hash: 'inicio' },
+  { id: 'productosEnergia', hash: 'productos-energia' },
+  { id: 'productosAgua', hash: 'productos-agua' },
+  { id: 'servicios', hash: 'servicios' },
+  { id: 'ingenieria', hash: 'ingenieria' },
+  { id: 'nosotros', hash: 'nosotros' },
+  { id: 'contacto', hash: 'contacto' },
+  { id: 'system', hash: 'design-system' },
+  { id: 'demo', hash: 'page' },
 ]
 
 function fromHash(): View {
@@ -41,21 +39,8 @@ export function App() {
     return () => window.removeEventListener('hashchange', onHash)
   }, [])
 
-  const go = (v: View) => {
-    window.location.hash = VIEWS.find((x) => x.id === v)!.hash
-    setView(v)
-    window.scrollTo({ top: 0 })
-  }
-
   return (
     <>
-      <div className={styles.switcher} role="tablist" aria-label="Vista">
-        {VIEWS.map((v) => (
-          <button key={v.id} role="tab" aria-selected={view === v.id} className={cx(styles.tab, view === v.id && styles.tabActive)} onClick={() => go(v.id)}>
-            {v.label}
-          </button>
-        ))}
-      </div>
       {view === 'inicio' && <Inicio />}
       {view === 'productosEnergia' && <ProductosEnergia />}
       {view === 'productosAgua' && <ProductosAgua />}
