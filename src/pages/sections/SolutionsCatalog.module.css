@@ -1,14 +1,58 @@
-.ctaStrip {
-  display: flex; align-items: center; justify-content: space-between; gap: var(--eco-space-6); flex-wrap: wrap;
-  padding: var(--eco-space-5) var(--eco-space-8);
-  border-radius: var(--eco-radius-full);
-  background: var(--eco-color-bg-mint);
-  border: 1px solid var(--eco-green-100);
+/* El catálogo respira más que el contenedor de 1200px del resto del sitio:
+   con seis tarjetas por fila necesita ancho para que los títulos no se partan. */
+.wrap {
+  width: 100%;
+  max-width: 1800px;
+  margin-inline: auto;
+  padding-inline: var(--eco-space-6);
 }
-.ctaText { display: inline-flex; align-items: center; gap: var(--eco-space-3); font-style: italic; font-family: var(--eco-font-accent); font-size: var(--eco-text-xl); color: var(--eco-green-800); }
-.ctaText svg { color: var(--eco-green-500); }
 
-@media (max-width: 639px) {
-  .ctaStrip { border-radius: var(--eco-radius-lg); padding: var(--eco-space-5); }
-  .ctaText { font-size: var(--eco-text-lg); }
+/* ===== Título "ECO lo tiene" ===== */
+.title {
+  text-align: center;
+  font-family: var(--eco-font-heading);
+  font-size: clamp(2.25rem, 6vw, var(--eco-text-6xl));
+  font-weight: var(--eco-weight-medium);
+  letter-spacing: var(--eco-tracking-display);
+  line-height: 1;
+  color: var(--eco-green-700);
+}
+.titleBrand { font-weight: var(--eco-weight-extrabold); color: var(--eco-green-500); }
+
+/* ===== Paneles Energía / Agua, uno al lado del otro ===== */
+.panels {
+  display: grid;
+  grid-template-columns: 1.9fr 1fr;
+  gap: var(--eco-space-6);
+  align-items: start;
+}
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--eco-space-4);
+  padding: var(--eco-space-4);
+  border-radius: var(--eco-radius-xl);
+  border: 1px solid var(--eco-green-100);
+  background: linear-gradient(180deg, var(--eco-green-50) 0%, var(--eco-color-surface) 45%);
+}
+.panelAgua {
+  border-color: var(--eco-sky-100);
+  background: linear-gradient(180deg, var(--eco-sky-50) 0%, var(--eco-color-surface) 45%);
+}
+.band { justify-content: center; }
+
+.cards { display: grid; gap: var(--eco-space-3); }
+.cardsEnergia { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.cardsAgua { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+@media (max-width: 1023px) {
+  .panels { grid-template-columns: 1fr; }
+}
+@media (max-width: 767px) {
+  .wrap { padding-inline: var(--eco-space-4); }
+  .cardsEnergia { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 479px) {
+  .cardsEnergia,
+  .cardsAgua { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

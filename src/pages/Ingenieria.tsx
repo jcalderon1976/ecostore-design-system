@@ -1,6 +1,5 @@
 import {
   Navbar,
-  Footer,
   Hero,
   Em,
   Reveal,
@@ -31,8 +30,8 @@ import {
   ShieldIcon,
   CheckCircleIcon,
 } from "@ds";
-import { SITE, NAV, SOCIAL, FOOTER, ROUTES } from "./site";
-import { SolutionsCatalog } from "./sections/SolutionsCatalog";
+import { SITE, NAV, ROUTES } from "./site";
+import { SiteClose } from "./sections/SiteClose";
 import styles from "./Ingenieria.module.css";
 
 const HERO_CHECKS = [
@@ -232,13 +231,6 @@ export function Ingenieria() {
         </Container>
       </Section>
 
-      {/* ---------- CATÁLOGO ---------- */}
-      <Section background="subtle">
-        <Container>
-          <SolutionsCatalog heading={false} />
-        </Container>
-      </Section>
-
       {/* ---------- GARANTÍAS + CTA ---------- */}
       <Section size="sm">
         <Container>
@@ -286,7 +278,7 @@ export function Ingenieria() {
         </Container>
       </Section>
 
-      <Footer {...FOOTER} social={SOCIAL} />
+      <SiteClose />
     </>
   );
 }
