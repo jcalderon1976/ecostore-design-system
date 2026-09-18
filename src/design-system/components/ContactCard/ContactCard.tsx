@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { cx } from '../../utils/cx'
 import { Card } from '../Card/Card'
 import { IconCircle } from '../IconCircle/IconCircle'
+import { BorderTrail } from '../BorderTrail/BorderTrail'
 import styles from './ContactCard.module.css'
 
 export interface ContactCardProps {
@@ -16,14 +17,17 @@ export interface ContactCardProps {
   meta?: ReactNode
   /** Contenido libre (ej. SocialLinks). */
   children?: ReactNode
+  /** Desfase de la estela del borde. */
+  trailDelay?: number
   className?: string
 }
 
 /** Tarjeta "Múltiples formas de contactarnos": ícono + título + valor + meta. */
-export function ContactCard({ icon, title, value, href, emphasize, meta, children, className }: ContactCardProps) {
+export function ContactCard({ icon, title, value, href, emphasize, meta, children, trailDelay = 0, className }: ContactCardProps) {
   const valueClass = cx(styles.value, emphasize && styles.valueLg)
   return (
     <Card className={cx(styles.card, className)} data-icon-hover="">
+      <BorderTrail delay={trailDelay} />
       <div className={styles.head}>
         <IconCircle tone="soft" size="md">{icon}</IconCircle>
         <h3 className={styles.title}>{title}</h3>

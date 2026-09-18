@@ -163,6 +163,7 @@
 
   --eco-container-max: 1200px;
   --eco-container-pad: var(--eco-space-6);
+  --eco-nav-h: 84px;
 
   /* ---------- Bordes (un radio por nivel: control / tarjeta / contenedor) ---------- */
   --eco-radius-sm:   8px;    /* chips, checkboxes */
@@ -194,6 +195,10 @@
   --eco-z-overlay: 200;
   --eco-z-modal:   300;
   --eco-z-toast:   400;
+}
+
+@media (max-width: 1023px) {
+  :root { --eco-nav-h: 72px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

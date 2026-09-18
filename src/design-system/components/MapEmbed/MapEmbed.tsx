@@ -9,19 +9,32 @@ export interface MapEmbedProps {
   title?: string
   /** Relación de aspecto del mapa. Por defecto 21/9 en escritorio. */
   ratio?: string
-  /** Contenido superpuesto (tarjeta con dirección, horario, botón). */
+  /** Contenido superpuesto (tarjeta o panel de ubicación). */
   overlay?: ReactNode
   overlayPosition?: 'left' | 'right'
+  /** Panel izquierdo a toda altura, con degradado sobre el mapa. */
+  overlayVariant?: 'card' | 'panel'
+  /** Franja inferior (datos de acceso, horario, etc.). */
+  bar?: ReactNode
   className?: string
 }
 
 /**
- * Mapa embebido con esquinas redondeadas, sombra teñida y tarjeta superpuesta opcional.
+ * Mapa embebido con esquinas redondeadas, sombra teñida y capas superpuestas.
  * El iframe carga en diferido y no envía referrer completo.
  */
-export function MapEmbed({ src, title = 'Ubicación en Google Maps', ratio = '21 / 9', overlay, overlayPosition = 'left', className }: MapEmbedProps) {
+export function MapEmbed({
+  src,
+  title = 'Ubicación en Google Maps',
+  ratio = '21 / 9',
+  overlay,
+  overlayPosition = 'left',
+  overlayVariant = 'card',
+  bar,
+  className,
+}: MapEmbedProps) {
   return (
-    <div className={cx(styles.wrap, className)} style={{ aspectRatio: ratio }}>
+    <div className={cx(styles.wrap, overlayVariant === 'panel' && styles.wrapPanel, className)} style={{ aspectRatio: ratio }}>
       <iframe
         src={src}
         title={title}
@@ -31,8 +44,17 @@ export function MapEmbed({ src, title = 'Ubicación en Google Maps', ratio = '21
         referrerPolicy="strict-origin-when-cross-origin"
       />
       {overlay && (
-        <div className={cx(styles.overlay, overlayPosition === 'right' && styles.overlayRight)}>{overlay}</div>
+        <div
+          className={cx(
+            styles.overlay,
+            overlayVariant === 'panel' && styles.overlayPanel,
+            overlayPosition === 'right' && styles.overlayRight,
+          )}
+        >
+          {overlay}
+        </div>
       )}
+      {bar && <div className={styles.bar}>{bar}</div>}
     </div>
   )
 }

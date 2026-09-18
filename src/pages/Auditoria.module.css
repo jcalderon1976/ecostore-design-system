@@ -6,24 +6,8 @@
 .heroChecks li { font-size: var(--eco-text-md); color: rgba(255, 255, 255, 0.92); }
 .heroChecks svg { color: var(--eco-lime-400); }
 
-/* ESCO + EaaS */
-.twoCols { align-items: stretch; }
-.block { display: flex; flex-direction: column; gap: var(--eco-space-5); height: 100%; }
-.block li { font-size: var(--eco-text-sm); line-height: var(--eco-leading-relaxed); }
-
-.sectors { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--eco-space-8); align-items: center; }
-.sectorList { gap: var(--eco-space-4) var(--eco-space-6); }
-
-/* Por qué una auditoría */
-.why { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: var(--eco-space-12); align-items: center; }
-.whyList { display: flex; flex-direction: column; gap: var(--eco-space-3); }
-.whyList li { display: flex; align-items: flex-start; gap: var(--eco-space-3); color: rgba(255, 255, 255, 0.9); }
-.whyList svg { color: var(--eco-lime-400); flex-shrink: 0; margin-top: 2px; }
-
 @media (max-width: 1023px) {
   .hero { min-height: 560px; }
-  .twoCols { grid-template-columns: 1fr !important; }
-  .sectors, .why { grid-template-columns: 1fr; gap: var(--eco-space-6); }
 }
 @media (max-width: 639px) {
   .hero { min-height: 0; }

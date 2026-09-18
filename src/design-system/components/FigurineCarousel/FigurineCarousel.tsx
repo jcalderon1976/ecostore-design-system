@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { cx } from '../../utils/cx'
 import { ArrowLeftIcon, ArrowRightIcon } from '../../icons'
+import { Button } from '../Button/Button'
 import styles from './FigurineCarousel.module.css'
 
 export interface FigurineItem {
@@ -13,8 +14,6 @@ export interface FigurineItem {
   description?: string
   /** Color de fondo de marca para este ítem (token o hex). */
   bg: string
-  /** Fotografía sin transparencia: se muestra como tarjeta redondeada a sangre en vez de recorte. */
-  photo?: boolean
 }
 
 export interface FigurineCarouselProps {
@@ -26,7 +25,7 @@ export interface FigurineCarouselProps {
   /** Enlace inferior derecho. */
   linkLabel?: string
   linkHref?: string
-  /** Alto del hero. Por defecto ocupa el viewport menos la cabecera. */
+  /** Alto del hero: el hueco bajo el navbar, sin desbordar el viewport. */
   height?: string
   /** Índice inicial. */
   initialIndex?: number
@@ -41,8 +40,8 @@ const DURATION = 650
  * desenfoque y opacidad se animan a la vez en 650 ms.
  */
 export function FigurineCarousel({
-  items, ghost, label, linkLabel = 'Ver catálogo', linkHref = '#catalogo',
-  height = 'calc(100vh - 84px)', initialIndex = 0, className,
+  items, ghost, label, linkLabel = 'Agenda una evaluación', linkHref = '#catalogo',
+  height = 'calc(100dvh - var(--eco-nav-h) - 1px)', initialIndex = 0, className,
 }: FigurineCarouselProps) {
   const n = items.length
   const [active, setActive] = useState(initialIndex % n)
@@ -107,7 +106,7 @@ export function FigurineCarousel({
           return (
             <div
               key={it.src}
-              className={cx(styles.item, styles[role], it.photo && styles.photo)}
+              className={cx(styles.item, styles[role])}
               aria-hidden={role !== 'center'}
             >
               <img src={it.src} alt={role === 'center' ? it.alt : ''} draggable={false} decoding="async" />
@@ -130,10 +129,11 @@ export function FigurineCarousel({
         </div>
       </div>
 
-      <a href={linkHref} className={styles.link}>
-        {linkLabel}
-        <ArrowRightIcon className={styles.linkIcon} strokeWidth={2.25} />
-      </a>
+      <div className={styles.link}>
+        <Button href={linkHref} variant="inverse" size="lg" arrow>
+          {linkLabel}
+        </Button>
+      </div>
     </section>
   )
 }

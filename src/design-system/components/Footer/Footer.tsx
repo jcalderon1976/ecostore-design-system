@@ -12,12 +12,16 @@ import { SocialLinks, type SocialLink } from "../SocialLinks/SocialLinks";
 import {
   ArrowUpIcon,
   ClockIcon,
-  LeafIcon,
   MailIcon,
   MapPinIcon,
   PhoneIcon,
 } from "../../icons";
 import styles from "./Footer.module.css";
+
+const BASE = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : import.meta.env.BASE_URL + "/";
+const FOOTER_LEAF_SRC = `${BASE}images/footer-leaf.png?v=2`;
 
 export interface FooterLink {
   label: string;
@@ -95,7 +99,12 @@ export function Footer({
     <footer ref={ref} className={styles.footer} data-visible={visible}>
       <div className={styles.glow} aria-hidden="true" />
       <div className={styles.grain} aria-hidden="true" />
-      <LeafIcon className={styles.leaf} size={520} />
+      <img
+        src={FOOTER_LEAF_SRC}
+        alt=""
+        aria-hidden="true"
+        className={styles.leaf}
+      />
       <span className={styles.topline} aria-hidden="true" />
 
       <Container className={styles.inner}>
@@ -168,8 +177,7 @@ export function Footer({
           style={d(2 + cols.length)}
         >
           <span className={styles.copy}>
-            {copyright ??
-              `© ${new Date().getFullYear()} ECOSTORE · Tu tienda de Eficiencia Energética y agua`}
+            {copyright ?? `© ${new Date().getFullYear()} ECOSTORE ·`}
           </span>
           <ul className={styles.legal}>
             {legal.map((l) => (

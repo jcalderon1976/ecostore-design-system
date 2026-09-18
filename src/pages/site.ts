@@ -17,7 +17,7 @@ export const SITE = {
   hours: 'Lun - Vie: 8:00am - 5:00pm',
   mapEmbed:
     'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4490.41063229366!2d-66.09295809999999!3d18.413354799999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c03692bae351bc1%3A0x16ddb193b6747561!2sEcoStore!5e1!3m2!1sen!2spr!4v1789500271946!5m2!1sen!2spr',
-  directions: 'https://www.google.com/maps/dir/?api=1&destination=EcoStore%2C%201354%20Avenida%20F.D.%20Roosevelt%2C%20San%20Juan%2C%2000920%2C%20Puerto%20Rico',
+  directions: 'https://maps.app.goo.gl/oTgYLNfByRznh9Xv5',
 } as const
 
 /**
@@ -34,6 +34,8 @@ export const ROUTES = {
   ingenieria: '#ingenieria',
   nosotros: '#nosotros',
   contacto: '#contacto',
+  /** CTA "Agenda una evaluación": Contacto + sección del formulario. */
+  agenda: '#formulario',
 } as const
 
 export type PageKey =
@@ -99,7 +101,7 @@ export const FOOTER: { description: string; columns: FooterColumn[]; contact: Fo
       { label: 'Contáctanos', href: ROUTES.contacto },
     ] },
   ],
-  copyright: `© ${new Date().getFullYear()} ECOSTORE · Tu tienda de Eficiencia Energética y agua`,
+  copyright: `© ${new Date().getFullYear()} ECOSTORE ·`,
   contact: {
     phone: '787-664-7676',
     phoneHref: SITE.phoneHref,

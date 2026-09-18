@@ -17,41 +17,34 @@ import {
   Text,
   Label,
   Button,
-  SectionHeader,
   SectionTitle,
-  Stat,
-  StatBar,
-  CtaBand,
-  Quote,
   SunIcon,
   DropletIcon,
-  CubeIcon,
+  CubeIsoIcon,
   LeafIcon,
-  AwardIcon,
+  AwardSealIcon,
   CartIcon,
   HardHatIcon,
   CalendarIcon,
-  SolarPanelIcon,
   SettingsIcon,
-  BuildingIcon,
-  ShieldIcon,
+  BorderTrail,
 } from "@ds";
-import { SITE, NAV, SOCIAL, FOOTER } from "./site";
+import { SITE, NAV, SOCIAL, FOOTER, ROUTES } from "./site";
+import { EcoLoTiene } from "./sections/EcoLoTiene";
 import styles from "./Nosotros.module.css";
 
 const IMG = { equipo: `${SITE.base}images/nosotros.jpg` };
 
 /**
  * Página "Nosotros".
- * Contenido: referencia visual (quiénes somos, 20+ años, All-in-One, servicios profesionales)
- * más la historia de la empresa (Energy Service Company of Puerto Rico) traducida al español.
+ * Contenido: quiénes somos, 20+ años, All-in-One, servicios profesionales y ECO lo tiene.
  */
 export function Nosotros() {
   return (
     <>
       <Navbar
         items={NAV("nosotros")}
-        ctaHref="#contacto"
+        ctaHref={ROUTES.agenda}
         phone={SITE.phone}
         phoneHref={SITE.phoneHref}
       />
@@ -94,10 +87,11 @@ export function Nosotros() {
         <Container>
           <Grid columns={2} gap={6} className={styles.pillarGrid}>
             <Reveal>
-              <Card padding="lg" className={styles.pillar}>
+              <Card padding="lg" className={styles.pillar} data-icon-hover="">
+                <BorderTrail delay={0} />
                 <Row gap={5} align="center">
                   <IconCircle tone="soft" size="xl">
-                    <AwardIcon size={34} />
+                    <AwardSealIcon size={56} />
                   </IconCircle>
                   <div>
                     <div className={styles.pillarNumber}>20+</div>
@@ -114,10 +108,11 @@ export function Nosotros() {
               </Card>
             </Reveal>
             <Reveal delay={80}>
-              <Card padding="lg" className={styles.pillar}>
+              <Card padding="lg" className={styles.pillar} data-icon-hover="">
+                <BorderTrail delay={0.5} />
                 <Row gap={5} align="center">
                   <IconCircle tone="soft" size="xl">
-                    <CubeIcon size={34} />
+                    <CubeIsoIcon size={48} />
                   </IconCircle>
                   <Heading level="h2" as="h3" tone="brand">
                     All-in-One
@@ -131,120 +126,6 @@ export function Nosotros() {
               </Card>
             </Reveal>
           </Grid>
-        </Container>
-      </Section>
-
-      {/* ---------- HISTORIA ---------- */}
-      <Section background="subtle">
-        <Container>
-          <Stack gap={12}>
-            <Reveal>
-              <SectionHeader
-                label="Nuestra historia"
-                title={
-                  <>
-                    Tu solución integral en ingeniería y{" "}
-                    <Em tone="brand">Eficiencia Energética</Em>
-                  </>
-                }
-                lead="Especialistas en soluciones sostenibles para una gestión energética rentable. EcoStore es la tienda de Eficiencia Energética y agua de la primera Energy Service Company of Puerto Rico."
-              />
-            </Reveal>
-
-            <Reveal delay={60}>
-              <StatBar>
-                <Stat
-                  value={2003}
-                  format={(n) => String(n)}
-                  label="año de fundación en San Juan, Puerto Rico"
-                />
-                <Stat
-                  value={1}
-                  prefix="#"
-                  format={(n) => String(n)}
-                  label="primera Empresa de Servicios Energéticos (ESCO) de la isla"
-                />
-                <Stat
-                  value={100}
-                  prefix="$"
-                  suffix="M+"
-                  label="ahorrados en facturas de servicios a clientes corporativos desde 2003"
-                />
-                <Stat
-                  value={3}
-                  label="disciplinas de ingeniería: civil, mecánica y eléctrica"
-                />
-              </StatBar>
-            </Reveal>
-
-            <Grid minColumn="260px" gap={6}>
-              <Reveal delay={0}>
-                <Card padding="lg" className={styles.story}>
-                  <IconCircle tone="soft" size="md">
-                    <BuildingIcon size={22} />
-                  </IconCircle>
-                  <Heading level="h4" as="h3">
-                    Fundada en 2003 en San Juan
-                  </Heading>
-                  <Text size="sm">
-                    Somos la primera Empresa de Servicios Energéticos (ESCO) de
-                    Puerto Rico. Ofrecemos soluciones integrales de energía como
-                    servicio, con la meta de alcanzar cero emisiones netas en
-                    todos nuestros clientes mediante tecnologías
-                    costo-eficientes y energía renovable.
-                  </Text>
-                </Card>
-              </Reveal>
-              <Reveal delay={60}>
-                <Card padding="lg" className={styles.story}>
-                  <IconCircle tone="soft" size="md">
-                    <HardHatIcon size={22} />
-                  </IconCircle>
-                  <Heading level="h4" as="h3">
-                    Ingeniería en eficiencia energética
-                  </Heading>
-                  <Text size="sm">
-                    Nuestro equipo de profesionales experimentados nos convierte
-                    en la solución integral para proyectos de ingeniería civil,
-                    mecánica y eléctrica, y para todo tipo de proyectos de
-                    Eficiencia Energética.
-                  </Text>
-                </Card>
-              </Reveal>
-              <Reveal delay={120}>
-                <Card padding="lg" className={styles.story}>
-                  <IconCircle tone="soft" size="md">
-                    <SolarPanelIcon size={22} />
-                  </IconCircle>
-                  <Heading level="h4" as="h3">
-                    Conservación, eficiencia y energía renovable
-                  </Heading>
-                  <Text size="sm">
-                    Nuestro compromiso es superar las necesidades de nuestros
-                    clientes con estrategias que mejoran su posición financiera
-                    al reducir significativamente los costos de energía y agua
-                    en sus negocios y hogares.
-                  </Text>
-                </Card>
-              </Reveal>
-              <Reveal delay={180}>
-                <Card padding="lg" className={styles.story}>
-                  <IconCircle tone="soft" size="md">
-                    <ShieldIcon size={22} />
-                  </IconCircle>
-                  <Heading level="h4" as="h3">
-                    Cientos de millones de dólares ahorrados
-                  </Heading>
-                  <Text size="sm">
-                    Desde 2003 hemos ahorrado cientos de millones de dólares en
-                    facturas de servicios a clientes corporativos de diversas
-                    industrias. Hoy esa misma experiencia está disponible para
-                    clientes residenciales, vivan donde vivan.
-                  </Text>
-                </Card>
-              </Reveal>
-            </Grid>
-          </Stack>
         </Container>
       </Section>
 
@@ -302,51 +183,7 @@ export function Nosotros() {
         </Container>
       </Section>
 
-      {/* ---------- COMPROMISO CON LA SOSTENIBILIDAD ---------- */}
-      <Section background="inverse">
-        <Container narrow>
-          <Reveal>
-            <Stack gap={6} align="center">
-              <Label inverse>Compromiso con la sostenibilidad</Label>
-              <Quote
-                inverse
-                name="EcoStore"
-                role="Energy Service Company of Puerto Rico · desde 2003"
-                initials="E"
-                className={styles.quote}
-              >
-                La sostenibilidad es nuestro compromiso inquebrantable. A través
-                de soluciones innovadoras impulsamos un futuro más verde y
-                aseguramos la preservación del medio ambiente.
-              </Quote>
-            </Stack>
-          </Reveal>
-        </Container>
-      </Section>
-
-      {/* ---------- CTA ---------- */}
-      <Section size="sm">
-        <Container>
-          <Reveal>
-            <CtaBand
-              eyebrow="Empieza hoy"
-              title={
-                <>
-                  ¿Listo para diseñar tu solución{" "}
-                  <Em tone="highlight">a la medida</Em>?
-                </>
-              }
-              lead="Agenda una evaluación gratuita. Analizamos tu consumo y te decimos exactamente dónde puedes ahorrar."
-              actions={
-                <Button size="lg" variant="inverse" href="#contacto" arrow>
-                  Agenda tu evaluación
-                </Button>
-              }
-              note="Sin compromiso · Respuesta en 24 h"
-            />
-          </Reveal>
-        </Container>
-      </Section>
+      <EcoLoTiene />
 
       <Footer {...FOOTER} social={SOCIAL} />
     </>

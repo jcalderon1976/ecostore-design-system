@@ -34,6 +34,8 @@ export interface NavbarProps {
   phone?: string
   phoneHref?: string
   logoHref?: string
+  /** Fijo y transparente: el contenido (p. ej. el recorrido) se ve detrás. */
+  overlay?: boolean
 }
 
 /** Item con submenú: abre en hover y con teclado (Enter/Espacio/flecha abajo), cierra con Escape o clic fuera. */
@@ -102,8 +104,9 @@ function Dropdown({ item }: { item: NavItem }) {
 /**
  * Cabecera sticky de cristal: logo, navegación en píldoras (con submenús), teléfono y CTA.
  * Gana sombra al hacer scroll. En < 1024px colapsa a un menú hamburguesa.
+ * `overlay` la deja fija y transparente sobre un hero a pantalla completa.
  */
-export function Navbar({ items, ctaLabel = 'Agenda una evaluación', ctaHref, onCtaClick, phone, phoneHref, logoHref = '/' }: NavbarProps) {
+export function Navbar({ items, ctaLabel = 'Agenda una evaluación', ctaHref, onCtaClick, phone, phoneHref, logoHref = '/', overlay = false }: NavbarProps) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const panelId = useId()
@@ -118,7 +121,12 @@ export function Navbar({ items, ctaLabel = 'Agenda una evaluación', ctaHref, on
   const tel = phoneHref ?? (phone ? `tel:${phone.replace(/\D/g, '')}` : undefined)
 
   return (
-    <header className={styles.header} data-scrolled={scrolled}>
+    <header
+      className={styles.header}
+      data-overlay={overlay || undefined}
+      data-scrolled={scrolled}
+      data-menu={open || undefined}
+    >
       <Container>
         <div className={styles.inner}>
           <a href={logoHref} className={styles.logo} aria-label="EcoStore, inicio">

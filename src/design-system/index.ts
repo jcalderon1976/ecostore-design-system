@@ -63,6 +63,12 @@ export type { TrustItemProps } from './components/TrustItem/TrustItem'
 export { ContactCard, ContactMetaStrong } from './components/ContactCard/ContactCard'
 export type { ContactCardProps } from './components/ContactCard/ContactCard'
 
+export { BorderTrail } from './components/BorderTrail/BorderTrail'
+export type { BorderTrailProps } from './components/BorderTrail/BorderTrail'
+
+export { GradientCard } from './components/GradientCard/GradientCard'
+export type { GradientCardProps, GradientTone } from './components/GradientCard/GradientCard'
+
 export { Checklist, ChecklistCard } from './components/Checklist/Checklist'
 export type { ChecklistProps, ChecklistCardProps } from './components/Checklist/Checklist'
 
@@ -99,6 +105,15 @@ export type { CategoryBandProps, SolutionCardProps, CategoryTone } from './compo
 
 export { FigurineCarousel } from './components/FigurineCarousel/FigurineCarousel'
 export type { FigurineCarouselProps, FigurineItem } from './components/FigurineCarousel/FigurineCarousel'
+
+export { HoverExpand } from './components/HoverExpand/HoverExpand'
+export type { HoverExpandProps, HoverExpandItem } from './components/HoverExpand/HoverExpand'
+
+export { CircularGallery } from './components/CircularGallery/CircularGallery'
+export type { CircularGalleryProps, GalleryItem } from './components/CircularGallery/CircularGallery'
+
+export { ProductDropCard } from './components/ProductDropCard/ProductDropCard'
+export type { ProductDropCardProps, DropItem } from './components/ProductDropCard/ProductDropCard'
 
 export { ParallaxHero } from './components/ParallaxHero/ParallaxHero'
 export type { ParallaxHeroProps, ParallaxLayer } from './components/ParallaxHero/ParallaxHero'

@@ -26,6 +26,7 @@ const VIEWS: Array<{ id: View; hash: string }> = [
 function fromHash(): View {
   const h = window.location.hash.replace('#', '')
   if (h === '') return 'inicio'
+  if (h === 'formulario') return 'contacto'
   return VIEWS.find((v) => v.hash === h)?.id ?? 'inicio'
 }
 
@@ -34,7 +35,11 @@ export function App() {
 
   // Los enlaces del Navbar/Footer cambian el hash: sincronizar la vista.
   useEffect(() => {
-    const onHash = () => { setView(fromHash()); window.scrollTo({ top: 0 }) }
+    const onHash = () => {
+      const h = window.location.hash.replace('#', '')
+      setView(fromHash())
+      if (h !== 'formulario') window.scrollTo({ top: 0 })
+    }
     window.addEventListener('hashchange', onHash)
     return () => window.removeEventListener('hashchange', onHash)
   }, [])

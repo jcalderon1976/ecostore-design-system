@@ -6,7 +6,10 @@
 .hero > div > div { padding-block: var(--eco-space-20) var(--eco-space-16); }
 
 /* Formulario + foto */
-.formSection { padding-top: var(--eco-space-6); }
+.formSection {
+  padding-top: var(--eco-space-6);
+  scroll-margin-top: calc(var(--eco-nav-h) + var(--eco-space-4));
+}
 .formLayout {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
@@ -48,7 +51,6 @@
   .checklist { margin: calc(-1 * var(--eco-space-6)) var(--eco-space-3) 0; }
 }
 
-/* Enlace dentro de la tarjeta Visítanos hacia el mapa */
 .mapLink {
   color: var(--eco-green-600);
   font-weight: var(--eco-weight-semibold);

@@ -28,9 +28,12 @@
 }
 .leaf {
   position: absolute; z-index: 0; pointer-events: none;
-  right: -140px; bottom: -160px;
-  color: rgba(168, 232, 74, 0.07);
-  transform: rotate(-14deg);
+  right: -8%; bottom: -18%;
+  height: 125%;
+  width: auto;
+  opacity: 0.34;
+  filter: brightness(1.35) saturate(0.75);
+  transform-origin: 80% 85%;
   animation: footer-float 9s ease-in-out infinite;
 }
 .topline {
@@ -150,8 +153,8 @@
   to   { transform: translate(6%, 8%) scale(1.12); opacity: 1; }
 }
 @keyframes footer-float {
-  0%, 100% { transform: rotate(-14deg) translateY(0); }
-  50%      { transform: rotate(-11deg) translateY(-14px); }
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
 }
 
 /* ---- Responsive ---- */
@@ -163,7 +166,7 @@
   .footer { padding-block: var(--eco-space-16) var(--eco-space-6); }
   .grid { grid-template-columns: 1fr; gap: var(--eco-space-8); }
   .bottom { flex-direction: column; align-items: flex-start; }
-  .leaf { right: -220px; bottom: -220px; }
+  .leaf { right: -18%; bottom: -28%; height: 90%; }
 }
 @media (prefers-reduced-motion: reduce) {
   .rise { opacity: 1; transform: none; transition: none; }

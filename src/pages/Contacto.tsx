@@ -1,12 +1,13 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import {
   Navbar, Footer, Hero, Em, TrustItem, TrustList, Reveal,
   Section, Container, Grid, Stack, Row,
-  SectionTitle, ContactCard, ContactMetaStrong, SocialLinks, ChecklistCard, MapEmbed, SectionHeader, Accordion,
+  SectionTitle, ContactCard, ContactMetaStrong, SocialLinks, ChecklistCard,
   Heading, Text, Button, Input, Select, Textarea, Checkbox, FormField, InlineGroup, Card, IconCircle,
-  LeafIcon, ShieldIcon, ClockIcon, PhoneIcon, MailIcon, MapPinIcon, ChatIcon, CalendarIcon, LockIcon, ArrowUpRightIcon,
+  LeafIcon, ShieldIcon, ClockIcon, PhoneIcon, MailIcon, MapPinIcon, ChatIcon, CalendarIcon, LockIcon,
 } from '@ds'
-import { SITE, NAV, SOCIAL, FOOTER } from './site'
+import { SITE, NAV, SOCIAL, FOOTER, ROUTES } from './site'
+import { EcoLoTiene } from './sections/EcoLoTiene'
 import styles from './Contacto.module.css'
 
 const IMG = {
@@ -16,37 +17,33 @@ const IMG = {
 const CONTACT = SITE
 const NAV_ITEMS = NAV('contacto')
 
-const FAQ = [
-  {
-    question: '¿La evaluación tiene algún costo?',
-    answer: 'No. La evaluación inicial es 100% gratuita y sin compromiso. Uno de nuestros especialistas analiza tu consumo y te presenta opciones.',
-  },
-  {
-    question: '¿Trabajan con propiedades comerciales?',
-    answer: 'Sí. Atendemos proyectos residenciales y comerciales en todo Puerto Rico, desde auditorías hasta diseño, permisología y construcción.',
-  },
-  {
-    question: '¿Qué incluye una auditoría energética?',
-    answer: 'Análisis de consumo, evaluación de sistemas y equipos, diagnóstico de eficiencia, recomendaciones personalizadas y análisis de costos y retorno de inversión.',
-  },
-  {
-    question: '¿Ayudan con el reembolso de eficiencia energética de LUMA?',
-    answer: 'Sí. Te orientamos en el programa de reembolso y en opciones de financiamiento como parte del servicio.',
-  },
-  {
-    question: '¿Venden e instalan los equipos?',
-    answer: 'Somos All-in-One: evaluación, equipos, diseño, instalación y asesoría en un solo lugar.',
-  },
-]
-
 /**
  * Página de contacto de EcoStore.
  * Estructura de la referencia: hero con fotografía, formas de contacto,
  * formulario con foto del especialista y checklist, footer.
  */
+type Interes = 'energia' | 'agua' | 'ambas' | ''
+
 export function Contacto() {
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [interes, setInteres] = useState<Interes>('')
+
+  useEffect(() => {
+    const go = () => {
+      if (window.location.hash.replace('#', '') !== 'formulario') return
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+      window.setTimeout(() => {
+        document.getElementById('formulario')?.scrollIntoView({
+          behavior: reduce ? 'auto' : 'smooth',
+          block: 'start',
+        })
+      }, 50)
+    }
+    go()
+    window.addEventListener('hashchange', go)
+    return () => window.removeEventListener('hashchange', go)
+  }, [])
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -57,7 +54,7 @@ export function Contacto() {
 
   return (
     <>
-      <Navbar items={NAV_ITEMS} ctaHref="#formulario" phone={CONTACT.phone} phoneHref={CONTACT.phoneHref} />
+      <Navbar items={NAV_ITEMS} ctaHref={ROUTES.agenda} phone={CONTACT.phone} phoneHref={CONTACT.phoneHref} />
 
       {/* ---------- HERO ---------- */}
       <Hero
@@ -83,43 +80,31 @@ export function Contacto() {
             </Reveal>
             <Grid minColumn="220px" gap={5}>
               <Reveal delay={0}>
-                <ContactCard icon={<PhoneIcon size={22} />} title="Llámanos" value={CONTACT.phone} href={CONTACT.phoneHref} emphasize meta={CONTACT.hours} />
+                <ContactCard icon={<PhoneIcon size={22} />} title="Llámanos" value={CONTACT.phone} href={CONTACT.phoneHref} emphasize meta={CONTACT.hours} trailDelay={0} />
               </Reveal>
               <Reveal delay={60}>
-                <ContactCard icon={<MailIcon size={22} />} title="Envíanos un correo" value={CONTACT.email} href={`mailto:${CONTACT.email}`} meta={<>Te responderemos a<br />la brevedad.</>} />
+                <ContactCard icon={<MailIcon size={22} />} title="Envíanos un correo" value={CONTACT.email} href={`mailto:${CONTACT.email}`} meta={<>Te responderemos a<br />la brevedad.</>} trailDelay={0.5} />
               </Reveal>
               <Reveal delay={120}>
-                <ContactCard icon={<MapPinIcon size={22} />} title="Visítanos" meta={<><ContactMetaStrong>{CONTACT.address}</ContactMetaStrong><br /><a href="#mapa" className={styles.mapLink}>Ver en el mapa</a></>} />
+                <ContactCard
+                  icon={<MapPinIcon size={22} />}
+                  title="Visítanos"
+                  meta={
+                    <>
+                      <ContactMetaStrong>1354 Avenida F.D. Roosevelt<br />San Juan, 00920, Puerto Rico</ContactMetaStrong>
+                      <br />
+                      <a href={CONTACT.directions} className={styles.mapLink} target="_blank" rel="noopener noreferrer">Cómo llegar</a>
+                    </>
+                  }
+                  trailDelay={1}
+                />
               </Reveal>
               <Reveal delay={180}>
-                <ContactCard icon={<ChatIcon size={22} />} title="Síguenos" meta={<>Mantente al día con consejos,<br />noticias y promociones.</>}>
+                <ContactCard icon={<ChatIcon size={22} />} title="Síguenos" meta={<>Mantente al día con consejos,<br />noticias y promociones.</>} trailDelay={1.5}>
                   <SocialLinks links={SOCIAL} tone="outline" size="sm" />
                 </ContactCard>
               </Reveal>
             </Grid>
-
-            {/* Mapa con la ubicación de la tienda */}
-            <Reveal delay={80} id="mapa">
-              <MapEmbed
-                src={CONTACT.mapEmbed}
-                title="Ubicación de EcoStore en Google Maps"
-                overlay={
-                  <Card variant="glassLight" padding="md">
-                    <Stack gap={3}>
-                      <Row gap={3}>
-                        <IconCircle tone="solid" size="sm"><MapPinIcon size={16} /></IconCircle>
-                        <Heading level="h5" as="h3">EcoStore</Heading>
-                      </Row>
-                      <Text size="sm" tone="strong">{CONTACT.address}</Text>
-                      <Text size="sm" tone="muted">{CONTACT.hours}</Text>
-                      <Button size="sm" href={CONTACT.directions} target="_blank" rel="noopener noreferrer" trailingIcon={<ArrowUpRightIcon size={16} />}>
-                        Cómo llegar
-                      </Button>
-                    </Stack>
-                  </Card>
-                }
-              />
-            </Reveal>
           </Stack>
         </Container>
       </Section>
@@ -174,9 +159,9 @@ export function Contacto() {
                         </Grid>
 
                         <InlineGroup label="Me interesa:">
-                          <Checkbox name="interes" value="energia" label="Eficiencia Energética" />
-                          <Checkbox name="interes" value="agua" label="Conservación de Agua" />
-                          <Checkbox name="interes" value="ambas" label="Ambas" />
+                          <Checkbox name="interes" value="energia" label="Eficiencia Energética" checked={interes === 'energia'} onChange={() => setInteres('energia')} />
+                          <Checkbox name="interes" value="agua" label="Conservación de Agua" checked={interes === 'agua'} onChange={() => setInteres('agua')} />
+                          <Checkbox name="interes" value="ambas" label="Ambas" checked={interes === 'ambas'} onChange={() => setInteres('ambas')} />
                         </InlineGroup>
 
                         <FormField>
@@ -220,30 +205,7 @@ export function Contacto() {
         </Container>
       </Section>
 
-      {/* ---------- PREGUNTAS FRECUENTES ---------- */}
-      <Section background="subtle" id="faq">
-        <Container narrow>
-          <Stack gap={10}>
-            <Reveal>
-              <SectionHeader
-                align="center"
-                label="Preguntas frecuentes"
-                title={<>¿Preguntas? Tenemos <Em tone="brand">respuestas</Em></>}
-                lead="Lo que más nos consultan antes de agendar una evaluación. Si tu duda no está aquí, llámanos o escríbenos."
-              />
-            </Reveal>
-            <Reveal delay={80}>
-              <Accordion items={FAQ} />
-            </Reveal>
-            <Reveal delay={120}>
-              <Row justify="center" gap={3}>
-                <Button href="#formulario" arrow>Agenda tu evaluación</Button>
-                <Button variant="outline" href={CONTACT.phoneHref} leadingIcon={<PhoneIcon size={18} />}>{CONTACT.phone}</Button>
-              </Row>
-            </Reveal>
-          </Stack>
-        </Container>
-      </Section>
+      <EcoLoTiene />
 
       <Footer {...FOOTER} social={SOCIAL} />
     </>

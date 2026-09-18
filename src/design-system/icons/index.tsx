@@ -81,6 +81,9 @@ export const QuoteIcon = (p: IconProps) =>
 export const StarIcon = (p: IconProps) =>
   base(p, <path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z" />, true)
 
+export const CarIcon = (p: IconProps) =>
+  base(p, <><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 8 12 8s-6.7 2.6-8.5 3.1C2.7 11.3 2 12.1 2 13v3c0 .6.4 1 1 1h2" /><circle cx="7" cy="17" r="2" /><circle cx="17" cy="17" r="2" /></>)
+
 export const CartIcon = (p: IconProps) =>
   base(p, <><circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" /><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" /></>)
 
@@ -90,8 +93,91 @@ export const HardHatIcon = (p: IconProps) =>
 export const AwardIcon = (p: IconProps) =>
   base(p, <><circle cx="12" cy="8" r="6" /><path d="M15.5 13 17 22l-5-3-5 3 1.5-9" /></>)
 
+/** Sello de experiencia: medalla dentada con check y cintas. */
+export function AwardSealIcon({ size = 40, title, ...rest }: IconProps) {
+  const lobes = [
+    [32, 8],
+    [40.1, 10.17],
+    [46.03, 16.1],
+    [48.2, 24.2],
+    [46.03, 32.3],
+    [40.1, 38.23],
+    [32, 40.4],
+    [23.9, 38.23],
+    [17.97, 32.3],
+    [15.8, 24.2],
+    [17.97, 16.1],
+    [23.9, 10.17],
+  ] as const
+
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      fill="none"
+      role={title ? 'img' : undefined}
+      aria-hidden={title ? undefined : true}
+      {...rest}
+    >
+      {title && <title>{title}</title>}
+      <path d="M22 38 14.5 57.2 27.8 48.4 29.2 38Z" fill="#176A2C" />
+      <path d="M42 38 49.5 57.2 36.2 48.4 34.8 38Z" fill="#124F22" />
+      <circle cx="32" cy="24.2" r="16.2" fill="#6FC98B" />
+      {lobes.map(([x, y]) => (
+        <circle key={`${x}-${y}`} cx={x} cy={y} r="5.2" fill="#6FC98B" />
+      ))}
+      <circle cx="32" cy="24.2" r="11.8" fill="#072A11" />
+      <circle
+        cx="32"
+        cy="24.2"
+        r="12.7"
+        fill="none"
+        stroke="#8FD4A3"
+        strokeWidth="0.9"
+      />
+      <path
+        d="M23.4 24.8 29.8 31.6 42.4 17.4"
+        stroke="#6FC98B"
+        strokeWidth="4.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
 export const CubeIcon = (p: IconProps) =>
   base(p, <><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /><path d="m3.3 7 8.7 5 8.7-5M12 22V12" /></>)
+
+/** Cubo isométrico 3D (All-in-One). Colores de marca, no usa currentColor. */
+export function CubeIsoIcon({ size = 40, title, ...rest }: IconProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      fill="none"
+      role={title ? 'img' : undefined}
+      aria-hidden={title ? undefined : true}
+      {...rest}
+    >
+      {title && <title>{title}</title>}
+      {/* Cara derecha (exterior) */}
+      <path d="M32 32 56 18.2V42.6L32 56.4Z" fill="#2E9E3E" />
+      {/* Cara izquierda (exterior) */}
+      <path d="M32 32 8 18.2V42.6L32 56.4Z" fill="#124F22" />
+      {/* Cara superior */}
+      <path d="M32 4.4 56 18.2 32 32 8 18.2Z" fill="#6FC98B" />
+      {/* Interior: piso claro */}
+      <path d="M32 22.5 44.5 29.7 32 36.9 19.5 29.7Z" fill="#F4FBF6" />
+      {/* Interior: pared izquierda */}
+      <path d="M19.5 29.7 32 36.9V47.8L19.5 40.6Z" fill="#A9DDB9" />
+      {/* Interior: pared derecha */}
+      <path d="M44.5 29.7 32 36.9V47.8L44.5 40.6Z" fill="#D5EEDC" />
+    </svg>
+  )
+}
 
 export const SolarPanelIcon = (p: IconProps) =>
   base(p, <><path d="M4 4h16l2 10H2z" /><path d="M8 4l-1 10M16 4l1 10M3 9h18M12 14v6M8 20h8" /></>)
