@@ -15,8 +15,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": ".",
-    "paths": { "@ds": ["src/design-system/index.ts"], "@ds/*": ["src/design-system/*"] }
+    "paths": { "@ds": ["./src/design-system/index.ts"], "@ds/*": ["./src/design-system/*"] }
   },
   "include": ["src"]
 }

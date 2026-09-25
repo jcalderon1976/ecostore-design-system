@@ -75,7 +75,7 @@ const FEATURED = PRODUCTS.map((p, i) => ({
   alt: p.alt,
   name: p.name,
   description: p.description,
-  bg: 'bg' in p ? p.bg : BG[i % BG.length],
+  bg: BG[i % BG.length],
 }))
 
 /** Productos · Conservación de agua. Hero-carrusel de productos a pantalla completa. */
