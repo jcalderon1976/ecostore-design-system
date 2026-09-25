@@ -1,0 +1,95 @@
+.section {
+  --from: #2e9e3e;
+  --via: #1e7a2e;
+  --to: #145220;
+  padding-block: var(--eco-space-16) var(--eco-space-12);
+  background: var(--eco-color-bg);
+}
+
+.header {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--eco-container-pad);
+  margin-bottom: var(--eco-space-8);
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: var(--eco-space-6);
+  align-items: end;
+  padding-bottom: var(--eco-space-6);
+  border-bottom: 1px solid var(--eco-hairline);
+}
+.title { margin: 0; }
+.lead { margin: 0; max-width: 36ch; justify-self: end; text-align: right; }
+
+.viewport {
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: var(--eco-space-4);
+  padding-block: var(--eco-space-4);
+  padding-right: var(--eco-space-4);
+  animation: eco-marquee var(--marquee-duration, 40s) linear infinite;
+}
+.viewport:hover .track { animation-play-state: paused; }
+
+.tile {
+  position: relative;
+  flex-shrink: 0;
+  width: 11.5rem;
+  height: 6.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--eco-radius-lg);
+  background: var(--eco-color-surface-muted, #f3f6f2);
+  overflow: hidden;
+}
+.tileDark { background: #111; }
+.wash {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.35);
+  background: linear-gradient(135deg, var(--from), var(--via), var(--to));
+  transition:
+    opacity 700ms var(--eco-ease-out),
+    transform 700ms var(--eco-ease-out);
+}
+.tile:hover .wash { opacity: 1; transform: scale(1); }
+.logo {
+  position: relative;
+  z-index: 1;
+  height: 68%;
+  width: auto;
+  max-width: 78%;
+  object-fit: contain;
+}
+
+@keyframes eco-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (max-width: 899px) {
+  .header {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  .lead { justify-self: start; text-align: left; }
+}
+@media (max-width: 639px) {
+  .tile { width: 9.5rem; height: 5.25rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track { animation: none; }
+  .wash { transition: none; }
+}

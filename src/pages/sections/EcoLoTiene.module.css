@@ -13,15 +13,25 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   gap: var(--eco-space-2);
   margin-bottom: var(--eco-space-4);
+  text-align: center;
+}
+.brand {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 .logo {
+  display: block;
   width: min(100%, 220px);
   height: auto;
+  margin-inline: auto;
 }
 .title {
   margin: 0;
+  width: 100%;
   font-family: var(--eco-font-heading);
   font-weight: var(--eco-weight-extrabold);
   font-size: clamp(3.25rem, 8vw, 5.25rem);
@@ -29,6 +39,11 @@
   line-height: 0.95;
   text-align: center;
   text-wrap: balance;
+}
+.eco,
+.lo {
+  display: inline-block;
+  will-change: transform, opacity;
 }
 .eco { color: var(--eco-green-500); }
 .lo { color: var(--eco-green-800); }

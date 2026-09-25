@@ -115,5 +115,8 @@ export type { CircularGalleryProps, GalleryItem } from './components/CircularGal
 export { ProductDropCard } from './components/ProductDropCard/ProductDropCard'
 export type { ProductDropCardProps, DropItem } from './components/ProductDropCard/ProductDropCard'
 
+export { MarqueeLogoScroller } from './components/MarqueeLogoScroller/MarqueeLogoScroller'
+export type { MarqueeLogoScrollerProps, MarqueeLogo } from './components/MarqueeLogoScroller/MarqueeLogoScroller'
+
 export { ParallaxHero } from './components/ParallaxHero/ParallaxHero'
 export type { ParallaxHeroProps, ParallaxLayer } from './components/ParallaxHero/ParallaxHero'

@@ -68,19 +68,6 @@ const PRODUCTS = [
     name: 'Tratamiento de agua',
     description: 'Ósmosis inversa, filtros y suavizadores. Agua más limpia para toda la casa.',
   },
-  {
-    file: 'cisterna.webp',
-    alt: 'Cisterna de agua',
-    name: 'Cisternas',
-    description: 'Almacenamiento seguro con bomba y filtración. Agua disponible cuando el servicio falla.',
-  },
-  {
-    file: 'captacion-lluvia.webp',
-    alt: 'Tanque de recolección de agua de lluvia',
-    name: 'Captación de lluvia',
-    description: 'Canaletas, filtración y tanques de recolección. Reúsa el agua de lluvia para riego y limpieza.',
-    bg: '#F0D060',
-  },
 ] as const
 
 const FEATURED = PRODUCTS.map((p, i) => ({

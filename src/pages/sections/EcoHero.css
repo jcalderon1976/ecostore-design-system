@@ -1,0 +1,455 @@
+/* Hero scroll de Example 7. Prefijo .eco-hero para no filtrar al resto del sitio. */
+.eco-hero {
+  --navy: #10324f;
+  --green: #1e8a2c;
+  --green-dark: #146b20;
+  --orange: #f28a1e;
+  --sun: #f9c932;
+  --ink-soft: #4a5b6b;
+  --card: rgba(255, 255, 255, 0.92);
+  position: relative;
+  height: 480vh;
+  color: var(--navy);
+  font-family: var(--eco-font-body);
+}
+
+.eco-hero .skip {
+  position: absolute;
+  left: -999px;
+  top: 8px;
+  z-index: 12;
+  background: var(--navy);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+.eco-hero .skip:focus {
+  left: 8px;
+}
+
+.eco-hero .stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(#5fb0ea, #bfe0f4 45%, #fbe3c4 80%, #fffaf3);
+}
+
+.eco-hero .layer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  will-change: transform, opacity;
+}
+
+.eco-hero .bg {
+  top: 0;
+}
+.eco-hero .bg img {
+  width: 100%;
+  height: auto;
+  min-height: 220vh;
+  object-fit: cover;
+  object-position: top;
+}
+
+.eco-hero .rays {
+  top: -20vh;
+  height: 120vh;
+  pointer-events: none;
+  background: conic-gradient(
+    from 180deg at 50% 0%,
+    transparent 0deg,
+    rgba(255, 255, 255, 0.18) 8deg,
+    transparent 16deg,
+    transparent 24deg,
+    rgba(255, 255, 255, 0.12) 30deg,
+    transparent 38deg,
+    transparent 322deg,
+    rgba(255, 255, 255, 0.12) 330deg,
+    transparent 336deg,
+    transparent 344deg,
+    rgba(255, 255, 255, 0.18) 352deg,
+    transparent 360deg
+  );
+  mix-blend-mode: soft-light;
+  animation: eco-hero-sway 9s ease-in-out infinite alternate;
+  transform-origin: 50% 0;
+}
+@keyframes eco-hero-sway {
+  from { transform: rotate(-3deg); }
+  to { transform: rotate(3deg); }
+}
+
+.eco-hero .particles {
+  inset: 0;
+  pointer-events: none;
+}
+.eco-hero .particles span {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0;
+  animation: eco-hero-twinkle 4s ease-in-out infinite;
+}
+@keyframes eco-hero-twinkle {
+  50% {
+    opacity: 0.9;
+    transform: translateY(-14px);
+  }
+}
+
+.eco-hero .intro {
+  top: clamp(var(--eco-nav-h), 11vh, 120px);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 16px;
+  pointer-events: none;
+}
+.eco-hero .intro__logo {
+  width: min(520px, 72vw, 44vh);
+  height: auto;
+  filter: drop-shadow(0 10px 24px rgba(16, 50, 79, 0.12));
+  animation: eco-hero-pop 1.1s cubic-bezier(0.2, 0.9, 0.25, 1.2) both;
+}
+@keyframes eco-hero-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(20px);
+  }
+}
+.eco-hero .intro h1 {
+  font-family: var(--eco-font-heading);
+  font-weight: 500;
+  font-size: clamp(28px, min(4.6vw, 6.6vh), 64px);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin-top: clamp(14px, 3vh, 36px);
+  max-width: 24ch;
+}
+.eco-hero .intro h1 .hl {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+.eco-hero .intro h1 .hl > span {
+  display: inline-block;
+  transform: translateY(110%);
+  animation: eco-hero-rise 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+.eco-hero .intro h1 .hl:nth-child(2) > span { animation-delay: 0.12s; }
+.eco-hero .intro h1 .hl:nth-child(3) > span { animation-delay: 0.24s; }
+@keyframes eco-hero-rise {
+  to { transform: none; }
+}
+
+.eco-hero .scroll-hint {
+  bottom: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--navy);
+  z-index: 6;
+  left: 50%;
+  right: auto;
+  translate: -50% 0;
+  padding: 10px 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.eco-hero .scroll-hint i {
+  width: 22px;
+  height: 36px;
+  border: 2px solid currentColor;
+  border-radius: 14px;
+  position: relative;
+  opacity: 0.7;
+}
+.eco-hero .scroll-hint i::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  width: 4px;
+  height: 8px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background: currentColor;
+  animation: eco-hero-wheel 1.6s infinite;
+}
+@keyframes eco-hero-wheel {
+  to {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+}
+
+.eco-hero .house-wrap {
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 4;
+}
+.eco-hero .house {
+  position: relative;
+  width: min(1180px, 94vw);
+  aspect-ratio: 1536 / 1024;
+  transform-origin: 50% 100%;
+  will-change: transform;
+  flex-shrink: 0;
+}
+.eco-hero .house img {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 30px 40px rgba(16, 50, 79, 0.25));
+}
+.eco-hero .ground-glow {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -2%;
+  height: 14%;
+  background: radial-gradient(ellipse at center, rgba(16, 50, 79, 0.28), transparent 70%);
+  filter: blur(10px);
+  z-index: -1;
+}
+
+.eco-hero .spot {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: auto;
+  --len: 70px;
+}
+.eco-hero .pin {
+  position: absolute;
+  left: -12px;
+  top: -12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--green);
+  border: 3px solid #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: scale(0);
+  transition: transform 0.5s cubic-bezier(0.3, 1.6, 0.5, 1), background 0.3s;
+  z-index: 2;
+}
+.eco-hero .pin::before,
+.eco-hero .pin::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2px solid var(--green);
+  opacity: 0;
+}
+.eco-hero .spot.on .pin { transform: scale(1); }
+.eco-hero .spot.on .pin::before { animation: eco-hero-ping 2s ease-out infinite; }
+.eco-hero .spot.on .pin::after { animation: eco-hero-ping 2s ease-out 0.7s infinite; }
+.eco-hero .spot.active .pin { background: var(--orange); }
+.eco-hero .spot.active .pin::before,
+.eco-hero .spot.active .pin::after { border-color: var(--orange); }
+@keyframes eco-hero-ping {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+.eco-hero .line {
+  position: absolute;
+  top: -1px;
+  height: 2px;
+  width: var(--len);
+  background: repeating-linear-gradient(90deg, #fff 0 6px, transparent 6px 10px);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+  transform: scaleX(0);
+  transition: transform 0.45s ease 0.15s;
+}
+.eco-hero .spot.r .line { left: 10px; transform-origin: left; }
+.eco-hero .spot.l .line { right: 10px; transform-origin: right; }
+.eco-hero .spot.on .line { transform: scaleX(1); }
+
+.eco-hero .tip {
+  position: absolute;
+  top: 0;
+  width: 230px;
+  background: var(--card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 12px 14px 12px 12px;
+  box-shadow: 0 16px 40px rgba(16, 50, 79, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.7) inset;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 4px 12px;
+  align-items: center;
+  opacity: 0;
+  transition:
+    opacity 0.4s ease 0.3s,
+    transform 0.55s cubic-bezier(0.2, 1.3, 0.4, 1) 0.3s,
+    box-shadow 0.3s;
+}
+.eco-hero .spot.r .tip {
+  left: calc(var(--len) + 14px);
+  transform: translate(-16px, calc(-50% + var(--dy, 0px))) scale(0.9);
+  transform-origin: left center;
+}
+.eco-hero .spot.l .tip {
+  right: calc(var(--len) + 14px);
+  transform: translate(16px, calc(-50% + var(--dy, 0px))) scale(0.9);
+  transform-origin: right center;
+}
+.eco-hero .spot.on .tip {
+  opacity: 1;
+  transform: translate(0, calc(-50% + var(--dy, 0px))) scale(1);
+}
+.eco-hero .spot.active .tip {
+  box-shadow: 0 20px 50px rgba(242, 138, 30, 0.35), 0 0 0 2px var(--orange) inset;
+}
+
+.eco-hero .tip__icon {
+  grid-row: span 2;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(135deg, var(--green), #34b24a);
+}
+.eco-hero .tip__icon svg { width: 22px; height: 22px; }
+.eco-hero .tip h3 { font-size: 14px; font-weight: 700; line-height: 1.2; }
+.eco-hero .tip p { font-size: 12px; color: var(--ink-soft); line-height: 1.35; }
+.eco-hero .tip small {
+  grid-column: 1 / -1;
+  display: block;
+  max-height: 0;
+  overflow: hidden;
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+  transition: max-height 0.5s ease, margin 0.5s ease;
+}
+.eco-hero .spot.active .tip small {
+  max-height: 80px;
+  margin-top: 6px;
+}
+
+.eco-hero .rail {
+  position: absolute;
+  right: clamp(14px, 3vw, 40px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 8;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.eco-hero .rail.show { opacity: 1; }
+.eco-hero .rail button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--navy);
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  opacity: 0.55;
+}
+.eco-hero .rail button.done { background: var(--navy); }
+.eco-hero .rail button.active {
+  background: var(--orange);
+  border-color: var(--orange);
+  transform: scale(1.4);
+  opacity: 1;
+}
+
+.eco-hero .caption {
+  bottom: clamp(20px, 5vh, 48px);
+  text-align: center;
+  z-index: 7;
+  padding: 0 16px;
+  opacity: 0;
+}
+.eco-hero .caption span {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(16, 50, 79, 0.12);
+}
+.eco-hero .caption b { color: var(--orange); }
+
+.eco-hero .mobile-card { display: none; }
+
+@media (max-width: 760px) {
+  .eco-hero .house { width: 112vw; }
+  .eco-hero .tip { display: none; }
+  .eco-hero .line { display: none; }
+  .eco-hero .pin {
+    left: -10px;
+    top: -10px;
+    width: 20px;
+    height: 20px;
+  }
+  .eco-hero .rail { display: none; }
+  .eco-hero .mobile-card {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    top: auto;
+    bottom: 20px;
+    z-index: 9;
+    display: grid !important;
+    width: auto;
+  }
+  .eco-hero .caption { display: none; }
+}
+
+.eco-hero .mobile-card.tip {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.35s, transform 0.35s;
+}
+.eco-hero .mobile-card.tip.on {
+  opacity: 1;
+  transform: none;
+}
+.eco-hero .mobile-card small {
+  max-height: 80px !important;
+  margin-top: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eco-hero *,
+  .eco-hero *::before,
+  .eco-hero *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+  .eco-hero .intro h1 .hl > span { transform: none; }
+}

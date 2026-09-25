@@ -137,7 +137,7 @@ export function Footer({
             </div>
           ))}
 
-          <div className={styles.rise} style={d(1 + cols.length)}>
+          <div className={cx(styles.contact, styles.rise)} style={d(1 + cols.length)}>
             <h3 className={styles.colTitle}>Contacto</h3>
             <ul className={styles.contactList}>
               <li>
