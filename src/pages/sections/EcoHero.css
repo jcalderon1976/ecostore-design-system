@@ -407,41 +407,85 @@
 .eco-hero .mobile-card { display: none; }
 
 @media (max-width: 760px) {
-  .eco-hero .house { width: 112vw; }
-  .eco-hero .tip { display: none; }
+  .eco-hero .house { width: 108vw; }
   .eco-hero .line { display: none; }
   .eco-hero .pin {
-    left: -10px;
-    top: -10px;
-    width: 20px;
-    height: 20px;
+    left: -11px;
+    top: -11px;
+    width: 22px;
+    height: 22px;
   }
   .eco-hero .rail { display: none; }
-  .eco-hero .mobile-card {
-    position: absolute;
-    left: 16px;
-    right: 16px;
-    top: auto;
-    bottom: 20px;
-    z-index: 9;
-    display: grid !important;
-    width: auto;
-  }
   .eco-hero .caption { display: none; }
-}
 
-.eco-hero .mobile-card.tip {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.35s, transform 0.35s;
-}
-.eco-hero .mobile-card.tip.on {
-  opacity: 1;
-  transform: none;
-}
-.eco-hero .mobile-card small {
-  max-height: 80px !important;
-  margin-top: 6px;
+  /* En la casa: cada producto revelado deja su etiqueta; no se borra al seguir el scroll. */
+  .eco-hero .spot .tip {
+    display: none;
+  }
+  .eco-hero .spot.on .tip {
+    display: block;
+    width: max-content;
+    max-width: min(168px, 46vw);
+    padding: 5px 9px;
+    border-radius: 999px;
+    grid-template-columns: unset;
+    opacity: 1;
+    z-index: 6;
+  }
+  .eco-hero .spot.west.on .tip {
+    left: 18px;
+    right: auto;
+    transform: translate(0, -50%) scale(1);
+  }
+  .eco-hero .spot.east.on .tip {
+    right: 18px;
+    left: auto;
+    transform: translate(0, -50%) scale(1);
+  }
+  .eco-hero .spot.on .tip__icon,
+  .eco-hero .spot.on .tip p,
+  .eco-hero .spot.on .tip small { display: none; }
+  .eco-hero .spot.on .tip h3 {
+    font-size: 11px;
+    line-height: 1.2;
+    margin: 0;
+    white-space: nowrap;
+  }
+  .eco-hero .spot.active .tip { z-index: 7; }
+
+  /* Ficha completa abajo: no hereda display:none del tooltip de escritorio. */
+  .eco-hero .mobile-card {
+    display: grid;
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    top: auto;
+    bottom: 12px;
+    width: auto;
+    z-index: 11;
+    opacity: 0;
+    transform: translateY(16px);
+    pointer-events: none;
+    padding: 12px 14px;
+  }
+  .eco-hero .mobile-card.on {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+  .eco-hero .mobile-card small {
+    max-height: 72px;
+    margin-top: 4px;
+  }
+  .eco-hero .mobile-card__count {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

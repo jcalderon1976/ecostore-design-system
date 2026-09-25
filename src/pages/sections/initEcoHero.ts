@@ -83,7 +83,7 @@ export function initEcoHero(root: HTMLElement): () => void {
   for (let i = 0; i < PRODUCTS.length; i++) {
     const p = PRODUCTS[i]
     const el = document.createElement('div')
-    el.className = `spot ${p.side}`
+    el.className = `spot ${p.side} ${p.x >= 50 ? 'east' : 'west'}`
     el.style.left = p.x + '%'
     el.style.top = p.y + '%'
     el.style.setProperty('--len', p.len + 'px')
@@ -154,12 +154,17 @@ export function initEcoHero(root: HTMLElement): () => void {
     hint!.style.opacity = String(1 - range(p, 0, 0.05))
 
     const houseH = house!.offsetHeight
+    const navH = parseFloat(getComputedStyle(root).getPropertyValue('--eco-nav-h')) || 84
+    const cardReserve = mobile ? Math.min(156, vh * 0.24) : 0
     const s0 = mobile ? 1 : 0.92
-    const s1 = mobile ? 1.05 : Math.min(1, (vh * 0.8) / houseH)
+    const s1 = mobile
+      ? Math.min(1, (vh - navH - cardReserve) / houseH)
+      : Math.min(1, (vh * 0.8) / houseH)
     const introBottom = intro!.offsetTop + intro!.offsetHeight
     const startTop = Math.min(Math.max(introBottom + 12, vh * 0.5), vh * 0.82)
-    const navH = parseFloat(getComputedStyle(root).getPropertyValue('--eco-nav-h')) || 84
-    const restTop = mobile ? vh * 0.2 : navH + Math.max(0, (vh - navH - houseH * s1) / 2)
+    const restTop = mobile
+      ? navH + Math.max(4, (vh - navH - cardReserve - houseH * s1) / 2)
+      : navH + Math.max(0, (vh - navH - houseH * s1) / 2)
     const s = lerp(s0, s1, a)
     const y = lerp(startTop - vh + houseH * s0, restTop - vh + houseH * s1, a)
     house!.style.transform = `translate3d(${curMX * 22}px, ${y + curMY * 10}px, 0) scale(${s})`
@@ -172,7 +177,7 @@ export function initEcoHero(root: HTMLElement): () => void {
       if (on) active = i
       spots[i].dot.classList.toggle('done', on)
     }
-    if (p > T1 + 0.03) active = -1
+    if (p > T1 + 0.03) active = mobile ? spots.length - 1 : -1
     for (let i = 0; i < spots.length; i++) {
       spots[i].el.classList.toggle('active', i === active)
       spots[i].dot.classList.toggle('active', i === active)
@@ -185,7 +190,7 @@ export function initEcoHero(root: HTMLElement): () => void {
       if (active >= 0 && capNum && capName && mobileCard) {
         capNum.textContent = String(active + 1)
         capName.textContent = PRODUCTS[active].title
-        mobileCard.innerHTML = tipHTML(PRODUCTS[active])
+        mobileCard.innerHTML = `${tipHTML(PRODUCTS[active])}<span class="mobile-card__count">${active + 1} / ${PRODUCTS.length}</span>`
         mobileCard.classList.remove('on')
         requestAnimationFrame(() => mobileCard.classList.add('on'))
       } else if (mobileCard) {

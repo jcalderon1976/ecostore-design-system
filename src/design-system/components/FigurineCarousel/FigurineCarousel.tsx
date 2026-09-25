@@ -14,6 +14,8 @@ export interface FigurineItem {
   description?: string
   /** Color de fondo de marca para este ítem (token o hex). */
   bg: string
+  /** Enlace de ficha o búsqueda. Si existe, el nombre y la figura central son clicables. */
+  href?: string
 }
 
 export interface FigurineCarouselProps {
@@ -103,20 +105,45 @@ export function FigurineCarousel({
       <div className={styles.stage}>
         {items.map((it, i) => {
           const role = roleOf(i)
+          const img = (
+            <img src={it.src} alt={role === 'center' ? it.alt : ''} draggable={false} decoding="async" />
+          )
           return (
             <div
               key={it.src}
               className={cx(styles.item, styles[role])}
               aria-hidden={role !== 'center'}
             >
-              <img src={it.src} alt={role === 'center' ? it.alt : ''} draggable={false} decoding="async" />
+              {it.href && role === 'center' ? (
+                <a
+                  href={it.href}
+                  className={styles.productLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Ver ${it.name}`}
+                >
+                  {img}
+                </a>
+              ) : img}
             </div>
           )
         })}
       </div>
 
       <div className={styles.caption} aria-live="polite">
-        <p className={styles.name} key={current.name}>{current.name}</p>
+        {current.href ? (
+          <a
+            href={current.href}
+            className={styles.name}
+            target="_blank"
+            rel="noopener noreferrer"
+            key={current.name}
+          >
+            {current.name}
+          </a>
+        ) : (
+          <p className={styles.name} key={current.name}>{current.name}</p>
+        )}
         {current.description && <p className={styles.desc}>{current.description}</p>}
         <div className={styles.nav}>
           <button type="button" className={styles.arrow} onClick={() => navigate('prev')} aria-label="Producto anterior">

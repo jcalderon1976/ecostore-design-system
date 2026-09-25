@@ -7,6 +7,8 @@ const energia = (name: string) => `${SITE.base}images/energia/${name}`;
 const BG = ["#2E9E3E", "#176A2C", "#E88F1A", "#3DB35F", "#5BB4E5"] as const;
 
 /** Un ítem por cada recorte en `public/images/energia`. */
+const TESLA_POWERWALL = "https://www.tesla.com/powerwall";
+
 const PRODUCTS = [
   {
     file: "heatPump.webp",
@@ -14,6 +16,7 @@ const PRODUCTS = [
     name: "Calentador Heat Pump",
     description:
       "Agua caliente con bomba de calor. Hasta tres veces más eficiente que un calentador eléctrico.",
+    href: "https://geaprstore.com/search?options%5Bprefix%5D=last&q=Heat+Pump",
   },
   {
     file: "climatizacion.webp",
@@ -21,6 +24,7 @@ const PRODUCTS = [
     name: "Climatización",
     description:
       "A/C inverter, de ventana y PTAC. Más confort con menos consumo en hogar y negocio.",
+    href: "https://geaprstore.com/search?q=air+conditioner+inverter&_pos=3&_psq=Air&_psid=db8be55dd&_ss=e",
   },
   {
     file: "placas.webp",
@@ -35,6 +39,7 @@ const PRODUCTS = [
     name: "Inversores",
     description:
       "Microinversores e inversores híbridos para sistemas solares con y sin batería.",
+    href: TESLA_POWERWALL,
   },
   {
     file: "bateria.webp",
@@ -42,6 +47,7 @@ const PRODUCTS = [
     name: "Baterías de litio",
     description:
       "Respaldo silencioso y limpio. Powerwall 3 y baterías modulares para hogares y negocios.",
+    href: TESLA_POWERWALL,
   },
   {
     file: "led.webp",
@@ -56,6 +62,7 @@ const PRODUCTS = [
     name: "Lavadora y secadora",
     description:
       "Equipos de alta eficiencia GE, Café y Haier. Menos agua, menos kWh y el mismo resultado.",
+    href: "https://geaprstore.com/search?options%5Bprefix%5D=last&q=lavadora+y+secadora+2%2F1+Heat+pump",
   },
   {
     file: "countertop.webp",
@@ -63,6 +70,7 @@ const PRODUCTS = [
     name: "Estufa de inducción",
     description:
       "Cocina precisa y eficiente. Menos calor residual y hasta 50% menos energía que una estufa tradicional.",
+    href: "https://geaprstore.com/search?q=induction+cooktop&_pos=1&_psq=induc&_psid=143610958&_ss=e",
   },
 ] as const;
 
@@ -72,6 +80,7 @@ const FEATURED = PRODUCTS.map((p, i) => ({
   name: p.name,
   description: p.description,
   bg: BG[i % BG.length],
+  href: "href" in p ? p.href : undefined,
 }));
 
 /** Productos · Eficiencia Energética. Hero-carrusel de productos a pantalla completa. */
