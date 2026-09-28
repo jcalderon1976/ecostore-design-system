@@ -221,6 +221,15 @@ export const MenuIcon = (p: IconProps) =>
 export const CloseIcon = (p: IconProps) =>
   base(p, <path d="M18 6 6 18M6 6l12 12" />)
 
+export const PlayIcon = (p: IconProps) =>
+  base(p, <polygon points="7 4 20 12 7 20 7 4" />, true)
+
+export const MaximizeIcon = (p: IconProps) =>
+  base(p, <><path d="M15 3h6v6" /><path d="m21 3-7 7" /><path d="m3 21 7-7" /><path d="M9 21H3v-6" /></>)
+
+export const MinimizeIcon = (p: IconProps) =>
+  base(p, <><path d="m14 10 7-7" /><path d="M20 10h-6V4" /><path d="m3 21 7-7" /><path d="M4 14h6v6" /></>)
+
 export const SunIcon = (p: IconProps) =>
   base(p, <><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" /></>)
 

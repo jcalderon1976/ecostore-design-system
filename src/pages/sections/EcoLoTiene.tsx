@@ -99,7 +99,7 @@ export function EcoLoTiene({ hideBrand = false }: { hideBrand?: boolean }) {
         {!hideBrand && (
           <div ref={headerRef} className={styles.header}>
             <div className={styles.brand}>
-              <Logo src={img('logo-eco-store-full.png')} className={styles.logo} />
+              <Logo src={img('logo-eco-store-full.png?v=3')} className={styles.logo} />
             </div>
             <h2 id="eco-lo-tiene-title" className={styles.title} aria-label="ECO lo tiene">
               {WORDS.map((word, index) => (

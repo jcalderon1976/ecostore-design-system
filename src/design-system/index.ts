@@ -106,6 +106,9 @@ export type { CategoryBandProps, SolutionCardProps, CategoryTone } from './compo
 export { FigurineCarousel } from './components/FigurineCarousel/FigurineCarousel'
 export type { FigurineCarouselProps, FigurineItem } from './components/FigurineCarousel/FigurineCarousel'
 
+export { YouTubePlayer } from './components/YouTubePlayer/YouTubePlayer'
+export type { YouTubePlayerProps } from './components/YouTubePlayer/YouTubePlayer'
+
 export { HoverExpand } from './components/HoverExpand/HoverExpand'
 export type { HoverExpandProps, HoverExpandItem } from './components/HoverExpand/HoverExpand'
 
@@ -117,6 +120,9 @@ export type { ProductDropCardProps, DropItem } from './components/ProductDropCar
 
 export { MarqueeLogoScroller } from './components/MarqueeLogoScroller/MarqueeLogoScroller'
 export type { MarqueeLogoScrollerProps, MarqueeLogo } from './components/MarqueeLogoScroller/MarqueeLogoScroller'
+
+export { Velaris } from './components/Velaris/Velaris'
+export type { VelarisProps } from './components/Velaris/Velaris'
 
 export { ParallaxHero } from './components/ParallaxHero/ParallaxHero'
 export type { ParallaxHeroProps, ParallaxLayer } from './components/ParallaxHero/ParallaxHero'

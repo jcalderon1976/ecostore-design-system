@@ -35,7 +35,7 @@ export function EcoHero() {
         <div className="layer particles" data-el="particles" aria-hidden="true" />
 
         <div className="layer intro" data-el="intro">
-          <img className="intro__logo" data-el="heroLogo" src={img('hero-logo.png')} alt="EcoStore" />
+          <img className="intro__logo" data-el="heroLogo" src={img('hero-logo.png?v=3')} alt="EcoStore" />
           <h1 data-el="headline">
             <span className="hl"><span>Tu Tienda de Soluciones</span></span>
             <span className="hl"><span>en Eficiencia Energética</span></span>
@@ -56,12 +56,13 @@ export function EcoHero() {
           </span>
         </div>
         <div className="rail" data-el="rail" />
-        <div className="tip mobile-card" data-el="mobileCard" />
 
         <div className="layer scroll-hint" data-el="hint">
           <i />
           Desliza para explorar
         </div>
+
+        <div className="mobile-card" data-el="mobileCard" />
       </div>
     </section>
   )

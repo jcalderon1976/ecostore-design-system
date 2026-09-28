@@ -17,6 +17,8 @@ const PRODUCTS = [
     description:
       "Agua caliente con bomba de calor. Hasta tres veces más eficiente que un calentador eléctrico.",
     href: "https://geaprstore.com/search?options%5Bprefix%5D=last&q=Heat+Pump",
+    videoId: "v-x1HAlp2Iw",
+    videoTitle: "Calentador Heat Pump",
   },
   {
     file: "climatizacion.webp",
@@ -25,6 +27,8 @@ const PRODUCTS = [
     description:
       "A/C inverter, de ventana y PTAC. Más confort con menos consumo en hogar y negocio.",
     href: "https://geaprstore.com/search?q=air+conditioner+inverter&_pos=3&_psq=Air&_psid=db8be55dd&_ss=e",
+    videoId: "BiHWJXax8JQ",
+    videoTitle: "Climatización",
   },
   {
     file: "placas.webp",
@@ -32,6 +36,8 @@ const PRODUCTS = [
     name: "Sistemas solares",
     description:
       "Paneles de alta eficiencia con inversores y baterías. Genera tu propia energía y reduce la factura desde el primer mes.",
+    videoId: "KFn4FAXVmrE",
+    videoTitle: "Sistemas solares",
   },
   {
     file: "microinversor.webp",
@@ -40,6 +46,8 @@ const PRODUCTS = [
     description:
       "Microinversores e inversores híbridos para sistemas solares con y sin batería.",
     href: TESLA_POWERWALL,
+    videoId: "KFn4FAXVmrE",
+    videoTitle: "Inversores",
   },
   {
     file: "bateria.webp",
@@ -48,6 +56,8 @@ const PRODUCTS = [
     description:
       "Respaldo silencioso y limpio. Powerwall 3 y baterías modulares para hogares y negocios.",
     href: TESLA_POWERWALL,
+    videoId: "cVBOfB9ex00",
+    videoTitle: "Baterías de litio",
   },
   {
     file: "led.webp",
@@ -55,6 +65,8 @@ const PRODUCTS = [
     name: "Iluminación LED",
     description:
       "Hasta 80% menos consumo que la iluminación tradicional, con sensores de ocupación y controles inteligentes.",
+    videoId: "TCUISEej9hU",
+    videoTitle: "Iluminación LED",
   },
   {
     file: "lavaseca.webp",
@@ -63,6 +75,8 @@ const PRODUCTS = [
     description:
       "Equipos de alta eficiencia GE, Café y Haier. Menos agua, menos kWh y el mismo resultado.",
     href: "https://geaprstore.com/search?options%5Bprefix%5D=last&q=lavadora+y+secadora+2%2F1+Heat+pump",
+    videoId: "5nKhUVWMnYU",
+    videoTitle: "Lavadora y secadora",
   },
   {
     file: "countertop.webp",
@@ -71,6 +85,22 @@ const PRODUCTS = [
     description:
       "Cocina precisa y eficiente. Menos calor residual y hasta 50% menos energía que una estufa tradicional.",
     href: "https://geaprstore.com/search?q=induction+cooktop&_pos=1&_psq=induc&_psid=143610958&_ss=e",
+    videoId: "b4ye4bFT6a4",
+    videoTitle: "Estufa de inducción",
+  },
+  {
+    file: "doubleGlass.png",
+    alt: "Perfil de ventana de doble cristal",
+    name: "Doble cristal",
+    description:
+      "Ventanas de doble panel que aíslan mejor el hogar. Menos calor, menos ruido y menos kWh en climatización.",
+  },
+  {
+    file: "Sealer.png",
+    alt: "Sellador de techo EcoStore",
+    name: "Sellador de techo",
+    description:
+      "Sellador de alto desempeño: sella grietas, refleja calor y protege el techo. Menos fugas y una casa más fresca.",
   },
 ] as const;
 
@@ -81,6 +111,8 @@ const FEATURED = PRODUCTS.map((p, i) => ({
   description: p.description,
   bg: BG[i % BG.length],
   href: "href" in p ? p.href : undefined,
+  videoId: "videoId" in p ? p.videoId : undefined,
+  videoTitle: "videoTitle" in p ? p.videoTitle : undefined,
 }));
 
 /** Productos · Eficiencia Energética. Hero-carrusel de productos a pantalla completa. */

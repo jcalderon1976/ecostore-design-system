@@ -155,7 +155,7 @@ export function initEcoHero(root: HTMLElement): () => void {
 
     const houseH = house!.offsetHeight
     const navH = parseFloat(getComputedStyle(root).getPropertyValue('--eco-nav-h')) || 84
-    const cardReserve = mobile ? Math.min(156, vh * 0.24) : 0
+    const cardReserve = mobile ? Math.min(176, vh * 0.28) : 0
     const s0 = mobile ? 1 : 0.92
     const s1 = mobile
       ? Math.min(1, (vh - navH - cardReserve) / houseH)
@@ -187,12 +187,13 @@ export function initEcoHero(root: HTMLElement): () => void {
 
     if (active !== lastActive) {
       lastActive = active
-      if (active >= 0 && capNum && capName && mobileCard) {
-        capNum.textContent = String(active + 1)
-        capName.textContent = PRODUCTS[active].title
-        mobileCard.innerHTML = `${tipHTML(PRODUCTS[active])}<span class="mobile-card__count">${active + 1} / ${PRODUCTS.length}</span>`
-        mobileCard.classList.remove('on')
-        requestAnimationFrame(() => mobileCard.classList.add('on'))
+      if (active >= 0) {
+        if (capNum) capNum.textContent = String(active + 1)
+        if (capName) capName.textContent = PRODUCTS[active].title
+        if (mobileCard) {
+          mobileCard.innerHTML = `${tipHTML(PRODUCTS[active])}<span class="mobile-card__count">${active + 1} / ${PRODUCTS.length}</span>`
+          mobileCard.classList.add('on')
+        }
       } else if (mobileCard) {
         mobileCard.classList.remove('on')
       }

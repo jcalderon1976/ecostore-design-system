@@ -80,10 +80,33 @@
 .back   { transform: translateX(-50%) scale(1); filter: blur(4px); opacity: 0.9; z-index: 5; height: 24%; bottom: 16%; }
 .hidden { transform: translateX(-50%) scale(0.6); filter: blur(6px); opacity: 0; z-index: 1; height: 18%; bottom: 16%; pointer-events: none; }
 
-.mobile .center { transform: translateX(-50%) scale(1.05); height: 50%; bottom: 26%; }
-.mobile .left   { left: 18%; height: 16%; bottom: 34%; }
-.mobile .right  { left: 82%; height: 16%; bottom: 34%; }
-.mobile .back   { height: 13%; bottom: 34%; }
+.mobile .center { transform: translateX(-50%) scale(1.05); height: 44%; bottom: 34%; }
+.mobile .left   { left: 14%; height: 15%; bottom: 42%; }
+.mobile .right  { left: 86%; height: 15%; bottom: 42%; }
+.mobile .back   { height: 12%; bottom: 42%; }
+
+.mobile .label { top: 10px; left: 12px; }
+.mobile .caption {
+  left: 12px;
+  bottom: 12px;
+  max-width: calc(100% - 128px);
+}
+.mobile .name { font-size: 13px; margin-bottom: 8px; }
+.mobile .arrow { width: 40px; height: 40px; }
+.mobile .counter { margin-left: 4px; font-size: 12px; }
+.mobile .videoDock {
+  right: 12px;
+  left: auto;
+  bottom: 58px;
+  width: min(150px, 40vw);
+}
+.mobile .link {
+  bottom: 12px;
+  right: 12px;
+}
+.mobile .link a {
+  padding-inline: 14px;
+}
 
 /* Texto inferior izquierdo y flechas */
 .caption {
@@ -125,6 +148,16 @@ a.name:hover { text-decoration-color: currentColor; }
 .arrow:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.35); }
 .counter { margin-left: var(--eco-space-2); font-variant-numeric: tabular-nums; font-size: var(--eco-text-sm); opacity: 0.8; }
 
+/* Video compacto: encima del CTA, sin tapar la figura ni las flechas */
+.videoDock {
+  position: absolute;
+  right: var(--eco-space-4);
+  bottom: calc(var(--eco-space-6) + 72px);
+  z-index: 60;
+  width: min(220px, 46vw);
+}
+.videoDock[hidden] { display: none; }
+
 /* CTA inferior derecho: píldora clara para contrastar con fondos de marca */
 .link {
   position: absolute;
@@ -162,6 +195,11 @@ a.name:hover { text-decoration-color: currentColor; }
   .desc { display: block; }
   .arrow { width: 64px; height: 64px; }
   .link { bottom: var(--eco-space-20); right: var(--eco-space-10); }
+  .videoDock {
+    right: var(--eco-space-10);
+    bottom: calc(var(--eco-space-20) + 88px);
+    width: 268px;
+  }
 }
 
 @media (min-width: 640px) and (max-height: 759px) {
@@ -170,6 +208,11 @@ a.name:hover { text-decoration-color: currentColor; }
   .desc { display: none; }
   .arrow { width: 48px; height: 48px; }
   .link { bottom: var(--eco-space-5); right: var(--eco-space-6); }
+  .videoDock {
+    right: var(--eco-space-6);
+    bottom: calc(var(--eco-space-5) + 64px);
+    width: 210px;
+  }
   .center { height: 62%; bottom: 6%; }
   .left, .right { height: 24%; bottom: 12%; }
 }

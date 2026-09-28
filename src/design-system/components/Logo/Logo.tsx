@@ -15,8 +15,8 @@ export interface LogoProps {
 
 /* Logos oficiales (public/logo.png y public/logo-inverse.png). Rutas relativas para funcionar con cualquier base. */
 const BASE = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/'
-export const LOGO_SRC = `${BASE}logo.png`
-export const LOGO_INVERSE_SRC = `${BASE}logo-inverse.png`
+export const LOGO_SRC = `${BASE}images/logo-wordmark.png?v=4`
+export const LOGO_INVERSE_SRC = `${BASE}images/logo-wordmark.png?v=4`
 /** Versión apilada en dos líneas para fondos oscuros (≈ 1.9 : 1). */
 export const LOGO_INVERSE_STACKED_SRC = `${BASE}logo-inverse-stacked.png`
 

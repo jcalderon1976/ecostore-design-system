@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties, type Reac
 import { cx } from '../../utils/cx'
 import { ArrowLeftIcon, ArrowRightIcon } from '../../icons'
 import { Button } from '../Button/Button'
+import { YouTubePlayer, preconnectYouTube } from '../YouTubePlayer/YouTubePlayer'
 import styles from './FigurineCarousel.module.css'
 
 export interface FigurineItem {
@@ -16,6 +17,9 @@ export interface FigurineItem {
   bg: string
   /** Enlace de ficha o búsqueda. Si existe, el nombre y la figura central son clicables. */
   href?: string
+  /** ID o URL de YouTube. Si existe, se muestra un reproductor compacto en este ítem. */
+  videoId?: string
+  videoTitle?: string
 }
 
 export interface FigurineCarouselProps {
@@ -48,11 +52,13 @@ export function FigurineCarousel({
   const n = items.length
   const [active, setActive] = useState(initialIndex % n)
   const [isMobile, setIsMobile] = useState(false)
+  const [videoOpen, setVideoOpen] = useState(false)
   const lock = useRef(false)
 
-  // Precarga de imágenes y detección de móvil
+  // Precarga de imágenes, YouTube y detección de móvil
   useEffect(() => {
     items.forEach((it) => { const im = new Image(); im.src = it.src })
+    if (items.some((it) => it.videoId)) preconnectYouTube()
     const mq = window.matchMedia('(max-width: 639px)')
     const update = () => setIsMobile(mq.matches)
     update()
@@ -61,11 +67,12 @@ export function FigurineCarousel({
   }, [items])
 
   const navigate = useCallback((dir: 'next' | 'prev') => {
-    if (lock.current) return
+    if (lock.current || videoOpen) return
     lock.current = true
+    setVideoOpen(false)
     setActive((prev) => (dir === 'next' ? (prev + 1) % n : (prev + n - 1) % n))
     window.setTimeout(() => { lock.current = false }, DURATION)
-  }, [n])
+  }, [n, videoOpen])
 
   // Teclado: flechas izquierda/derecha
   useEffect(() => {
@@ -156,9 +163,21 @@ export function FigurineCarousel({
         </div>
       </div>
 
+      {current.videoId && (
+        <div className={styles.videoDock}>
+          <YouTubePlayer
+            key={current.videoId}
+            videoId={current.videoId}
+            title={current.videoTitle ?? current.name}
+            compact={isMobile}
+            onExpandedChange={setVideoOpen}
+          />
+        </div>
+      )}
+
       <div className={styles.link}>
-        <Button href={linkHref} variant="inverse" size="lg" arrow>
-          {linkLabel}
+        <Button href={linkHref} variant="inverse" size={isMobile ? 'sm' : 'lg'} arrow>
+          {isMobile ? 'Agendar' : linkLabel}
         </Button>
       </div>
     </section>

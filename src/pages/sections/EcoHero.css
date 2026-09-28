@@ -453,29 +453,59 @@
   }
   .eco-hero .spot.active .tip { z-index: 7; }
 
-  /* Ficha completa abajo: no hereda display:none del tooltip de escritorio. */
+  /* Ficha propia: no comparte .tip (opacity/top/backdrop) para no quedar bajo la casa. */
   .eco-hero .mobile-card {
     display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 4px 12px;
+    align-items: center;
     position: absolute;
     left: 12px;
     right: 12px;
     top: auto;
-    bottom: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom, 0px));
     width: auto;
-    z-index: 11;
-    opacity: 0;
-    transform: translateY(16px);
-    pointer-events: none;
+    z-index: 20;
+    isolation: isolate;
+    background: #fff;
+    border-radius: 16px;
     padding: 12px 14px;
+    box-shadow: 0 16px 40px rgba(16, 50, 79, 0.22);
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
   }
   .eco-hero .mobile-card.on {
     opacity: 1;
-    transform: none;
+    transform: translate3d(0, 0, 0);
     pointer-events: auto;
   }
+  .eco-hero .mobile-card .tip__icon {
+    grid-row: span 2;
+  }
+  .eco-hero .mobile-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    padding-right: 40px;
+  }
+  .eco-hero .mobile-card p {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.35;
+    margin: 0;
+  }
   .eco-hero .mobile-card small {
-    max-height: 72px;
+    grid-column: 1 / -1;
+    display: block;
+    max-height: none;
+    overflow: visible;
     margin-top: 4px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.45;
   }
   .eco-hero .mobile-card__count {
     position: absolute;

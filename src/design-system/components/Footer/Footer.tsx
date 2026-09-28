@@ -9,6 +9,7 @@ import { cx } from "../../utils/cx";
 import { Container } from "../Layout/Layout";
 import { Logo, LOGO_INVERSE_STACKED_SRC } from "../Logo/Logo";
 import { SocialLinks, type SocialLink } from "../SocialLinks/SocialLinks";
+import { Velaris } from "../Velaris/Velaris";
 import {
   ArrowUpIcon,
   ClockIcon,
@@ -22,6 +23,7 @@ const BASE = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : import.meta.env.BASE_URL + "/";
 const FOOTER_LEAF_SRC = `${BASE}images/footer-leaf.png?v=2`;
+const VELARIS_COLORS = ["#176A2C", "#2E9E3E", "#3DB35F", "#0D3A19"];
 
 export interface FooterLink {
   label: string;
@@ -53,9 +55,8 @@ export interface FooterProps {
 }
 
 /**
- * Footer premium: marca + columnas de enlaces + contacto y línea legal.
- * Entra con animación escalonada al llegar al viewport; halo ambiental
- * que respira; hoja flotante.
+ * Footer premium: marca + columnas + contacto.
+ * Fondo Velaris (WebGL) bajo la hoja existente.
  */
 export function Footer({
   description,
@@ -97,6 +98,15 @@ export function Footer({
 
   return (
     <footer ref={ref} className={styles.footer} data-visible={visible}>
+      <Velaris
+        fill
+        playing={visible}
+        className={styles.velaris}
+        bg="#041209"
+        colors={VELARIS_COLORS}
+        speed={0.55}
+        grain={0.18}
+      />
       <div className={styles.glow} aria-hidden="true" />
       <div className={styles.grain} aria-hidden="true" />
       <img
