@@ -88,6 +88,14 @@ export function initEcoHero(root: HTMLElement): () => void {
   const spots: Array<{ el: HTMLElement; dot: HTMLButtonElement }> = []
   const cleanups: Array<() => void> = []
 
+  let hintW = 0
+  function measureHint() {
+    hintW = hint!.offsetWidth
+  }
+  measureHint()
+  addEventListener('resize', measureHint)
+  cleanups.push(() => removeEventListener('resize', measureHint))
+
   for (let i = 0; i < PRODUCTS.length; i++) {
     const p = PRODUCTS[i]
     const el = document.createElement('div')
@@ -159,7 +167,13 @@ export function initEcoHero(root: HTMLElement): () => void {
     heroLogo!.style.transform = `translate3d(${curMX * 10}px, ${-a * vh * 0.35}px, 0) scale(${1 - a * 0.25})`
     headline!.style.transform = `translate3d(${curMX * 16}px, ${-a * vh * 0.5}px, 0)`
     intro!.style.opacity = String(1 - range(p, 0.06, 0.26))
-    hint!.style.opacity = String(1 - range(p, 0, 0.05))
+
+    const parked = ease(range(p, 0, 0.32))
+    const startX = -hintW / 2
+    const endX = (mobile ? 12 : 24) - innerWidth / 2
+    const tx = startX + (endX - startX) * parked
+    hint!.style.transform = `translate3d(${tx}px, 0, 0) scale(${1 - parked * 0.08})`
+    hint!.style.opacity = String(1 - range(p, T1, 0.995))
 
     const houseH = house!.offsetHeight
     const navH = parseFloat(getComputedStyle(root).getPropertyValue('--eco-nav-h')) || 84
