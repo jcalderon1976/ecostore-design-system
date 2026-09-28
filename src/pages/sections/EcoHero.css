@@ -437,8 +437,24 @@
   .eco-hero .rail { display: none; }
   .eco-hero .caption { display: none; }
   .eco-hero .scroll-hint {
-    padding: 8px 14px;
-    font-size: 11px;
+    flex-direction: row;
+    gap: 8px;
+    padding: 8px 12px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    z-index: 30;
+    background: #fff;
+    box-shadow: 0 10px 28px rgba(16, 50, 79, 0.2);
+  }
+  .eco-hero .scroll-hint i {
+    width: 16px;
+    height: 24px;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+  .eco-hero .scroll-hint i::after {
+    top: 4px;
+    height: 6px;
   }
 
   /* En la casa: cada producto revelado deja su etiqueta; no se borra al seguir el scroll. */

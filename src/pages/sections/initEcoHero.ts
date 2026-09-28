@@ -168,16 +168,22 @@ export function initEcoHero(root: HTMLElement): () => void {
     headline!.style.transform = `translate3d(${curMX * 16}px, ${-a * vh * 0.5}px, 0)`
     intro!.style.opacity = String(1 - range(p, 0.06, 0.26))
 
+    const houseH = house!.offsetHeight
+    const navH = parseFloat(getComputedStyle(root).getPropertyValue('--eco-nav-h')) || 84
+    const cardOn = Boolean(mobile && mobileCard?.classList.contains('on'))
+    const cardH = cardOn ? mobileCard!.getBoundingClientRect().height : 0
+    const cardReserve = mobile ? Math.min(176, vh * 0.28) : 0
+
     const parked = ease(range(p, 0, 0.32))
     const startX = -hintW / 2
     const endX = (mobile ? 12 : 24) - innerWidth / 2
     const tx = startX + (endX - startX) * parked
+    const hintBottom = mobile
+      ? 22 + parked * ((cardH || cardReserve) + 14)
+      : 22
+    hint!.style.bottom = `${hintBottom}px`
     hint!.style.transform = `translate3d(${tx}px, 0, 0) scale(${1 - parked * 0.08})`
     hint!.style.opacity = String(1 - range(p, T1, 0.995))
-
-    const houseH = house!.offsetHeight
-    const navH = parseFloat(getComputedStyle(root).getPropertyValue('--eco-nav-h')) || 84
-    const cardReserve = mobile ? Math.min(176, vh * 0.28) : 0
     const s0 = mobile ? 1 : 0.92
     const s1 = mobile
       ? Math.min(1, (vh - navH - cardReserve) / houseH)
