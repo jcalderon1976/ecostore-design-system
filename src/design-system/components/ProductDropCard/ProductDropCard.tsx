@@ -11,6 +11,7 @@ export interface DropItem {
   collection: string
   imageSrc: string
   imageAlt?: string
+  href?: string
 }
 
 export interface ProductDropCardProps {
@@ -176,16 +177,32 @@ export function ProductDropCard({ title, subtitle, items, className }: ProductDr
             '--drop-visible': visible,
           } as CSSProperties}
         >
-          {loopItems.map((item, i) => (
-            <article key={`${item.name}-${item.imageSrc}-${i}`} className={styles.slide} tabIndex={0}>
-              <p className={styles.time}>{item.time}</p>
-              <div className={styles.media}>
-                <img src={item.imageSrc} alt={item.imageAlt ?? item.name} className={styles.img} />
-              </div>
-              <h4 className={styles.name}>{item.name}</h4>
-              <p className={styles.collection}>{item.collection}</p>
-            </article>
-          ))}
+          {loopItems.map((item, i) => {
+            const inner = (
+              <>
+                <p className={styles.time}>{item.time}</p>
+                <div className={styles.media}>
+                  <img src={item.imageSrc} alt={item.imageAlt ?? item.name} className={styles.img} />
+                </div>
+                <h4 className={styles.name}>{item.name}</h4>
+                <p className={styles.collection}>{item.collection}</p>
+              </>
+            )
+            return item.href ? (
+              <a
+                key={`${item.name}-${item.imageSrc}-${i}`}
+                className={styles.slide}
+                href={item.href}
+                aria-label={`Ver ${item.name}`}
+              >
+                {inner}
+              </a>
+            ) : (
+              <article key={`${item.name}-${item.imageSrc}-${i}`} className={styles.slide} tabIndex={0}>
+                {inner}
+              </article>
+            )
+          })}
         </div>
       </div>
     </Card>

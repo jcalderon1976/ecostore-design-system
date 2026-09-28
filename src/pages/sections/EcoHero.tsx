@@ -62,7 +62,7 @@ export function EcoHero() {
           Desliza para explorar
         </div>
 
-        <div className="mobile-card" data-el="mobileCard" />
+        <a className="mobile-card" data-el="mobileCard" />
       </div>
     </section>
   )

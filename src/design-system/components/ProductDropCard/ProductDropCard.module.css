@@ -58,6 +58,8 @@
   border-radius: var(--eco-radius-lg);
   border: 1px solid var(--eco-color-border-soft);
   background: var(--eco-color-surface);
+  color: inherit;
+  text-decoration: none;
   cursor: pointer;
   transform-origin: center center;
   transition:

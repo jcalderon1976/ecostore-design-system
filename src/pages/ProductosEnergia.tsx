@@ -1,5 +1,12 @@
 import { Navbar, Footer, FigurineCarousel } from "@ds";
-import { SITE, NAV, SOCIAL, FOOTER, ROUTES } from "./site";
+import {
+  SITE,
+  NAV,
+  SOCIAL,
+  FOOTER,
+  ROUTES,
+  productIndexFromHash,
+} from "./site";
 import { EcoLoTiene } from "./sections/EcoLoTiene";
 
 const energia = (name: string) => `${SITE.base}images/energia/${name}`;
@@ -12,6 +19,7 @@ const TESLA_POWERWALL = "https://www.tesla.com/powerwall";
 const PRODUCTS = [
   {
     file: "heatPump.webp",
+    slug: "heat-pump",
     alt: "Calentador de agua heat pump",
     name: "Calentador Heat Pump",
     description:
@@ -22,6 +30,7 @@ const PRODUCTS = [
   },
   {
     file: "climatizacion.webp",
+    slug: "climatizacion",
     alt: "Aire acondicionado inverter",
     name: "Climatización",
     description:
@@ -32,6 +41,7 @@ const PRODUCTS = [
   },
   {
     file: "placas.webp",
+    slug: "solares",
     alt: "Paneles solares",
     name: "Sistemas solares",
     description:
@@ -41,6 +51,7 @@ const PRODUCTS = [
   },
   {
     file: "microinversor.webp",
+    slug: "inversores",
     alt: "Microinversor solar",
     name: "Inversores",
     description:
@@ -51,6 +62,7 @@ const PRODUCTS = [
   },
   {
     file: "bateria.webp",
+    slug: "baterias",
     alt: "Batería de litio",
     name: "Baterías de litio",
     description:
@@ -61,6 +73,7 @@ const PRODUCTS = [
   },
   {
     file: "led.webp",
+    slug: "led",
     alt: "Bombilla LED",
     name: "Iluminación LED",
     description:
@@ -70,6 +83,7 @@ const PRODUCTS = [
   },
   {
     file: "lavaseca.webp",
+    slug: "lavaseca",
     alt: "Lavadora y secadora",
     name: "Lavadora y secadora",
     description:
@@ -80,6 +94,7 @@ const PRODUCTS = [
   },
   {
     file: "countertop.webp",
+    slug: "induccion",
     alt: "Estufa de inducción",
     name: "Estufa de inducción",
     description:
@@ -90,13 +105,15 @@ const PRODUCTS = [
   },
   {
     file: "doubleGlass.png",
+    slug: "doble-cristal",
     alt: "Perfil de ventana de doble cristal",
-    name: "Doble cristal",
+    name: "Aislamiento térmico y acústico. Ventanas de doble cristal",
     description:
-      "Ventanas de doble panel que aíslan mejor el hogar. Menos calor, menos ruido y menos kWh en climatización.",
+      "Aislamiento térmico y acústico. Ventanas de doble panel que aíslan mejor el hogar. Menos calor, menos ruido y menos kWh en climatización.",
   },
   {
     file: "Sealer.png",
+    slug: "sealer",
     alt: "Sellador de techo EcoStore",
     name: "Sellador de techo",
     description:
@@ -132,6 +149,7 @@ export function ProductosEnergia() {
         label="EcoStore · Productos"
         linkLabel="Agenda una evaluación"
         linkHref={ROUTES.agenda}
+        initialIndex={productIndexFromHash(PRODUCTS.map((p) => p.slug))}
       />
 
       <EcoLoTiene />

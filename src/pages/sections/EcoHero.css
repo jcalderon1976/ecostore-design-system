@@ -8,7 +8,7 @@
   --ink-soft: #4a5b6b;
   --card: rgba(255, 255, 255, 0.92);
   position: relative;
-  height: 480vh;
+  height: 600vh;
   color: var(--navy);
   font-family: var(--eco-font-body);
 }
@@ -325,6 +325,21 @@
 .eco-hero .spot.active .tip {
   box-shadow: 0 20px 50px rgba(242, 138, 30, 0.35), 0 0 0 2px var(--orange) inset;
 }
+.eco-hero a.tip {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.eco-hero .spot.on a.tip:hover {
+  box-shadow: 0 18px 44px rgba(16, 50, 79, 0.3), 0 0 0 2px var(--green) inset;
+}
+.eco-hero .spot.active a.tip:hover {
+  box-shadow: 0 20px 50px rgba(242, 138, 30, 0.4), 0 0 0 2px var(--orange) inset;
+}
+.eco-hero a.tip:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 3px;
+}
 
 .eco-hero .tip__icon {
   grid-row: span 2;
@@ -475,6 +490,9 @@
     transform: translate3d(0, 16px, 0);
     pointer-events: none;
     transition: opacity 0.35s ease, transform 0.35s ease;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
   }
   .eco-hero .mobile-card.on {
     opacity: 1;

@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react'
 import { Logo, Reveal, ProductDropCard, type DropItem } from '@ds'
-import { SITE } from '../site'
+import { SITE, ROUTES } from '../site'
 import { ENERGIA, AGUA } from './SolutionsCatalog'
 import styles from './EcoLoTiene.module.css'
 
@@ -16,9 +16,21 @@ function toDrops(list: typeof ENERGIA, collection: string): DropItem[] {
           collection: s.items.slice(0, 2).join(' · '),
           imageSrc: img(s.image),
           imageAlt: s.alt ?? s.title,
+          href: DROP_HREF[s.title],
         }]
       : [],
   )
+}
+
+const DROP_HREF: Record<string, string> = {
+  'Climatización': `${ROUTES.productosEnergia}/climatizacion`,
+  'Electrodomésticos': `${ROUTES.productosEnergia}/lavaseca`,
+  'Iluminación y Controles': `${ROUTES.productosEnergia}/led`,
+  'Eficiencia de la Propiedad': `${ROUTES.productosEnergia}/sealer`,
+  'Solar y Baterías': `${ROUTES.productosEnergia}/solares`,
+  'Agua Caliente': `${ROUTES.productosAgua}/calentador-solar`,
+  'Conservación de Agua': `${ROUTES.productosAgua}/duchas`,
+  'Tratamiento de Agua': `${ROUTES.productosAgua}/tratamiento`,
 }
 
 const WATER_TITLES = new Set(['Agua Caliente', 'Almacenamiento'])

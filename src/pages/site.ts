@@ -38,6 +38,25 @@ export const ROUTES = {
   agenda: '#formulario',
 } as const
 
+/** Página del hash (`productos-energia/led` → `productos-energia`). */
+export function hashPage(hash = typeof window === 'undefined' ? '' : window.location.hash): string {
+  return hash.replace(/^#/, '').split('/')[0]
+}
+
+/** Slug de producto en el hash (`#productos-energia/led` → `led`). */
+export function productSlugFromHash(hash = typeof window === 'undefined' ? '' : window.location.hash): string | undefined {
+  const slug = hash.replace(/^#/, '').split('/')[1]
+  return slug || undefined
+}
+
+/** Índice del carrusel según el slug del hash; 0 si no hay match. */
+export function productIndexFromHash(slugs: readonly string[]): number {
+  const slug = productSlugFromHash()
+  if (!slug) return 0
+  const i = slugs.indexOf(slug)
+  return i < 0 ? 0 : i
+}
+
 export type PageKey =
   | 'inicio' | 'productos' | 'productosEnergia' | 'productosAgua'
   | 'servicios' | 'ingenieria' | 'nosotros' | 'contacto'

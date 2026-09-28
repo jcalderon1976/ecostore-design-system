@@ -2,6 +2,7 @@
  * Hero scroll de Example 7: intro, casa que sube y hotspots.
  * Solo transform y opacity. Devuelve cleanup para desmontar en React.
  */
+import { ROUTES } from '../site'
 
 type Side = 'l' | 'r'
 
@@ -15,6 +16,7 @@ type Product = {
   title: string
   sub: string
   desc: string
+  href: string
 }
 
 const ICONS: Record<string, string> = {
@@ -30,15 +32,21 @@ const ICONS: Record<string, string> = {
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="6" width="6" height="15" rx="2"/><rect x="13" y="6" width="6" height="15" rx="2"/><path d="M8 6V3h8v3M8 11v5M16 11v5"/></svg>',
   led:
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg>',
+  roof:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9h14v-9"/><path d="M9 19v-5h6v5"/></svg>',
+  glass:
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M12 3v18M3 12h18"/></svg>',
 }
 
 const PRODUCTS: Product[] = [
-  { id: 'solar', x: 29, y: 15, side: 'l', len: 90, title: 'Placas Solares', sub: 'Energía fotovoltaica', desc: 'Reduce hasta un 90% tu factura de luz con paneles de alta eficiencia y baterías de respaldo.' },
-  { id: 'heater', x: 54, y: 8, side: 'l', len: 150, title: 'Calentador Solar', sub: 'Agua caliente gratis', desc: 'Tubos al vacío que calientan el agua con el sol, sin consumo eléctrico.' },
-  { id: 'ac', x: 80, y: 18, side: 'r', len: 70, dy: 24, title: 'A/C Inverter', sub: 'Confort eficiente', desc: 'Climatización con tecnología inverter que consume hasta 60% menos energía.' },
-  { id: 'led', x: 36, y: 63, side: 'l', len: 120, title: 'Iluminación LED', sub: 'Luz que ahorra', desc: 'Luminarias LED interiores y exteriores con larga vida útil y bajo consumo.' },
-  { id: 'ev', x: 93, y: 64, side: 'l', len: 110, title: 'Cargador Eléctrico', sub: 'Para tu vehículo EV', desc: 'Estaciones de carga Nivel 2 instaladas en tu marquesina, listas para solar.' },
-  { id: 'filter', x: 81, y: 83, side: 'r', len: 110, title: 'Filtración de Agua', sub: 'Agua pura en casa', desc: 'Sistemas de filtración y suavizadores para toda la casa. Agua limpia en cada llave.' },
+  { id: 'solar', x: 29, y: 15, side: 'l', len: 90, title: 'Placas Solares', sub: 'Energía fotovoltaica', desc: 'Reduce hasta un 90% tu factura de luz con paneles de alta eficiencia y baterías de respaldo.', href: `${ROUTES.productosEnergia}/solares` },
+  { id: 'heater', x: 54, y: 8, side: 'l', len: 150, title: 'Calentador Solar', sub: 'Agua caliente gratis', desc: 'Tubos al vacío que calientan el agua con el sol, sin consumo eléctrico.', href: `${ROUTES.productosAgua}/calentador-solar` },
+  { id: 'roof', x: 38, y: 22, side: 'l', len: 88, dy: 42, title: 'Tratamiento de Techo', sub: 'Sellador de alto desempeño', desc: 'Sella grietas, refleja el calor y protege el techo. Menos fugas y una casa más fresca.', href: `${ROUTES.productosEnergia}/sealer` },
+  { id: 'ac', x: 80, y: 18, side: 'r', len: 70, dy: 24, title: 'A/C Inverter', sub: 'Confort eficiente', desc: 'Climatización con tecnología inverter que consume hasta 60% menos energía.', href: `${ROUTES.productosEnergia}/climatizacion` },
+  { id: 'glass', x: 33, y: 36, side: 'l', len: 100, title: 'Aislamiento Térmico', sub: 'Ventanas de doble cristal', desc: 'Doble panel que aísla mejor el hogar. Menos calor, menos ruido y menos kWh en climatización.', href: `${ROUTES.productosEnergia}/doble-cristal` },
+  { id: 'led', x: 36, y: 63, side: 'l', len: 120, title: 'Iluminación LED', sub: 'Luz que ahorra', desc: 'Luminarias LED interiores y exteriores con larga vida útil y bajo consumo.', href: `${ROUTES.productosEnergia}/led` },
+  { id: 'ev', x: 93, y: 64, side: 'l', len: 110, title: 'Cargador Eléctrico', sub: 'Para tu vehículo EV', desc: 'Estaciones de carga Nivel 2 instaladas en tu marquesina, listas para solar.', href: `${ROUTES.productosEnergia}/solares` },
+  { id: 'filter', x: 81, y: 83, side: 'r', len: 110, title: 'Filtración de Agua', sub: 'Agua pura en casa', desc: 'Sistemas de filtración y suavizadores para toda la casa. Agua limpia en cada llave.', href: `${ROUTES.productosAgua}/tratamiento` },
 ]
 
 const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v))
@@ -88,7 +96,7 @@ export function initEcoHero(root: HTMLElement): () => void {
     el.style.top = p.y + '%'
     el.style.setProperty('--len', p.len + 'px')
     if (p.dy) el.style.setProperty('--dy', p.dy + 'px')
-    el.innerHTML = `<button class="pin" type="button" aria-label="${p.title}"></button><span class="line"></span><div class="tip">${tipHTML(p)}</div>`
+    el.innerHTML = `<button class="pin" type="button" aria-label="${p.title}"></button><span class="line"></span><a class="tip" href="${p.href}" aria-label="Ver ${p.title}">${tipHTML(p)}</a>`
     const pin = el.querySelector('.pin') as HTMLButtonElement
     const onPin = () => jumpTo(i)
     pin.addEventListener('click', onPin)
@@ -193,6 +201,10 @@ export function initEcoHero(root: HTMLElement): () => void {
         if (mobileCard) {
           mobileCard.innerHTML = `${tipHTML(PRODUCTS[active])}<span class="mobile-card__count">${active + 1} / ${PRODUCTS.length}</span>`
           mobileCard.classList.add('on')
+          if (mobileCard instanceof HTMLAnchorElement) {
+            mobileCard.href = PRODUCTS[active].href
+            mobileCard.setAttribute('aria-label', `Ver ${PRODUCTS[active].title}`)
+          }
         }
       } else if (mobileCard) {
         mobileCard.classList.remove('on')

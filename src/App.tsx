@@ -8,6 +8,7 @@ import { ProductosEnergia } from './pages/ProductosEnergia'
 import { ProductosAgua } from './pages/ProductosAgua'
 import { ContactPage } from './showcase/ContactPage'
 import { SystemPage } from './showcase/SystemPage'
+import { hashPage, productSlugFromHash } from './pages/site'
 
 type View = 'inicio' | 'contacto' | 'nosotros' | 'servicios' | 'ingenieria' | 'productosEnergia' | 'productosAgua' | 'system' | 'demo'
 
@@ -24,7 +25,7 @@ const VIEWS: Array<{ id: View; hash: string }> = [
 ]
 
 function fromHash(): View {
-  const h = window.location.hash.replace('#', '')
+  const h = hashPage()
   if (h === '') return 'inicio'
   if (h === 'formulario') return 'contacto'
   return VIEWS.find((v) => v.hash === h)?.id ?? 'inicio'
@@ -32,13 +33,14 @@ function fromHash(): View {
 
 export function App() {
   const [view, setView] = useState<View>(fromHash)
+  const [slug, setSlug] = useState(productSlugFromHash)
 
   // Los enlaces del Navbar/Footer cambian el hash: sincronizar la vista.
   useEffect(() => {
     const onHash = () => {
-      const h = window.location.hash.replace('#', '')
       setView(fromHash())
-      if (h !== 'formulario') window.scrollTo({ top: 0 })
+      setSlug(productSlugFromHash())
+      if (hashPage() !== 'formulario') window.scrollTo({ top: 0 })
     }
     window.addEventListener('hashchange', onHash)
     return () => window.removeEventListener('hashchange', onHash)
@@ -47,8 +49,8 @@ export function App() {
   return (
     <>
       {view === 'inicio' && <Inicio />}
-      {view === 'productosEnergia' && <ProductosEnergia />}
-      {view === 'productosAgua' && <ProductosAgua />}
+      {view === 'productosEnergia' && <ProductosEnergia key={slug ?? 'energia'} />}
+      {view === 'productosAgua' && <ProductosAgua key={slug ?? 'agua'} />}
       {view === 'servicios' && <Auditoria />}
       {view === 'ingenieria' && <Ingenieria />}
       {view === 'nosotros' && <Nosotros />}
