@@ -41,6 +41,12 @@
   letter-spacing: 0;
   line-height: 0.9;
 }
+/* Caja de layout: la serif itálica no puede comerse este hueco al pintar hacia la izquierda. */
+.em::before {
+  content: '';
+  display: inline-block;
+  width: 0.35em;
+}
 .emHighlight { color: var(--eco-color-highlight); }
 .emBrand { color: var(--eco-green-600); }
 .emAccent { color: var(--eco-orange-500); }

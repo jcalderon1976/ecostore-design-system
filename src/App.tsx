@@ -6,11 +6,25 @@ import { Auditoria } from './pages/Auditoria'
 import { Ingenieria } from './pages/Ingenieria'
 import { ProductosEnergia } from './pages/ProductosEnergia'
 import { ProductosAgua } from './pages/ProductosAgua'
+import { Privacidad, Terminos } from './pages/Legal'
+import { NotFound } from './pages/NotFound'
 import { ContactPage } from './showcase/ContactPage'
 import { SystemPage } from './showcase/SystemPage'
-import { hashPage, productSlugFromHash } from './pages/site'
+import { hashPage, pageTitle, productSlugFromHash } from './pages/site'
 
-type View = 'inicio' | 'contacto' | 'nosotros' | 'servicios' | 'ingenieria' | 'productosEnergia' | 'productosAgua' | 'system' | 'demo'
+type View =
+  | 'inicio'
+  | 'contacto'
+  | 'nosotros'
+  | 'servicios'
+  | 'ingenieria'
+  | 'productosEnergia'
+  | 'productosAgua'
+  | 'privacidad'
+  | 'terminos'
+  | 'system'
+  | 'demo'
+  | 'notfound'
 
 const VIEWS: Array<{ id: View; hash: string }> = [
   { id: 'inicio', hash: 'inicio' },
@@ -20,26 +34,38 @@ const VIEWS: Array<{ id: View; hash: string }> = [
   { id: 'ingenieria', hash: 'ingenieria' },
   { id: 'nosotros', hash: 'nosotros' },
   { id: 'contacto', hash: 'contacto' },
+  { id: 'privacidad', hash: 'privacidad' },
+  { id: 'terminos', hash: 'terminos' },
   { id: 'system', hash: 'design-system' },
   { id: 'demo', hash: 'page' },
 ]
 
+const ALIASES: Record<string, View> = {
+  '': 'inicio',
+  formulario: 'contacto',
+  productos: 'productosEnergia',
+}
+
 function fromHash(): View {
   const h = hashPage()
-  if (h === '') return 'inicio'
-  if (h === 'formulario') return 'contacto'
-  return VIEWS.find((v) => v.hash === h)?.id ?? 'inicio'
+  if (h in ALIASES) return ALIASES[h]
+  return VIEWS.find((v) => v.hash === h)?.id ?? 'notfound'
 }
 
 export function App() {
   const [view, setView] = useState<View>(fromHash)
   const [slug, setSlug] = useState(productSlugFromHash)
 
+  useEffect(() => {
+    document.title = pageTitle()
+  }, [view, slug])
+
   // Los enlaces del Navbar/Footer cambian el hash: sincronizar la vista.
   useEffect(() => {
     const onHash = () => {
       setView(fromHash())
       setSlug(productSlugFromHash())
+      document.title = pageTitle()
       if (hashPage() !== 'formulario') window.scrollTo({ top: 0 })
     }
     window.addEventListener('hashchange', onHash)
@@ -55,8 +81,11 @@ export function App() {
       {view === 'ingenieria' && <Ingenieria />}
       {view === 'nosotros' && <Nosotros />}
       {view === 'contacto' && <Contacto />}
+      {view === 'privacidad' && <Privacidad />}
+      {view === 'terminos' && <Terminos />}
       {view === 'system' && <SystemPage />}
       {view === 'demo' && <ContactPage />}
+      {view === 'notfound' && <NotFound />}
     </>
   )
 }

@@ -1,60 +1,77 @@
-import { useRef } from 'react'
-import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react'
-import { Logo, Reveal, ProductDropCard, type DropItem } from '@ds'
-import { SITE, ROUTES } from '../site'
-import { ENERGIA, AGUA } from './SolutionsCatalog'
-import styles from './EcoLoTiene.module.css'
+import { useRef } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "motion/react";
+import { Reveal, ProductDropCard, type DropItem } from "@ds";
+import { SITE, ROUTES } from "../site";
+import { ENERGIA, AGUA } from "./SolutionsCatalog";
+import styles from "./EcoLoTiene.module.css";
 
-const img = (name: string) => `${SITE.base}images/${name}`
+const img = (name: string) => `${SITE.base}images/${name}`;
 
 function toDrops(list: typeof ENERGIA, collection: string): DropItem[] {
   return list.flatMap((s) =>
     s.image
-      ? [{
-          time: collection,
-          name: s.title,
-          collection: s.items.slice(0, 2).join(' · '),
-          imageSrc: img(s.image),
-          imageAlt: s.alt ?? s.title,
-          href: DROP_HREF[s.title],
-        }]
+      ? [
+          {
+            time: collection,
+            name: s.title,
+            collection: s.items.slice(0, 2).join(" · "),
+            imageSrc: img(s.image),
+            imageAlt: s.alt ?? s.title,
+            href: DROP_HREF[s.title],
+          },
+        ]
       : [],
-  )
+  );
 }
 
 const DROP_HREF: Record<string, string> = {
-  'Climatización': `${ROUTES.productosEnergia}/climatizacion`,
-  'Electrodomésticos': `${ROUTES.productosEnergia}/lavaseca`,
-  'Iluminación y Controles': `${ROUTES.productosEnergia}/led`,
-  'Eficiencia de la Propiedad': `${ROUTES.productosEnergia}/sealer`,
-  'Solar y Baterías': `${ROUTES.productosEnergia}/solares`,
-  'Agua Caliente': `${ROUTES.productosAgua}/calentador-solar`,
-  'Conservación de Agua': `${ROUTES.productosAgua}/duchas`,
-  'Tratamiento de Agua': `${ROUTES.productosAgua}/tratamiento`,
-}
+  Climatización: `${ROUTES.productosEnergia}/climatizacion`,
+  Electrodomésticos: `${ROUTES.productosEnergia}/lavaseca`,
+  "Iluminación y Controles": `${ROUTES.productosEnergia}/led`,
+  "Eficiencia de la Propiedad": `${ROUTES.productosEnergia}/sealer`,
+  "Solar y Baterías": `${ROUTES.productosEnergia}/solares`,
+  "Agua Caliente": `${ROUTES.productosAgua}/calentador-solar`,
+  "Conservación de Agua": `${ROUTES.productosAgua}/duchas`,
+  "Tratamiento de Agua": `${ROUTES.productosAgua}/tratamiento`,
+};
 
-const WATER_TITLES = new Set(['Agua Caliente', 'Almacenamiento'])
-const HIDDEN_AGUA = new Set(['Almacenamiento', 'Captación de Agua de Lluvia'])
+const WATER_TITLES = new Set(["Agua Caliente", "Almacenamiento"]);
+const HIDDEN_AGUA = new Set(["Almacenamiento", "Captación de Agua de Lluvia"]);
 
 const DROPS: DropItem[] = [
-  ...toDrops(ENERGIA.filter((s) => !WATER_TITLES.has(s.title)), 'Energía'),
-  ...toDrops(ENERGIA.filter((s) => s.title === 'Agua Caliente'), 'Agua'),
-  ...toDrops(AGUA.filter((s) => !HIDDEN_AGUA.has(s.title)), 'Agua'),
-]
+  ...toDrops(
+    ENERGIA.filter((s) => !WATER_TITLES.has(s.title)),
+    "Energía",
+  ),
+  ...toDrops(
+    ENERGIA.filter((s) => s.title === "Agua Caliente"),
+    "Agua",
+  ),
+  ...toDrops(
+    AGUA.filter((s) => !HIDDEN_AGUA.has(s.title)),
+    "Agua",
+  ),
+];
 
 const WORDS = [
-  { text: 'ECO', tone: 'eco' as const },
-  { text: 'lo', tone: 'lo' as const },
-  { text: 'tiene', tone: 'lo' as const },
-]
+  { text: "ECO", tone: "eco" as const },
+  { text: "lo", tone: "lo" as const },
+  { text: "tiene", tone: "lo" as const },
+];
 
-const START_OPACITY = 0.16
-const SPREAD = 0.72
-const WORD_DURATION = 0.28
+const START_OPACITY = 0.16;
+const SPREAD = 0.72;
+const WORD_DURATION = 0.28;
 
 function wordRange(index: number, count: number) {
-  const start = count <= 1 ? 0 : (index / (count - 1)) * SPREAD
-  return { start, end: Math.min(1, start + WORD_DURATION) }
+  const start = count <= 1 ? 0 : (index / (count - 1)) * SPREAD;
+  return { start, end: Math.min(1, start + WORD_DURATION) };
 }
 
 function Word({
@@ -65,55 +82,58 @@ function Word({
   count,
   reducedMotion,
 }: {
-  text: string
-  tone: 'eco' | 'lo'
-  progress: MotionValue<number>
-  index: number
-  count: number
-  reducedMotion: boolean
+  text: string;
+  tone: "eco" | "lo";
+  progress: MotionValue<number>;
+  index: number;
+  count: number;
+  reducedMotion: boolean;
 }) {
-  const { start, end } = wordRange(index, count)
+  const { start, end } = wordRange(index, count);
   const opacity = useTransform(progress, (latest) => {
-    if (latest <= start) return START_OPACITY
-    if (latest >= end) return 1
-    return START_OPACITY + (1 - START_OPACITY) * ((latest - start) / (end - start))
-  })
-  const y = useTransform(progress, [start, end], [18, 0])
+    if (latest <= start) return START_OPACITY;
+    if (latest >= end) return 1;
+    return (
+      START_OPACITY + (1 - START_OPACITY) * ((latest - start) / (end - start))
+    );
+  });
+  const y = useTransform(progress, [start, end], [18, 0]);
 
   return (
     <motion.span
-      className={tone === 'eco' ? styles.eco : styles.lo}
+      className={tone === "eco" ? styles.eco : styles.lo}
       aria-hidden="true"
       style={reducedMotion ? undefined : { opacity, y }}
     >
       {text}
     </motion.span>
-  )
+  );
 }
 
 /** Infográfico "ECO lo tiene": logo, título y carrusel. Reutilizado en Contáctanos y Nosotros. */
 export function EcoLoTiene({ hideBrand = false }: { hideBrand?: boolean }) {
-  const reduce = useReducedMotion()
-  const headerRef = useRef<HTMLDivElement>(null)
+  const reduce = useReducedMotion();
+  const headerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: headerRef,
-    offset: ['start 0.92', 'start 0.4'],
-  })
+    offset: ["start 0.92", "start 0.4"],
+  });
 
   return (
     <section
       className={styles.section}
       id="eco-lo-tiene"
-      aria-labelledby={hideBrand ? undefined : 'eco-lo-tiene-title'}
-      aria-label={hideBrand ? 'Nuestros productos' : undefined}
+      aria-labelledby={hideBrand ? undefined : "eco-lo-tiene-title"}
+      aria-label={hideBrand ? "Nuestros productos" : undefined}
     >
       <div className={styles.wrap}>
         {!hideBrand && (
           <div ref={headerRef} className={styles.header}>
-            <div className={styles.brand}>
-              <Logo src={img('logo-eco-store-full.png?v=3')} className={styles.logo} />
-            </div>
-            <h2 id="eco-lo-tiene-title" className={styles.title} aria-label="ECO lo tiene">
+            <h2
+              id="eco-lo-tiene-title"
+              className={styles.title}
+              aria-label="ECO lo tiene"
+            >
               {WORDS.map((word, index) => (
                 <span key={`${word.text}-${index}`}>
                   <Word
@@ -124,7 +144,7 @@ export function EcoLoTiene({ hideBrand = false }: { hideBrand?: boolean }) {
                     count={WORDS.length}
                     reducedMotion={Boolean(reduce)}
                   />
-                  {index < WORDS.length - 1 ? ' ' : null}
+                  {index < WORDS.length - 1 ? " " : null}
                 </span>
               ))}
             </h2>
@@ -139,5 +159,5 @@ export function EcoLoTiene({ hideBrand = false }: { hideBrand?: boolean }) {
         </Reveal>
       </div>
     </section>
-  )
+  );
 }

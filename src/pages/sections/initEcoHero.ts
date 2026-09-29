@@ -26,8 +26,6 @@ const ICONS: Record<string, string> = {
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="3" width="16" height="6" rx="3"/><path d="M6 9l-2 12M10 9l-1 12M14 9l1 12M18 9l2 12"/></svg>',
   ac:
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="14" rx="2"/><circle cx="9" cy="11" r="4"/><path d="M9 7v8M5 11h8M16 8h3M16 11h3M16 14h3M5 21h14"/></svg>',
-  ev:
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="4" y="3" width="10" height="18" rx="2"/><path d="M10 7l-3 5h4l-3 5"/><path d="M14 10h2a2 2 0 0 1 2 2v4a2 2 0 0 0 4 0V8l-2-2"/></svg>',
   filter:
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="6" width="6" height="15" rx="2"/><rect x="13" y="6" width="6" height="15" rx="2"/><path d="M8 6V3h8v3M8 11v5M16 11v5"/></svg>',
   led:
@@ -45,7 +43,6 @@ const PRODUCTS: Product[] = [
   { id: 'ac', x: 80, y: 18, side: 'r', len: 70, dy: 24, title: 'A/C Inverter', sub: 'Confort eficiente', desc: 'Climatización con tecnología inverter que consume hasta 60% menos energía.', href: `${ROUTES.productosEnergia}/climatizacion` },
   { id: 'glass', x: 33, y: 36, side: 'l', len: 100, title: 'Aislamiento Térmico', sub: 'Ventanas de doble cristal', desc: 'Doble panel que aísla mejor el hogar. Menos calor, menos ruido y menos kWh en climatización.', href: `${ROUTES.productosEnergia}/doble-cristal` },
   { id: 'led', x: 36, y: 63, side: 'l', len: 120, title: 'Iluminación LED', sub: 'Luz que ahorra', desc: 'Luminarias LED interiores y exteriores con larga vida útil y bajo consumo.', href: `${ROUTES.productosEnergia}/led` },
-  { id: 'ev', x: 93, y: 64, side: 'l', len: 110, title: 'Cargador Eléctrico', sub: 'Para tu vehículo EV', desc: 'Estaciones de carga Nivel 2 instaladas en tu marquesina, listas para solar.', href: `${ROUTES.productosEnergia}/solares` },
   { id: 'filter', x: 81, y: 83, side: 'r', len: 110, title: 'Filtración de Agua', sub: 'Agua pura en casa', desc: 'Sistemas de filtración y suavizadores para toda la casa. Agua limpia en cada llave.', href: `${ROUTES.productosAgua}/tratamiento` },
 ]
 
@@ -164,8 +161,8 @@ export function initEcoHero(root: HTMLElement): () => void {
     const bgTravel = Math.max(0, bg!.offsetHeight - vh)
     bg!.style.transform = `translate3d(${curMX * -8}px, ${-bgTravel * 0.42 * ease(range(p, 0, 0.6)) + curMY * -6}px, 0) scale(1.04)`
 
-    heroLogo!.style.transform = `translate3d(${curMX * 10}px, ${-a * vh * 0.35}px, 0) scale(${1 - a * 0.25})`
-    headline!.style.transform = `translate3d(${curMX * 16}px, ${-a * vh * 0.5}px, 0)`
+    heroLogo!.style.transform = `translate3d(${curMX * 8}px, ${a * 16}px, 0) scale(${1 - a * 0.12})`
+    headline!.style.transform = `translate3d(${curMX * 12}px, ${a * 10}px, 0)`
     intro!.style.opacity = String(1 - range(p, 0.06, 0.26))
 
     const houseH = house!.offsetHeight
@@ -173,6 +170,8 @@ export function initEcoHero(root: HTMLElement): () => void {
     const cardOn = Boolean(mobile && mobileCard?.classList.contains('on'))
     const cardH = cardOn ? mobileCard!.getBoundingClientRect().height : 0
     const cardReserve = mobile ? Math.min(176, vh * 0.28) : 0
+    const tipReserve = mobile ? 10 : 108
+    const captionReserve = mobile ? 0 : 56
 
     const parked = ease(range(p, 0, 0.32))
     const startX = -hintW / 2
@@ -185,17 +184,18 @@ export function initEcoHero(root: HTMLElement): () => void {
     hint!.style.transform = `translate3d(${tx}px, 0, 0) scale(${1 - parked * 0.08})`
     hint!.style.opacity = String(1 - range(p, T1, 0.995))
     const s0 = mobile ? 1 : 0.92
-    const s1 = mobile
-      ? Math.min(1, (vh - navH - cardReserve) / houseH)
-      : Math.min(1, (vh * 0.8) / houseH)
+    const fitH = Math.max(
+      160,
+      vh - navH - tipReserve - (mobile ? cardReserve : captionReserve),
+    )
+    const s1 = Math.min(1, fitH / houseH)
     const introBottom = intro!.offsetTop + intro!.offsetHeight
     const startTop = Math.min(Math.max(introBottom + 12, vh * 0.5), vh * 0.82)
-    const restTop = mobile
-      ? navH + Math.max(4, (vh - navH - cardReserve - houseH * s1) / 2)
-      : navH + Math.max(0, (vh - navH - houseH * s1) / 2)
+    const restTop =
+      navH + tipReserve + Math.max(0, (fitH - houseH * s1) / 2)
     const s = lerp(s0, s1, a)
     const y = lerp(startTop - vh + houseH * s0, restTop - vh + houseH * s1, a)
-    house!.style.transform = `translate3d(${curMX * 22}px, ${y + curMY * 10}px, 0) scale(${s})`
+    house!.style.transform = `translate3d(${curMX * 16}px, ${y + curMY * 4}px, 0) scale(${s})`
 
     let active = -1
     for (let i = 0; i < spots.length; i++) {

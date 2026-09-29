@@ -17,8 +17,17 @@
   align-items: stretch;
 }
 .formCard { border-radius: var(--eco-radius-xl); }
+.formTitle em::before { width: 0.42em; }
 .formGrid { gap: var(--eco-space-4); }
 .secure { display: inline-flex; align-items: center; justify-content: center; gap: var(--eco-space-2); }
+.submitError { color: var(--eco-danger-500); font-weight: var(--eco-weight-medium); }
+.honey {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
 
 .aside { position: relative; min-height: 640px; }
 .asideImage {

@@ -2,7 +2,7 @@
  * Datos compartidos del sitio: contacto, navegación, redes y footer.
  * Una sola fuente de verdad para todas las páginas.
  */
-import type { NavItem, SocialLink, FooterColumn, FooterContact } from '@ds'
+import type { NavItem, SocialLink, FooterColumn, FooterContact, FooterLink } from '@ds'
 
 const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/'
 
@@ -36,11 +36,35 @@ export const ROUTES = {
   contacto: '#contacto',
   /** CTA "Agenda una evaluación": Contacto + sección del formulario. */
   agenda: '#formulario',
+  privacidad: '#privacidad',
+  terminos: '#terminos',
 } as const
 
 /** Página del hash (`productos-energia/led` → `productos-energia`). */
 export function hashPage(hash = typeof window === 'undefined' ? '' : window.location.hash): string {
   return hash.replace(/^#/, '').split('/')[0]
+}
+
+const PAGE_TITLES: Record<string, string> = {
+  '': 'EcoStore',
+  inicio: 'EcoStore',
+  formulario: 'Agenda una evaluación · EcoStore',
+  contacto: 'Contáctanos · EcoStore',
+  productos: 'Eficiencia Energética · EcoStore',
+  'productos-energia': 'Eficiencia Energética · EcoStore',
+  'productos-agua': 'Conservación de agua · EcoStore',
+  servicios: 'Auditoría energética · EcoStore',
+  ingenieria: 'Servicios de ingeniería · EcoStore',
+  nosotros: 'Nosotros · EcoStore',
+  privacidad: 'Privacidad · EcoStore',
+  terminos: 'Términos · EcoStore',
+  'design-system': 'Design System · EcoStore',
+  page: 'Demo · EcoStore',
+}
+
+/** Título de pestaña: EcoStore + página actual. */
+export function pageTitle(hash = typeof window === 'undefined' ? '' : window.location.hash): string {
+  return PAGE_TITLES[hashPage(hash)] ?? 'Página no encontrada · EcoStore'
 }
 
 /** Slug de producto en el hash (`#productos-energia/led` → `led`). */
@@ -102,14 +126,19 @@ export const NAV = (active: PageKey): NavItem[] => [
   { label: 'Contáctanos', href: ROUTES.contacto, active: active === 'contacto' },
 ]
 
+/** Perfiles oficiales de EcoStore (Facebook) y del canal ESCOPR (YouTube). */
 export const SOCIAL: SocialLink[] = [
-  { network: 'facebook', href: 'https://facebook.com' },
-  { network: 'instagram', href: 'https://instagram.com' },
-  { network: 'youtube', href: 'https://youtube.com' },
-  { network: 'linkedin', href: 'https://linkedin.com' },
+  { network: 'facebook', href: 'https://www.facebook.com/ahorraaguapr' },
+  { network: 'youtube', href: 'https://www.youtube.com/@escopr5800' },
 ]
 
-export const FOOTER: { description: string; columns: FooterColumn[]; contact: FooterContact; copyright: string } = {
+export const FOOTER: {
+  description: string
+  columns: FooterColumn[]
+  contact: FooterContact
+  copyright: string
+  legal: FooterLink[]
+} = {
   description: 'Más de 20 años ayudando a hogares y negocios en Puerto Rico a reducir su consumo de energía y agua.',
   columns: [
     { title: 'Enlaces rápidos', links: [
@@ -121,6 +150,10 @@ export const FOOTER: { description: string; columns: FooterColumn[]; contact: Fo
     ] },
   ],
   copyright: `© ${new Date().getFullYear()} ECOSTORE ·`,
+  legal: [
+    { label: 'Privacidad', href: ROUTES.privacidad },
+    { label: 'Términos', href: ROUTES.terminos },
+  ],
   contact: {
     phone: '787-664-7676',
     phoneHref: SITE.phoneHref,

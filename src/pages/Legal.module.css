@@ -1,0 +1,27 @@
+.article :is(h2) {
+  margin: 0;
+}
+
+.article :is(ul) {
+  margin: 0;
+  padding-left: 1.2em;
+  display: flex;
+  flex-direction: column;
+  gap: var(--eco-space-2);
+}
+
+.article :is(li) {
+  color: var(--eco-color-text-body);
+  line-height: 1.65;
+}
+
+.updated {
+  margin-top: var(--eco-space-8);
+}
+
+.notFound {
+  min-height: calc(70dvh - var(--eco-nav-h));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

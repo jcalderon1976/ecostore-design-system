@@ -27,6 +27,7 @@ const icons = {
 }
 
 export function SocialLinks({ links, tone = 'outline', size = 'sm', shape = 'circle', className, ...rest }: SocialLinksProps) {
+  if (links.length === 0) return null
   return (
     <ul className={cx(styles.list, className)} {...rest}>
       {links.map(({ network, href }) => {

@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import {
   Navbar, Footer, Hero, Em, TrustItem, TrustList, Reveal,
   Section, Container, Grid, Stack, Row,
@@ -8,7 +8,8 @@ import {
   ShieldIcon, ClockIcon, PhoneIcon, MailIcon, MapPinIcon, ChatIcon, CalendarIcon, LockIcon,
   SunIcon, DropletIcon, ZapIcon, IconCircle, LeafIcon,
 } from '@ds'
-import { FOOTER } from '../pages/site'
+import { FOOTER, SOCIAL } from '../pages/site'
+import { payloadFromForm, consumeSentFlag, contactFormAction, thanksUrl, validateContact, type ContactErrors } from '../pages/contactForm'
 import { FloorPlan } from './FloorPlan'
 import { HeroVisual } from './HeroVisual'
 import styles from './ContactPage.module.css'
@@ -20,22 +21,42 @@ const NAV = [
   { label: 'Contáctanos', href: '#contacto', active: true },
 ]
 
-const SOCIAL = [
-  { network: 'facebook' as const, href: 'https://facebook.com' },
-  { network: 'instagram' as const, href: 'https://instagram.com' },
-  { network: 'youtube' as const, href: 'https://youtube.com' },
-  { network: 'linkedin' as const, href: 'https://linkedin.com' },
-]
-
 /** Página de contacto premium construida únicamente con componentes del sistema. */
 export function ContactPage() {
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [errors, setErrors] = useState<ContactErrors>({})
+  const [submitError, setSubmitError] = useState('')
 
-  const onSubmit = (e: FormEvent) => {
+  useEffect(() => {
+    if (consumeSentFlag()) setSent(true)
+  }, [])
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    const form = e.currentTarget
+    const payload = payloadFromForm(form)
+    const next = validateContact(payload)
+    setErrors(next)
+    setSubmitError('')
+    if (Object.keys(next).length > 0) {
+      const first = (['nombre', 'telefono', 'email'] as const).find((key) => next[key])
+      const control = first ? form.elements.namedItem(first) : null
+      if (control instanceof HTMLElement) control.focus()
+      return
+    }
+    const nextUrl = form.elements.namedItem('_next')
+    if (nextUrl instanceof HTMLInputElement) nextUrl.value = thanksUrl()
+    const subject = form.elements.namedItem('_subject')
+    if (subject instanceof HTMLInputElement) {
+      subject.value = `Solicitud de evaluación — ${payload.nombre.trim()}`
+    }
     setLoading(true)
-    setTimeout(() => { setLoading(false); setSent(true) }, 900)
+    form.submit()
+  }
+
+  const clearError = (field: keyof ContactErrors) => {
+    setErrors((prev) => (prev[field] ? { ...prev, [field]: undefined } : prev))
   }
 
   return (
@@ -95,11 +116,13 @@ export function ContactPage() {
               <Reveal delay={120}>
                 <ContactCard icon={<MapPinIcon size={22} />} title="Visítanos" meta={<><ContactMetaStrong>1354 Ave. F.D. Roosevelt, San Juan, PR 00920</ContactMetaStrong><br />Estacionamiento disponible.</>} />
               </Reveal>
+              {SOCIAL.length > 0 && (
               <Reveal delay={180}>
                 <ContactCard icon={<ChatIcon size={22} />} title="Síguenos" meta="Consejos de ahorro, noticias y promociones.">
                   <SocialLinks links={SOCIAL} tone="outline" size="sm" />
                 </ContactCard>
               </Reveal>
+              )}
             </Grid>
           </Stack>
         </Container>
@@ -155,7 +178,7 @@ export function ContactPage() {
               <Card variant="mint" padding="lg" className={styles.formCard}>
                 <Stack gap={8}>
                   <Stack gap={3}>
-                    <Heading level="h1" as="h2" tone="brand">Agenda tu orientación <Em tone="brand">personalizada</Em></Heading>
+                    <Heading level="h1" as="h2" tone="brand" className={styles.formTitle}>Agenda tu orientación<Em tone="brand">personalizada</Em></Heading>
                     <Text>Déjanos tus datos y nuestro equipo te contactará en menos de 24 horas.</Text>
                   </Stack>
 
@@ -170,17 +193,22 @@ export function ContactPage() {
                       </Row>
                     </Card>
                   ) : (
-                    <form onSubmit={onSubmit} noValidate>
+                    <form action={contactFormAction()} method="POST" onSubmit={onSubmit} noValidate>
+                      <input type="hidden" name="_next" value="" />
+                      <input type="hidden" name="_subject" value="Solicitud de evaluación EcoStore" />
+                      <input type="hidden" name="_template" value="table" />
+                      <input type="hidden" name="_captcha" value="false" />
+                      <input type="text" name="_honey" tabIndex={-1} autoComplete="off" className={styles.honey} aria-hidden="true" />
                       <Stack gap={5}>
                         <Grid columns={2} gap={4} className={styles.formGrid}>
-                          <FormField label="Nombre completo" required>
-                            <Input name="nombre" placeholder="Ana Rivera" autoComplete="name" />
+                          <FormField label="Nombre completo" required error={errors.nombre}>
+                            <Input name="nombre" placeholder="Ana Rivera" autoComplete="name" onChange={() => clearError('nombre')} />
                           </FormField>
-                          <FormField label="Teléfono" required>
-                            <Input name="telefono" type="tel" placeholder="(787) 000-0000" autoComplete="tel" />
+                          <FormField label="Teléfono" required error={errors.telefono}>
+                            <Input name="telefono" type="tel" placeholder="(787) 000-0000" autoComplete="tel" onChange={() => clearError('telefono')} />
                           </FormField>
-                          <FormField label="Correo electrónico" required>
-                            <Input name="email" type="email" placeholder="ana@ejemplo.com" autoComplete="email" />
+                          <FormField label="Correo electrónico" required error={errors.email}>
+                            <Input name="email" type="email" placeholder="ana@ejemplo.com" autoComplete="email" onChange={() => clearError('email')} />
                           </FormField>
                           <FormField label="Tipo de propiedad">
                             <Select
@@ -204,6 +232,12 @@ export function ContactPage() {
                         <FormField label="Cuéntanos sobre tu propiedad" hint="Metros cuadrados, número de personas, factura mensual aproximada… lo que sepas.">
                           <Textarea name="mensaje" placeholder="Casa de dos plantas en Guaynabo, 4 personas, factura de unos $280 al mes." />
                         </FormField>
+
+                        {submitError ? (
+                          <Text size="sm" className={styles.submitError} role="alert">
+                            {submitError}
+                          </Text>
+                        ) : null}
 
                         <Button type="submit" size="lg" fullWidth loading={loading} arrow leadingIcon={<CalendarIcon size={20} />}>
                           Enviar solicitud

@@ -171,6 +171,7 @@ export function Footer({
                 <span className={styles.contactValue}>{contact.hours}</span>
               </li>
             </ul>
+            {social.length > 0 && (
             <div className={styles.social}>
               <SocialLinks
                 links={social}
@@ -178,6 +179,7 @@ export function Footer({
                 shape="square"
               />
             </div>
+            )}
           </div>
         </div>
 

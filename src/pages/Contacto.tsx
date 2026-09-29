@@ -8,6 +8,7 @@ import {
 } from '@ds'
 import { SITE, NAV, SOCIAL, FOOTER, ROUTES } from './site'
 import { EcoLoTiene } from './sections/EcoLoTiene'
+import { payloadFromForm, consumeSentFlag, contactFormAction, thanksUrl, validateContact, type ContactErrors } from './contactForm'
 import styles from './Contacto.module.css'
 
 const IMG = {
@@ -28,8 +29,11 @@ export function Contacto() {
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
   const [interes, setInteres] = useState<Interes>('')
+  const [errors, setErrors] = useState<ContactErrors>({})
+  const [submitError, setSubmitError] = useState('')
 
   useEffect(() => {
+    if (consumeSentFlag()) setSent(true)
     const go = () => {
       if (window.location.hash.replace('#', '') !== 'formulario') return
       const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -45,11 +49,32 @@ export function Contacto() {
     return () => window.removeEventListener('hashchange', go)
   }, [])
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    const form = e.currentTarget
+    const payload = payloadFromForm(form, interes)
+    const next = validateContact(payload)
+    setErrors(next)
+    setSubmitError('')
+    if (Object.keys(next).length > 0) {
+      const first = (['nombre', 'telefono', 'email'] as const).find((key) => next[key])
+      const control = first ? form.elements.namedItem(first) : null
+      if (control instanceof HTMLElement) control.focus()
+      return
+    }
+
+    const nextUrl = form.elements.namedItem('_next')
+    if (nextUrl instanceof HTMLInputElement) nextUrl.value = thanksUrl()
+    const subject = form.elements.namedItem('_subject')
+    if (subject instanceof HTMLInputElement) {
+      subject.value = `Solicitud de evaluación — ${payload.nombre.trim()}`
+    }
     setLoading(true)
-    // Sustituir por la llamada real al backend / servicio de formularios.
-    setTimeout(() => { setLoading(false); setSent(true) }, 900)
+    form.submit()
+  }
+
+  const clearError = (field: keyof ContactErrors) => {
+    setErrors((prev) => (prev[field] ? { ...prev, [field]: undefined } : prev))
   }
 
   return (
@@ -99,11 +124,13 @@ export function Contacto() {
                   trailDelay={1}
                 />
               </Reveal>
+              {SOCIAL.length > 0 && (
               <Reveal delay={180}>
                 <ContactCard icon={<ChatIcon size={22} />} title="Síguenos" meta={<>Mantente al día con consejos,<br />noticias y promociones.</>} trailDelay={1.5}>
                   <SocialLinks links={SOCIAL} tone="outline" size="sm" />
                 </ContactCard>
               </Reveal>
+              )}
             </Grid>
           </Stack>
         </Container>
@@ -117,7 +144,7 @@ export function Contacto() {
               <Card variant="mint" padding="lg" className={styles.formCard}>
                 <Stack gap={6}>
                   <Stack gap={3}>
-                    <Heading level="h1" as="h2" tone="brand">Agenda tu orientación <Em tone="brand">personalizada</Em></Heading>
+                    <Heading level="h1" as="h2" tone="brand" className={styles.formTitle}>Agenda tu orientación<Em tone="brand">personalizada</Em></Heading>
                     <Text>Déjanos tus datos y nuestro equipo te contactará.</Text>
                   </Stack>
 
@@ -132,17 +159,42 @@ export function Contacto() {
                       </Row>
                     </Card>
                   ) : (
-                    <form onSubmit={onSubmit} noValidate>
+                    <form action={contactFormAction()} method="POST" onSubmit={onSubmit} noValidate>
+                      <input type="hidden" name="_next" value="" />
+                      <input type="hidden" name="_subject" value="Solicitud de evaluación EcoStore" />
+                      <input type="hidden" name="_template" value="table" />
+                      <input type="hidden" name="_captcha" value="false" />
+                      <input type="text" name="_honey" tabIndex={-1} autoComplete="off" className={styles.honey} aria-hidden="true" />
                       <Stack gap={4}>
                         <Grid columns={2} gap={4} className={styles.formGrid}>
-                          <FormField required>
-                            <Input name="nombre" placeholder="Nombre completo" autoComplete="name" aria-label="Nombre completo" />
+                          <FormField required error={errors.nombre}>
+                            <Input
+                              name="nombre"
+                              placeholder="Nombre completo"
+                              autoComplete="name"
+                              aria-label="Nombre completo"
+                              onChange={() => clearError('nombre')}
+                            />
                           </FormField>
-                          <FormField required>
-                            <Input name="telefono" type="tel" placeholder="Teléfono" autoComplete="tel" aria-label="Teléfono" />
+                          <FormField required error={errors.telefono}>
+                            <Input
+                              name="telefono"
+                              type="tel"
+                              placeholder="Teléfono"
+                              autoComplete="tel"
+                              aria-label="Teléfono"
+                              onChange={() => clearError('telefono')}
+                            />
                           </FormField>
-                          <FormField required>
-                            <Input name="email" type="email" placeholder="Correo electrónico" autoComplete="email" aria-label="Correo electrónico" />
+                          <FormField required error={errors.email}>
+                            <Input
+                              name="email"
+                              type="email"
+                              placeholder="Correo electrónico"
+                              autoComplete="email"
+                              aria-label="Correo electrónico"
+                              onChange={() => clearError('email')}
+                            />
                           </FormField>
                           <FormField>
                             <Select
@@ -167,6 +219,12 @@ export function Contacto() {
                         <FormField>
                           <Textarea name="mensaje" placeholder="Cuéntanos brevemente sobre tu propiedad o necesidad" aria-label="Mensaje" />
                         </FormField>
+
+                        {submitError ? (
+                          <Text size="sm" className={styles.submitError} role="alert">
+                            {submitError}
+                          </Text>
+                        ) : null}
 
                         <Button type="submit" size="lg" fullWidth loading={loading} leadingIcon={<CalendarIcon size={20} />}>
                           Enviar solicitud

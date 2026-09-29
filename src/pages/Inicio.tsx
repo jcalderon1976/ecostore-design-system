@@ -34,6 +34,7 @@ export function Inicio() {
     <>
       <Navbar
         overlay
+        overlayUntil=".eco-hero-overlay-until"
         items={NAV("inicio")}
         ctaHref={ROUTES.agenda}
         phone={SITE.phone}
