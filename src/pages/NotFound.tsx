@@ -10,6 +10,8 @@ import {
   Button,
 } from '@ds'
 import { SITE, NAV, SOCIAL, FOOTER, ROUTES } from './site'
+import { SEO } from './seo'
+import { SeoHead } from './SeoHead'
 import styles from './Legal.module.css'
 
 /** Hash desconocido: no reutiliza el inicio. */
@@ -20,6 +22,7 @@ export function NotFound() {
 
   return (
     <>
+      <SeoHead {...SEO.notfound} />
       <Navbar
         items={NAV('inicio')}
         ctaHref={ROUTES.agenda}

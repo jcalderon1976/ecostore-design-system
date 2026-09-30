@@ -1,0 +1,19 @@
+# EcoStore
+
+EcoStore es una tienda y firma de orientación en eficiencia energética y conservación de agua en Puerto Rico.
+
+- Dirección: 1354 Avenida F.D. Roosevelt, San Juan, 00920
+- Teléfono: (787) 664-7676
+- Correo: info@ecostorepr.com
+- Horario: lunes a viernes, 8:00 a.m. a 5:00 p.m.
+
+Páginas útiles:
+
+- /energia-solar — paneles, inversores y baterías
+- /calentadores-solares — agua caliente solar y heat pump
+- /conservacion-de-agua — duchas, inodoros y tratamiento
+- /auditoria-energetica — diagnóstico de consumo y retorno
+- /contacto — agenda una evaluación
+
+Facebook: https://www.facebook.com/ahorraaguapr
+YouTube: https://www.youtube.com/@escopr5800

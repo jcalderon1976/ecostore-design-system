@@ -11,15 +11,19 @@ import {
   Eyebrow,
 } from '@ds'
 import { SITE, NAV, SOCIAL, FOOTER, ROUTES } from './site'
+import { SEO } from './seo'
+import { SeoHead } from './SeoHead'
 import styles from './Legal.module.css'
 
 function LegalShell({
   title,
   lead,
+  seo,
   children,
 }: {
   title: string
   lead: string
+  seo: (typeof SEO)['privacidad']
   children: ReactNode
 }) {
   useEffect(() => {
@@ -28,6 +32,7 @@ function LegalShell({
 
   return (
     <>
+      <SeoHead {...seo} />
       <Navbar
         items={NAV('inicio')}
         ctaHref={ROUTES.agenda}
@@ -69,6 +74,7 @@ export function Privacidad() {
     <LegalShell
       title="Política de privacidad"
       lead="Explica cómo EcoStore recopila, usa y protege la información que nos das al usar este sitio o al solicitar una evaluación."
+      seo={SEO.privacidad}
     >
       <Block title="Quiénes somos">
         <Text>
@@ -125,6 +131,7 @@ export function Terminos() {
     <LegalShell
       title="Términos de uso"
       lead="Condiciones para usar el sitio de EcoStore y para las solicitudes de orientación o evaluación que envíes por este medio."
+      seo={SEO.terminos}
     >
       <Block title="El sitio">
         <Text>

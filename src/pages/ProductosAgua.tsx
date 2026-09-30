@@ -1,5 +1,8 @@
 import { Navbar, Footer, FigurineCarousel } from '@ds'
-import { SITE, NAV, SOCIAL, FOOTER, ROUTES, productIndexFromHash } from './site'
+import { SITE, NAV, SOCIAL, FOOTER, ROUTES, productIndexFromHash, productSlugFromHash } from './site'
+import { SEO, breadcrumbJsonLd, faqJsonLd } from './seo'
+import { SeoHead } from './SeoHead'
+import { ServiceGuide } from './ServiceGuide'
 import { EcoLoTiene } from './sections/EcoLoTiene'
 
 const agua = (name: string) => `${SITE.base}images/agua/${name}`
@@ -96,6 +99,43 @@ const PRODUCTS = [
   },
 ] as const
 
+const AGUA_FAQ = [
+  {
+    question: '¿Qué es conservación de agua en EcoStore?',
+    answer:
+      'Productos y orientación para usar menos agua sin perder confort: duchas y aireadores de bajo flujo, inodoros eficientes y tratamiento cuando la calidad del agua lo pide.',
+  },
+  {
+    question: '¿Por dónde empezar en un hogar en Puerto Rico?',
+    answer:
+      'Casi siempre por las duchas y los aireadores: se instalan rápido y bajan galones por minuto. El inodoro y la filtración se evalúan según fugas, presión y calidad del agua del sector.',
+  },
+  {
+    question: '¿Hacen evaluación de agua y de energía juntas?',
+    answer:
+      'Sí. Muchos clientes llegan por la luz y descubren fugas o equipos de agua que también mueven la factura. En el formulario puedes marcar ambas.',
+  },
+]
+
+const AGUA_BLOCKS = [
+  {
+    title: 'Para quién aplica',
+    body: 'Hogares y negocios que pagan mucha agua, tienen cisterna, o quieren reducir descarga y ducha sin obras grandes. El tratamiento (ósmosis, filtros) se recomienda cuando hay sedimento, dureza o sabor.',
+  },
+  {
+    title: 'Cómo funciona',
+    body: 'Menos caudal en el punto de uso (ducha, grifo) y menos litros por descarga en el inodoro. El tratamiento limpia o acondiciona el agua que ya entra a la casa.',
+  },
+  {
+    title: 'Qué incluye la evaluación',
+    body: 'Uso de agua, presión, si hay cisterna o pozo, y si el problema es consumo, calidad o ambos. Sales con una prioridad de productos, no con un paquete cerrado.',
+  },
+  {
+    title: 'Qué mueve el ahorro',
+    body: 'Personas en la casa, minutos de ducha, inodoros viejos y fugas. Un porcentaje como “hasta 40% menos agua” en duchas depende de lo que tengas hoy y de cómo las uses.',
+  },
+]
+
 const FEATURED = PRODUCTS.map((p, i) => ({
   src: agua(p.file),
   alt: p.alt,
@@ -108,8 +148,24 @@ const FEATURED = PRODUCTS.map((p, i) => ({
 
 /** Productos · Conservación de agua. Hero-carrusel de productos a pantalla completa. */
 export function ProductosAgua() {
+  const slug = productSlugFromHash()
+  const product = PRODUCTS.find((p) => p.slug === slug)
+  const path = slug ? `${ROUTES.productosAgua}/${slug}` : ROUTES.productosAgua
   return (
     <>
+      <SeoHead
+        title={product ? `${product.name} · Conservación de agua | EcoStore` : SEO.productosAgua.title}
+        description={product?.description ?? SEO.productosAgua.description}
+        path={path}
+        jsonLd={[
+          breadcrumbJsonLd([
+            { name: 'Inicio', path: '/' },
+            { name: 'Conservación de agua', path: ROUTES.productosAgua },
+            ...(product ? [{ name: product.name, path }] : []),
+          ]),
+          ...(!slug ? [faqJsonLd(AGUA_FAQ)] : []),
+        ]}
+      />
       <Navbar items={NAV('productosAgua')} ctaHref={ROUTES.agenda} phone={SITE.phone} phoneHref={SITE.phoneHref} />
 
       <FigurineCarousel
@@ -120,6 +176,14 @@ export function ProductosAgua() {
         linkHref={ROUTES.agenda}
         initialIndex={productIndexFromHash(PRODUCTS.map((p) => p.slug))}
       />
+
+      {!slug && (
+        <ServiceGuide
+          lead="En San Juan orientamos conservación de agua para Puerto Rico: menos galones en ducha y grifo, inodoros eficientes y tratamiento cuando la calidad lo requiere."
+          blocks={AGUA_BLOCKS}
+          faq={AGUA_FAQ}
+        />
+      )}
 
       <EcoLoTiene />
 

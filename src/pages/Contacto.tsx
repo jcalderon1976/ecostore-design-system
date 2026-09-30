@@ -7,6 +7,8 @@ import {
   LeafIcon, ShieldIcon, ClockIcon, PhoneIcon, MailIcon, MapPinIcon, ChatIcon, CalendarIcon, LockIcon,
 } from '@ds'
 import { SITE, NAV, SOCIAL, FOOTER, ROUTES } from './site'
+import { SEO } from './seo'
+import { SeoHead } from './SeoHead'
 import { EcoLoTiene } from './sections/EcoLoTiene'
 import { payloadFromForm, consumeSentFlag, contactFormAction, thanksUrl, validateContact, type ContactErrors } from './contactForm'
 import styles from './Contacto.module.css'
@@ -79,6 +81,7 @@ export function Contacto() {
 
   return (
     <>
+      <SeoHead {...(typeof window !== 'undefined' && window.location.hash === '#formulario' ? SEO.formulario : SEO.contacto)} />
       <Navbar items={NAV_ITEMS} ctaHref={ROUTES.agenda} phone={CONTACT.phone} phoneHref={CONTACT.phoneHref} />
 
       {/* ---------- HERO ---------- */}

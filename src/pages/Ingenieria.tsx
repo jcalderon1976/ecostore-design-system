@@ -9,6 +9,8 @@ import {
   CalendarIcon,
 } from "@ds";
 import { SITE, NAV, SOCIAL, FOOTER, ROUTES } from "./site";
+import { SEO, breadcrumbJsonLd } from "./seo";
+import { SeoHead } from "./SeoHead";
 import { EcoLoTiene } from "./sections/EcoLoTiene";
 import styles from "./Ingenieria.module.css";
 
@@ -26,8 +28,13 @@ const HERO_CHECKS = [
  * Hero con checklist, ECO lo tiene y CTA hacia contacto.
  */
 export function Ingenieria() {
+  const seo = SEO.ingenieria
   return (
     <>
+      <SeoHead
+        {...seo}
+        jsonLd={[breadcrumbJsonLd([{ name: 'Inicio', path: '/' }, { name: 'Ingeniería', path: seo.path }])]}
+      />
       <Navbar
         items={NAV("ingenieria")}
         ctaHref={ROUTES.agenda}

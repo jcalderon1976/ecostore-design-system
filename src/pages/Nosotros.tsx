@@ -30,6 +30,8 @@ import {
   BorderTrail,
 } from "@ds";
 import { SITE, NAV, SOCIAL, FOOTER, ROUTES } from "./site";
+import { SEO, breadcrumbJsonLd } from "./seo";
+import { SeoHead } from "./SeoHead";
 import { EcoLoTiene } from "./sections/EcoLoTiene";
 import styles from "./Nosotros.module.css";
 
@@ -42,6 +44,10 @@ const IMG = { equipo: `${SITE.base}images/nosotros.jpg` };
 export function Nosotros() {
   return (
     <>
+      <SeoHead
+        {...SEO.nosotros}
+        jsonLd={[breadcrumbJsonLd([{ name: 'Inicio', path: '/' }, { name: 'Nosotros', path: SEO.nosotros.path }])]}
+      />
       <Navbar
         items={NAV("nosotros")}
         ctaHref={ROUTES.agenda}
@@ -171,7 +177,7 @@ export function Nosotros() {
                 </div>
                 <Button
                   size="lg"
-                  href="#contacto"
+                  href={ROUTES.contacto}
                   leadingIcon={<CalendarIcon size={20} />}
                   arrow
                 >

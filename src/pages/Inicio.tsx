@@ -1,5 +1,7 @@
 import { Navbar, Footer, MarqueeLogoScroller } from "@ds";
 import { SITE, NAV, SOCIAL, FOOTER, ROUTES } from "./site";
+import { SEO, webSiteJsonLd } from "./seo";
+import { SeoHead } from "./SeoHead";
 import { EcoLoTiene } from "./sections/EcoLoTiene";
 import { EcoHero } from "./sections/EcoHero";
 
@@ -32,6 +34,7 @@ const PARTNERS = [
 export function Inicio() {
   return (
     <>
+      <SeoHead {...SEO.inicio} jsonLd={[webSiteJsonLd()]} />
       <Navbar
         overlay
         overlayUntil=".eco-hero-overlay-until"

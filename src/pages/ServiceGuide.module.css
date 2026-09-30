@@ -1,0 +1,14 @@
+.blocks {
+  width: 100%;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--eco-space-4);
+}
+
+@media (max-width: 767px) {
+  .blocks {
+    grid-template-columns: 1fr !important;
+  }
+}

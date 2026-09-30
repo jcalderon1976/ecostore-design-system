@@ -6,7 +6,10 @@ import {
   FOOTER,
   ROUTES,
   productIndexFromHash,
+  productSlugFromHash,
 } from "./site";
+import { SEO, breadcrumbJsonLd } from "./seo";
+import { SeoHead } from "./SeoHead";
 import { EcoLoTiene } from "./sections/EcoLoTiene";
 
 const energia = (name: string) => `${SITE.base}images/energia/${name}`;
@@ -134,8 +137,21 @@ const FEATURED = PRODUCTS.map((p, i) => ({
 
 /** Productos · Eficiencia Energética. Hero-carrusel de productos a pantalla completa. */
 export function ProductosEnergia() {
+  const slug = productSlugFromHash()
+  const product = PRODUCTS.find((p) => p.slug === slug)
+  const path = slug ? `${ROUTES.productosEnergia}/${slug}` : ROUTES.productosEnergia
   return (
     <>
+      <SeoHead
+        title={product ? `${product.name} · Eficiencia energética | EcoStore` : SEO.productosEnergia.title}
+        description={product?.description ?? SEO.productosEnergia.description}
+        path={path}
+        jsonLd={[breadcrumbJsonLd([
+          { name: 'Inicio', path: '/' },
+          { name: 'Eficiencia energética', path: ROUTES.productosEnergia },
+          ...(product ? [{ name: product.name, path }] : []),
+        ])]}
+      />
       <Navbar
         items={NAV("productosEnergia")}
         ctaHref={ROUTES.agenda}

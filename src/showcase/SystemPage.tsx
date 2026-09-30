@@ -11,6 +11,8 @@ import {
   FacebookIcon, InstagramIcon, YoutubeIcon, LinkedinIcon,
 } from '@ds'
 import styles from './SystemPage.module.css'
+import { SEO } from '../pages/seo'
+import { SeoHead } from '../pages/SeoHead'
 
 const entries = (o: object) => Object.entries(o) as Array<[string, string]>
 
@@ -56,6 +58,7 @@ const ICONS: Array<[string, ReactNode]> = [
 export function SystemPage() {
   return (
     <>
+      <SeoHead {...SEO.system} />
       <Section background="inverse" size="lg">
         <Container>
           <Stack gap={5}>
