@@ -71,21 +71,22 @@ export function Footer({
 }: FooterProps) {
   const ref = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);
+  const [inView, setInView] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el || typeof IntersectionObserver === "undefined") {
       setVisible(true);
+      setInView(true);
       return;
     }
     const io = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting) {
-          setVisible(true);
-          io.disconnect();
-        }
+        const on = Boolean(e?.isIntersecting);
+        setInView(on);
+        if (on) setVisible(true);
       },
-      { threshold: 0.12 },
+      { threshold: 0.08, rootMargin: "80px 0px" },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -100,7 +101,7 @@ export function Footer({
     <footer ref={ref} className={styles.footer} data-visible={visible}>
       <Velaris
         fill
-        playing={visible}
+        playing={inView}
         className={styles.velaris}
         bg="#041209"
         colors={VELARIS_COLORS}

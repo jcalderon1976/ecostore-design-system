@@ -1,18 +1,20 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, startTransition, useEffect, useState } from 'react'
 import { Inicio } from './pages/Inicio'
-import { Contacto } from './pages/Contacto'
-import { Nosotros } from './pages/Nosotros'
-import { Auditoria } from './pages/Auditoria'
-import { Ingenieria } from './pages/Ingenieria'
-import { ProductosEnergia } from './pages/ProductosEnergia'
-import { ProductosAgua } from './pages/ProductosAgua'
-import { EnergiaSolar } from './pages/EnergiaSolar'
-import { CalentadoresSolares } from './pages/CalentadoresSolares'
-import { Privacidad, Terminos } from './pages/Legal'
-import { NotFound } from './pages/NotFound'
-import { ContactPage } from './showcase/ContactPage'
-import { SystemPage } from './showcase/SystemPage'
 import { currentPath, productSlugFromHash } from './pages/site'
+
+const ProductosEnergia = lazy(() => import('./pages/ProductosEnergia').then((m) => ({ default: m.ProductosEnergia })))
+const ProductosAgua = lazy(() => import('./pages/ProductosAgua').then((m) => ({ default: m.ProductosAgua })))
+const EnergiaSolar = lazy(() => import('./pages/EnergiaSolar').then((m) => ({ default: m.EnergiaSolar })))
+const CalentadoresSolares = lazy(() => import('./pages/CalentadoresSolares').then((m) => ({ default: m.CalentadoresSolares })))
+const Auditoria = lazy(() => import('./pages/Auditoria').then((m) => ({ default: m.Auditoria })))
+const Ingenieria = lazy(() => import('./pages/Ingenieria').then((m) => ({ default: m.Ingenieria })))
+const Nosotros = lazy(() => import('./pages/Nosotros').then((m) => ({ default: m.Nosotros })))
+const Contacto = lazy(() => import('./pages/Contacto').then((m) => ({ default: m.Contacto })))
+const Privacidad = lazy(() => import('./pages/Legal').then((m) => ({ default: m.Privacidad })))
+const Terminos = lazy(() => import('./pages/Legal').then((m) => ({ default: m.Terminos })))
+const NotFound = lazy(() => import('./pages/NotFound').then((m) => ({ default: m.NotFound })))
+const SystemPage = lazy(() => import('./showcase/SystemPage').then((m) => ({ default: m.SystemPage })))
+const ContactPage = lazy(() => import('./showcase/ContactPage').then((m) => ({ default: m.ContactPage })))
 
 type View =
   | 'inicio'
@@ -55,6 +57,17 @@ function fromPath(): View {
   return PAGE_VIEW[page] ?? 'notfound'
 }
 
+function applyRoute(commit: () => void) {
+  requestAnimationFrame(() => {
+    startTransition(commit)
+  })
+}
+
+/** Reserva el viewport mientras carga un chunk para no colapsar el layout. */
+function PageFallback() {
+  return <div style={{ minHeight: '100dvh' }} aria-busy="true" />
+}
+
 export function App() {
   const [view, setView] = useState<View>(fromPath)
   const [slug, setSlug] = useState(productSlugFromHash)
@@ -77,23 +90,26 @@ export function App() {
       if (next !== `${window.location.pathname}${window.location.search}${window.location.hash}`) {
         window.history.pushState(null, '', next)
       }
-      sync()
-      if (url.hash !== '#formulario') window.scrollTo({ top: 0 })
-      if (url.hash) {
-        const id = url.hash.slice(1)
-        requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView())
-      }
+      applyRoute(() => {
+        sync()
+        if (url.hash !== '#formulario') window.scrollTo({ top: 0 })
+        if (url.hash) {
+          const id = url.hash.slice(1)
+          requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView())
+        }
+      })
     }
-    window.addEventListener('popstate', sync)
+    const onPop = () => applyRoute(sync)
+    window.addEventListener('popstate', onPop)
     document.addEventListener('click', onClick)
     return () => {
-      window.removeEventListener('popstate', sync)
+      window.removeEventListener('popstate', onPop)
       document.removeEventListener('click', onClick)
     }
   }, [])
 
   return (
-    <>
+    <Suspense fallback={<PageFallback />}>
       {view === 'inicio' && <Inicio />}
       {view === 'productosEnergia' && <ProductosEnergia key={slug ?? 'energia'} />}
       {view === 'productosAgua' && <ProductosAgua key={slug ?? 'agua'} />}
@@ -108,6 +124,6 @@ export function App() {
       {view === 'system' && <SystemPage />}
       {view === 'demo' && <ContactPage />}
       {view === 'notfound' && <NotFound />}
-    </>
+    </Suspense>
   )
 }

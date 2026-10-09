@@ -54,17 +54,30 @@ export function FigurineCarousel({
   const [isMobile, setIsMobile] = useState(false)
   const [videoOpen, setVideoOpen] = useState(false)
   const lock = useRef(false)
+  const stageRef = useRef<HTMLDivElement>(null)
+  const videoOpenRef = useRef(videoOpen)
+  videoOpenRef.current = videoOpen
 
-  // Precarga de imágenes, YouTube y detección de móvil
   useEffect(() => {
-    items.forEach((it) => { const im = new Image(); im.src = it.src })
-    if (items.some((it) => it.videoId)) preconnectYouTube()
     const mq = window.matchMedia('(max-width: 639px)')
     const update = () => setIsMobile(mq.matches)
     update()
     mq.addEventListener('change', update)
     return () => mq.removeEventListener('change', update)
-  }, [items])
+  }, [])
+
+  useEffect(() => {
+    const warm = (i: number) => {
+      const it = items[(i + n) % n]
+      if (!it) return
+      const im = new Image()
+      im.src = it.src
+    }
+    warm(active)
+    warm(active + 1)
+    warm(active - 1)
+    if (items[active]?.videoId) preconnectYouTube()
+  }, [active, items, n])
 
   const navigate = useCallback((dir: 'next' | 'prev') => {
     if (lock.current || videoOpen) return
@@ -73,6 +86,9 @@ export function FigurineCarousel({
     setActive((prev) => (dir === 'next' ? (prev + 1) % n : (prev + n - 1) % n))
     window.setTimeout(() => { lock.current = false }, DURATION)
   }, [n, videoOpen])
+
+  const navigateRef = useRef(navigate)
+  navigateRef.current = navigate
 
   // Teclado: flechas izquierda/derecha
   useEffect(() => {
@@ -83,6 +99,102 @@ export function FigurineCarousel({
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [navigate])
+
+  useEffect(() => {
+    const el = stageRef.current
+    if (!el) return
+
+    let pointerId = -1
+    let startX = 0
+    let startY = 0
+    let lastX = 0
+    let axis: 'x' | 'y' | null = null
+    let dragging = false
+    let didDrag = false
+
+    const setDrag = (px: number) => {
+      el.style.setProperty('--fc-drag', `${px}px`)
+    }
+
+    const clearDrag = () => {
+      setDrag(0)
+      el.removeAttribute('data-dragging')
+    }
+
+    const onPointerDown = (e: PointerEvent) => {
+      if (e.button !== 0 || videoOpenRef.current || lock.current) return
+      pointerId = e.pointerId
+      startX = e.clientX
+      startY = e.clientY
+      lastX = e.clientX
+      axis = null
+      dragging = true
+      didDrag = false
+    }
+
+    const onPointerMove = (e: PointerEvent) => {
+      if (!dragging || e.pointerId !== pointerId) return
+      const dx = e.clientX - startX
+      const dy = e.clientY - startY
+      if (!axis) {
+        if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return
+        axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'
+        if (axis === 'y') {
+          dragging = false
+          return
+        }
+        el.setPointerCapture(e.pointerId)
+        el.dataset.dragging = ''
+        didDrag = true
+        if (e.cancelable) e.preventDefault()
+      }
+      if (axis === 'x') {
+        if (e.cancelable) e.preventDefault()
+        lastX = e.clientX
+        setDrag(dx)
+      }
+    }
+
+    const onPointerUp = (e: PointerEvent) => {
+      if (!dragging || e.pointerId !== pointerId) return
+      dragging = false
+      if (axis === 'x') {
+        const dx = lastX - startX
+        const threshold = Math.min(88, Math.max(40, el.getBoundingClientRect().width * 0.12))
+        if (dx <= -threshold) navigateRef.current('next')
+        else if (dx >= threshold) navigateRef.current('prev')
+      }
+      clearDrag()
+      axis = null
+      pointerId = -1
+      try {
+        el.releasePointerCapture(e.pointerId)
+      } catch {
+        /* already released */
+      }
+    }
+
+    const onClickCapture = (e: MouseEvent) => {
+      if (!didDrag) return
+      e.preventDefault()
+      e.stopPropagation()
+      didDrag = false
+    }
+
+    el.addEventListener('pointerdown', onPointerDown)
+    el.addEventListener('pointermove', onPointerMove, { passive: false })
+    el.addEventListener('pointerup', onPointerUp)
+    el.addEventListener('pointercancel', onPointerUp)
+    el.addEventListener('click', onClickCapture, true)
+    return () => {
+      clearDrag()
+      el.removeEventListener('pointerdown', onPointerDown)
+      el.removeEventListener('pointermove', onPointerMove)
+      el.removeEventListener('pointerup', onPointerUp)
+      el.removeEventListener('pointercancel', onPointerUp)
+      el.removeEventListener('click', onClickCapture, true)
+    }
+  }, [])
 
   const current = items[active]
 
@@ -109,7 +221,7 @@ export function FigurineCarousel({
 
       {label && <div className={styles.label}>{label}</div>}
 
-      <div className={styles.stage}>
+      <div ref={stageRef} className={styles.stage}>
         {items.map((it, i) => {
           const role = roleOf(i)
           const img = (

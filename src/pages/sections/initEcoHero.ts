@@ -120,7 +120,8 @@ export function initEcoHero(root: HTMLElement): () => void {
   }
 
   if (particles) {
-    for (let i = 0; i < 40; i++) {
+    const count = innerWidth <= 760 ? 12 : 24
+    for (let i = 0; i < count; i++) {
       const s = document.createElement('span')
       s.style.left = Math.random() * 100 + '%'
       s.style.top = Math.random() * 60 + '%'
@@ -135,8 +136,10 @@ export function initEcoHero(root: HTMLElement): () => void {
   let curMX = 0
   let curMY = 0
   let lastActive = -2
+  let lastP = -1
   let raf = 0
   let running = true
+  let inView = true
 
   function heroProgress() {
     const r = root.getBoundingClientRect()
@@ -147,11 +150,10 @@ export function initEcoHero(root: HTMLElement): () => void {
     const p = T0 + STEP * (i + 0.5)
     const top = root.offsetTop + p * (root.offsetHeight - innerHeight)
     scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' })
+    kick()
   }
 
-  function frame() {
-    if (!running) return
-    const p = heroProgress()
+  function paint(p: number) {
     const vh = innerHeight
     const mobile = innerWidth <= 760
     curMX += (mouseX - curMX) * 0.06
@@ -230,7 +232,23 @@ export function initEcoHero(root: HTMLElement): () => void {
         mobileCard.classList.remove('on')
       }
     }
+  }
 
+  function frame() {
+    raf = 0
+    if (!running || !inView || document.hidden) return
+    const p = heroProgress()
+    const settling = Math.abs(mouseX - curMX) > 0.0008 || Math.abs(mouseY - curMY) > 0.0008
+    const scrolled = Math.abs(p - lastP) > 0.00035
+    if (scrolled || settling || lastP < 0) {
+      paint(p)
+      lastP = p
+      raf = requestAnimationFrame(frame)
+    }
+  }
+
+  function kick() {
+    if (!running || !inView || document.hidden || raf) return
     raf = requestAnimationFrame(frame)
   }
 
@@ -238,15 +256,39 @@ export function initEcoHero(root: HTMLElement): () => void {
     if (e.pointerType !== 'mouse' || reduce) return
     mouseX = e.clientX / innerWidth - 0.5
     mouseY = e.clientY / innerHeight - 0.5
+    kick()
   }
-  addEventListener('pointermove', onMove)
+  const onScroll = () => kick()
+  const onResize = () => {
+    lastP = -1
+    kick()
+  }
+  const onVis = () => {
+    if (!document.hidden) kick()
+  }
 
-  raf = requestAnimationFrame(frame)
+  addEventListener('pointermove', onMove, { passive: true })
+  addEventListener('scroll', onScroll, { passive: true })
+  addEventListener('resize', onResize, { passive: true })
+  document.addEventListener('visibilitychange', onVis)
+
+  const io = new IntersectionObserver(([entry]) => {
+    inView = Boolean(entry?.isIntersecting)
+    if (inView) kick()
+  })
+  io.observe(root)
+  cleanups.push(() => io.disconnect())
+
+  kick()
 
   return () => {
     running = false
     cancelAnimationFrame(raf)
+    raf = 0
     removeEventListener('pointermove', onMove)
+    removeEventListener('scroll', onScroll)
+    removeEventListener('resize', onResize)
+    document.removeEventListener('visibilitychange', onVis)
     for (let i = 0; i < cleanups.length; i++) cleanups[i]()
     for (let i = 0; i < spots.length; i++) {
       spots[i].el.remove()

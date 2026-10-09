@@ -38,6 +38,7 @@ export function ProductDropCard({ title, subtitle, items, className }: ProductDr
   const [index, setIndex] = useState(lead)
   const [instant, setInstant] = useState(false)
   const viewportRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
   const indexRef = useRef(index)
   const loopingRef = useRef(looping)
   indexRef.current = index
@@ -77,18 +78,24 @@ export function ProductDropCard({ title, subtitle, items, className }: ProductDr
 
   useEffect(() => {
     const el = viewportRef.current
-    if (!el) return
+    const track = trackRef.current
+    if (!el || !track) return
 
     let side: 'left' | 'right' | null = null
     let timer = 0
+    let pointerId = -1
+    let startX = 0
+    let startY = 0
+    let lastX = 0
+    let axis: 'x' | 'y' | null = null
+    let dragging = false
+    let didDrag = false
 
-    const step = () => {
+    const stepBy = (dir: -1 | 1) => {
       setIndex((prev) => {
-        if (loopingRef.current) return prev + (side === 'left' ? -1 : 1)
+        if (loopingRef.current) return prev + dir
         const max = Math.max(0, n - visibleCount())
-        if (side === 'left' && prev <= 0) return prev
-        if (side === 'right' && prev >= max) return prev
-        return side === 'left' ? prev - 1 : prev + 1
+        return Math.min(max, Math.max(0, prev + dir))
       })
     }
 
@@ -106,12 +113,58 @@ export function ProductDropCard({ title, subtitle, items, className }: ProductDr
       side = next
       el.dataset.edge = next
       if (timer) window.clearInterval(timer)
-      step()
-      timer = window.setInterval(step, 700)
+      stepBy(next === 'left' ? -1 : 1)
+      timer = window.setInterval(() => stepBy(next === 'left' ? -1 : 1), 700)
     }
 
-    const onMove = (e: PointerEvent) => {
-      if (e.pointerType === 'touch' || e.pointerType === 'pen') return
+    const setDrag = (px: number) => {
+      track.style.setProperty('--drop-drag', `${px}px`)
+    }
+
+    const clearDrag = () => {
+      setDrag(0)
+      track.removeAttribute('data-dragging')
+      el.removeAttribute('data-dragging')
+    }
+
+    const onPointerDown = (e: PointerEvent) => {
+      if (e.button !== 0) return
+      pointerId = e.pointerId
+      startX = e.clientX
+      startY = e.clientY
+      lastX = e.clientX
+      axis = null
+      dragging = true
+      didDrag = false
+      stop()
+    }
+
+    const onPointerMove = (e: PointerEvent) => {
+      if (dragging && e.pointerId === pointerId) {
+        const dx = e.clientX - startX
+        const dy = e.clientY - startY
+        if (!axis) {
+          if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return
+          axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'
+          if (axis === 'y') {
+            dragging = false
+            return
+          }
+          el.setPointerCapture(e.pointerId)
+          el.dataset.dragging = ''
+          track.dataset.dragging = ''
+          didDrag = true
+          if (e.cancelable) e.preventDefault()
+        }
+        if (axis === 'x') {
+          if (e.cancelable) e.preventDefault()
+          lastX = e.clientX
+          setDrag(dx)
+          return
+        }
+      }
+
+      if (dragging || e.pointerType === 'touch' || e.pointerType === 'pen') return
       const r = el.getBoundingClientRect()
       const x = e.clientX - r.left
       const edge = Math.max(72, Math.min(128, r.width * 0.16))
@@ -120,12 +173,52 @@ export function ProductDropCard({ title, subtitle, items, className }: ProductDr
       else stop()
     }
 
-    el.addEventListener('pointermove', onMove)
-    el.addEventListener('pointerleave', stop)
+    const onPointerUp = (e: PointerEvent) => {
+      if (!dragging || e.pointerId !== pointerId) return
+      dragging = false
+      if (axis === 'x') {
+        const dx = lastX - startX
+        const width = el.getBoundingClientRect().width
+        const threshold = Math.min(88, Math.max(40, width * 0.18))
+        if (dx <= -threshold) stepBy(1)
+        else if (dx >= threshold) stepBy(-1)
+      }
+      clearDrag()
+      axis = null
+      pointerId = -1
+      try {
+        el.releasePointerCapture(e.pointerId)
+      } catch {
+        /* already released */
+      }
+    }
+
+    const onPointerLeave = () => {
+      if (!dragging) stop()
+    }
+
+    const onClickCapture = (e: MouseEvent) => {
+      if (!didDrag) return
+      e.preventDefault()
+      e.stopPropagation()
+      didDrag = false
+    }
+
+    el.addEventListener('pointerdown', onPointerDown)
+    el.addEventListener('pointermove', onPointerMove, { passive: false })
+    el.addEventListener('pointerup', onPointerUp)
+    el.addEventListener('pointercancel', onPointerUp)
+    el.addEventListener('pointerleave', onPointerLeave)
+    el.addEventListener('click', onClickCapture, true)
     return () => {
       stop()
-      el.removeEventListener('pointermove', onMove)
-      el.removeEventListener('pointerleave', stop)
+      clearDrag()
+      el.removeEventListener('pointerdown', onPointerDown)
+      el.removeEventListener('pointermove', onPointerMove)
+      el.removeEventListener('pointerup', onPointerUp)
+      el.removeEventListener('pointercancel', onPointerUp)
+      el.removeEventListener('pointerleave', onPointerLeave)
+      el.removeEventListener('click', onClickCapture, true)
     }
   }, [n])
 
@@ -170,6 +263,7 @@ export function ProductDropCard({ title, subtitle, items, className }: ProductDr
 
       <div ref={viewportRef} className={styles.viewport}>
         <div
+          ref={trackRef}
           className={styles.track}
           data-instant={instant || undefined}
           style={{
@@ -182,7 +276,7 @@ export function ProductDropCard({ title, subtitle, items, className }: ProductDr
               <>
                 <p className={styles.time}>{item.time}</p>
                 <div className={styles.media}>
-                  <img src={item.imageSrc} alt={item.imageAlt ?? item.name} className={styles.img} />
+                  <img src={item.imageSrc} alt={item.imageAlt ?? item.name} className={styles.img} draggable={false} />
                 </div>
                 <h4 className={styles.name}>{item.name}</h4>
                 <p className={styles.collection}>{item.collection}</p>

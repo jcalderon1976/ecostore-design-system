@@ -32,22 +32,39 @@
   padding: 0;
 }
 
-.viewport { overflow: hidden; }
+.viewport {
+  overflow: hidden;
+  touch-action: pan-y;
+  overscroll-behavior-x: contain;
+  cursor: grab;
+}
 .viewport[data-edge='left'] .slide { cursor: w-resize; }
 .viewport[data-edge='right'] .slide { cursor: e-resize; }
+.viewport[data-dragging] {
+  cursor: grabbing;
+  user-select: none;
+}
 .track {
   --drop-gap: var(--eco-space-3);
+  --drop-drag: 0px;
   display: flex;
   gap: var(--drop-gap);
   isolation: isolate;
   padding-block: 12px;
   transition: transform 500ms var(--eco-ease-standard);
   transform: translateX(
-    calc(-1 * var(--drop-index, 0) * ((100% + var(--drop-gap)) / var(--drop-visible, 5)))
+    calc(
+      -1 * var(--drop-index, 0) * ((100% + var(--drop-gap)) / var(--drop-visible, 5))
+      + var(--drop-drag)
+    )
   );
 }
-.track[data-instant] {
+.track[data-instant],
+.track[data-dragging] {
   transition: none;
+}
+.track[data-dragging] {
+  will-change: transform;
 }
 .slide {
   position: relative;
@@ -75,6 +92,12 @@
   border-color: var(--eco-green-300);
   outline: none;
 }
+.viewport[data-dragging] .slide:hover,
+.viewport[data-dragging] .slide:focus-visible {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--eco-color-border-soft);
+}
 .slide:focus-visible {
   box-shadow: var(--eco-shadow-md), 0 0 0 4px var(--eco-color-focus-ring);
 }
@@ -99,6 +122,8 @@
   height: 100%;
   object-fit: contain;
   padding: var(--eco-space-3);
+  user-select: none;
+  -webkit-user-drag: none;
   transition: transform var(--eco-duration-normal) var(--eco-ease-standard);
 }
 .slide:hover .img,

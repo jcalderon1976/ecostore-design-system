@@ -36,7 +36,7 @@ export function EcoHero() {
 
       <div className="stage">
         <div className="layer bg" data-el="bg">
-          <img src={img("background.jpg")} alt="" />
+          <img src={img("background.jpg")} alt="" width={567} height={1024} decoding="async" />
         </div>
         <div className="layer rays" aria-hidden="true" />
         <div
@@ -51,6 +51,9 @@ export function EcoHero() {
             data-el="heroLogo"
             src={img("hero-logo.png?v=3")}
             alt="EcoStore"
+            width={1678}
+            height={937}
+            decoding="async"
           />
           <h1 data-el="headline">
             <span className="hl">
@@ -71,6 +74,10 @@ export function EcoHero() {
             <img
               src={img("house.png")}
               alt="Casa equipada con productos EcoStore"
+              width={1536}
+              height={1024}
+              fetchPriority="high"
+              decoding="async"
             />
           </div>
         </div>

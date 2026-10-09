@@ -124,6 +124,8 @@ export function Velaris({
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const playingRef = useRef(playing)
+  const startLoop = useRef(() => {})
+  const stopLoop = useRef(() => {})
   playingRef.current = playing
 
   useEffect(() => {
@@ -196,28 +198,55 @@ export function Velaris({
 
     let raf = 0
     const render = (t: number) => {
-      if (playingRef.current && !document.hidden) {
-        gl.uniform2f(locs.res, canvas.width, canvas.height)
-        gl.uniform1f(locs.time, t * 0.001 * speed)
-        gl.uniform1f(locs.grain, grain)
-        gl.uniform3f(locs.bg, ...hexToRgb(bg))
-        gl.uniform3fv(locs.colors, new Float32Array(palette.slice(0, 4).flatMap(hexToRgb)))
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
+      if (!playingRef.current || document.hidden) {
+        raf = 0
+        return
       }
+      gl.uniform2f(locs.res, canvas.width, canvas.height)
+      gl.uniform1f(locs.time, t * 0.001 * speed)
+      gl.uniform1f(locs.grain, grain)
+      gl.uniform3f(locs.bg, ...hexToRgb(bg))
+      gl.uniform3fv(locs.colors, new Float32Array(palette.slice(0, 4).flatMap(hexToRgb)))
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
       raf = requestAnimationFrame(render)
     }
 
-    raf = requestAnimationFrame(render)
+    const start = () => {
+      if (raf || !playingRef.current || document.hidden) return
+      raf = requestAnimationFrame(render)
+    }
+    const stop = () => {
+      cancelAnimationFrame(raf)
+      raf = 0
+    }
+    startLoop.current = start
+    stopLoop.current = stop
+
+    const onVis = () => {
+      if (document.hidden) stop()
+      else start()
+    }
+    document.addEventListener('visibilitychange', onVis)
+    if (playingRef.current) start()
 
     return () => {
+      document.removeEventListener('visibilitychange', onVis)
+      startLoop.current = () => {}
+      stopLoop.current = () => {}
       ro.disconnect()
-      cancelAnimationFrame(raf)
+      stop()
       gl.deleteBuffer(buffer)
       gl.deleteProgram(program)
       gl.deleteShader(vs)
       gl.deleteShader(fs)
     }
   }, [bg, colors, speed, grain])
+
+  useEffect(() => {
+    playingRef.current = playing
+    if (playing) startLoop.current()
+    else stopLoop.current()
+  }, [playing])
 
   return (
     <div
