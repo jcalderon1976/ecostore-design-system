@@ -112,12 +112,7 @@ export function FigurineCarousel({
     let dragging = false
     let didDrag = false
 
-    const setDrag = (px: number) => {
-      el.style.setProperty('--fc-drag', `${px}px`)
-    }
-
     const clearDrag = () => {
-      setDrag(0)
       el.removeAttribute('data-dragging')
     }
 
@@ -148,11 +143,10 @@ export function FigurineCarousel({
         didDrag = true
         if (e.cancelable) e.preventDefault()
       }
-      if (axis === 'x') {
-        if (e.cancelable) e.preventDefault()
-        lastX = e.clientX
-        setDrag(dx)
-      }
+        if (axis === 'x') {
+          if (e.cancelable) e.preventDefault()
+          lastX = e.clientX
+        }
     }
 
     const onPointerUp = (e: PointerEvent) => {

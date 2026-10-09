@@ -49,14 +49,12 @@
 
 /* Escenario */
 .stage {
-  --fc-drag: 0px;
   position: absolute;
   inset: 0;
   z-index: 3;
   touch-action: pan-y;
   overscroll-behavior-x: contain;
   cursor: grab;
-  transform: translateX(var(--fc-drag));
 }
 .stage[data-dragging] {
   cursor: grabbing;
@@ -95,11 +93,11 @@
 .back   { transform: translateX(-50%) scale(1); filter: blur(4px); opacity: 0.9; z-index: 5; height: 24%; bottom: 16%; }
 .hidden { transform: translateX(-50%) scale(0.6); filter: blur(6px); opacity: 0; z-index: 1; height: 18%; bottom: 16%; pointer-events: none; }
 
-.mobile .center { transform: translateX(-50%) scale(1.05); height: 44%; bottom: 34%; }
-.mobile .left   { left: 14%; height: 15%; bottom: 42%; filter: none; }
-.mobile .right  { left: 86%; height: 15%; bottom: 42%; filter: none; }
-.mobile .back   { height: 12%; bottom: 42%; filter: none; }
-.mobile .hidden { filter: none; }
+.mobile .center { transform: translateX(-50%) scale(1.12); filter: blur(0); height: 56%; bottom: 22%; }
+.mobile .left   { left: 16%; height: 24%; bottom: 28%; filter: blur(2px); }
+.mobile .right  { left: 84%; height: 24%; bottom: 28%; filter: blur(2px); }
+.mobile .back   { height: 18%; bottom: 30%; filter: blur(4px); }
+.mobile .hidden { filter: blur(6px); }
 
 .mobile .label { top: 10px; left: 12px; }
 .mobile .caption {
