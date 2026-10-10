@@ -30,12 +30,28 @@
     <meta property="og:locale" content="es_PR" />
     <meta property="og:site_name" content="EcoStore" />
     <style>
-      @font-face{font-family:Inter;font-style:normal;font-weight:400 700;font-display:swap;src:url('/fonts/inter.woff2') format('woff2')}
-      @font-face{font-family:Outfit;font-style:normal;font-weight:500 800;font-display:swap;src:url('/fonts/outfit.woff2') format('woff2')}
+      @font-face{font-family:Inter;font-style:normal;font-weight:400 700;font-display:optional;src:url('/fonts/inter.woff2') format('woff2')}
+      @font-face{font-family:Outfit;font-style:normal;font-weight:500 800;font-display:optional;src:url('/fonts/outfit.woff2') format('woff2')}
+      :root{--eco-nav-h:84px}
       html,body{margin:0;background:#fff;color:#0F2216;font-family:Inter,system-ui,sans-serif}
       #root{min-height:100dvh}
+      header[data-overlay]{position:fixed;left:0;right:0;top:0;z-index:40;height:var(--eco-nav-h)}
+      .eco-hero{position:relative;height:600vh;color:#10324f}
+      .eco-hero .stage{position:sticky;top:0;height:100dvh;overflow:hidden;isolation:isolate;background:linear-gradient(#5fb0ea,#bfe0f4 45%,#fbe3c4 80%,#fffaf3)}
+      .eco-hero .layer{position:absolute;left:0;right:0}
+      .eco-hero .intro{top:calc(var(--eco-nav-h) + 8px);z-index:5;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 16px}
+      .eco-hero .intro__logo{width:min(440px,54vw,32vh);height:auto;aspect-ratio:640/357}
+      .eco-hero .intro h1{font-family:Outfit,Inter,sans-serif;font-weight:500;font-size:clamp(28px,min(4.6vw,6.6vh),64px);line-height:1.12;letter-spacing:-.01em;margin:clamp(14px,3vh,36px) 0 0;max-width:24ch}
+      .eco-hero .house-wrap{top:0;bottom:0;display:flex;align-items:flex-end;justify-content:center;z-index:4;pointer-events:none}
+      .eco-hero .house{width:min(1180px,94vw);aspect-ratio:1536/1024;flex-shrink:0}
+      .eco-hero .house img{width:100%;height:100%;display:block}
+      .eco-hero .bg img{width:100%;height:auto;object-fit:cover;object-position:top}
       .lcp-house{position:fixed;left:50%;bottom:0;width:min(1180px,94vw);height:auto;aspect-ratio:1536/1024;transform:translateX(-50%);object-fit:contain;pointer-events:none;z-index:1}
-      @media (max-width:760px){.lcp-house{width:108vw}}
+      @media (max-width:760px){
+        .lcp-house,.eco-hero .house{width:108vw}
+        .eco-hero .intro__logo{width:min(240px,62vw,18vh)}
+        .eco-hero .intro h1{margin-top:8px}
+      }
       html.is-app .lcp-house{display:none}
     </style>
     <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin />

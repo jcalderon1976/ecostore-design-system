@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { SITE } from "../site";
+import { initEcoHero } from "./initEcoHero";
 import "./EcoHero.css";
 
 const img = (p: string) => `${SITE.base}images/hero/${p}`;
@@ -13,18 +14,8 @@ export function EcoHero() {
   }, []);
 
   useEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
-    let dead = false;
-    let stop: void | (() => void);
-    import("./initEcoHero").then(({ initEcoHero }) => {
-      if (dead || rootRef.current !== root) return;
-      stop = initEcoHero(root);
-    });
-    return () => {
-      dead = true;
-      stop?.();
-    };
+    if (!rootRef.current) return;
+    return initEcoHero(rootRef.current);
   }, []);
 
   return (

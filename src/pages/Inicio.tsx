@@ -19,34 +19,18 @@ function AfterHero({ children }: { children: ReactNode }) {
     }
 
     const onScroll = () => {
-      if (window.scrollY > 48) go()
+      if (window.scrollY > 24) go()
     }
     window.addEventListener('scroll', onScroll, { passive: true })
-
-    let idleId = 0
-    if (typeof requestIdleCallback === 'function') {
-      idleId = requestIdleCallback(go, { timeout: 900 })
-    } else {
-      idleId = window.setTimeout(go, 1)
-    }
-
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      if (typeof cancelIdleCallback === 'function') cancelIdleCallback(idleId)
-      else window.clearTimeout(idleId)
-    }
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  if (!ready) return <div style={{ minHeight: '90vh' }} aria-hidden="true" />
+  if (!ready) return null
 
-  return (
-    <Suspense fallback={<div style={{ minHeight: '90vh' }} aria-hidden="true" />}>
-      {children}
-    </Suspense>
-  )
+  return <Suspense fallback={null}>{children}</Suspense>
 }
 
-/** Home: hero de scroll; el resto espera al idle o al primer scroll. */
+/** Home: hero de scroll; marcas, carrusel y footer esperan al primer scroll. */
 export function Inicio() {
   return (
     <>

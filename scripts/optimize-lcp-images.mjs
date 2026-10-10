@@ -28,7 +28,7 @@ await webp('public/images/hero/house.png', 'public/images/hero/house-800.webp', 
 await webp('public/images/hero/house.png', 'public/images/hero/house-1200.webp', { width: 1200, quality: 54 })
 await webp('public/images/hero/house.png', 'public/images/hero/house-1600.webp', { width: 1536, quality: 54 })
 
-await webp('public/images/hero/hero-logo.png', 'public/images/hero/hero-logo-320.webp', { width: 320, quality: 68 })
+await webp('public/images/hero/hero-logo.png', 'public/images/hero/hero-logo-320.webp', { width: 320, quality: 40 })
 await webp('public/images/hero/hero-logo.png', 'public/images/hero/hero-logo-520.webp', { width: 520, quality: 68 })
 await webp('public/images/hero/hero-logo.png', 'public/images/hero/hero-logo-640.webp', { width: 640, quality: 68 })
 
