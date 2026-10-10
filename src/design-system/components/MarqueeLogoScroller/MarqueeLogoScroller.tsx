@@ -5,6 +5,8 @@ import styles from './MarqueeLogoScroller.module.css'
 
 export interface MarqueeLogo {
   src: string
+  srcSet?: string
+  sizes?: string
   alt: string
   /** Tile oscuro para wordmarks sobre negro. */
   onDark?: boolean
@@ -75,7 +77,17 @@ export function MarqueeLogoScroller({
               }
             >
               <span className={styles.wash} aria-hidden="true" />
-              <img src={logo.src} alt={logo.alt} className={styles.logo} />
+              <img
+                src={logo.src}
+                srcSet={logo.srcSet}
+                sizes={logo.srcSet ? logo.sizes ?? '184px' : undefined}
+                alt={logo.alt}
+                className={styles.logo}
+                width={184}
+                height={100}
+                loading="lazy"
+                decoding="async"
+              />
             </div>
           ))}
         </div>

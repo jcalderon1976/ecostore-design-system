@@ -22,7 +22,7 @@ import styles from "./Footer.module.css";
 const BASE = import.meta.env.BASE_URL.endsWith("/")
   ? import.meta.env.BASE_URL
   : import.meta.env.BASE_URL + "/";
-const FOOTER_LEAF_SRC = `${BASE}images/footer-leaf.png?v=2`;
+const FOOTER_LEAF_SRC = `${BASE}images/footer-leaf-800.webp`;
 const VELARIS_COLORS = ["#176A2C", "#2E9E3E", "#3DB35F", "#0D3A19"];
 
 export interface FooterLink {
@@ -115,6 +115,8 @@ export function Footer({
         alt=""
         aria-hidden="true"
         className={styles.leaf}
+        loading="lazy"
+        decoding="async"
       />
       <span className={styles.topline} aria-hidden="true" />
 
@@ -128,6 +130,7 @@ export function Footer({
             <Logo
               height={84}
               src={LOGO_INVERSE_STACKED_SRC}
+              loading="lazy"
               className={styles.brandLogo}
             />
             <p className={styles.brandText}>{description}</p>

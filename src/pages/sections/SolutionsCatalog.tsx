@@ -3,10 +3,15 @@ import {
   Reveal, Grid, Stack, Button, SectionTitle, CategoryBand, SolutionCard, Em,
   BoltIcon, DropIcon, LeafIcon, SnowflakeIcon, HomeIcon, FilterIcon, CloudRainIcon,
 } from '@ds'
-import { SITE, ROUTES } from '../site'
+import { ROUTES } from '../site'
+import { responsiveSrc, SIZES } from '../responsiveImage'
 import styles from './SolutionsCatalog.module.css'
 
-const img = (name: string) => `${SITE.base}images/${name}`
+function cardImage(file?: string) {
+  if (!file) return {}
+  const pic = responsiveSrc('images', file)
+  return { imageSrc: pic.src, imageSrcSet: pic.srcSet, imageSizes: SIZES.solution }
+}
 
 interface Solution { title: string; items: string[]; image?: string; alt?: string; icon?: ReactNode; fit?: 'contain' | 'cover' }
 
@@ -57,7 +62,7 @@ export function SolutionsCatalog({ cta = true, heading = true }: SolutionsCatalo
         <Grid minColumn="150px" gap={3}>
           {ENERGIA.map((s, i) => (
             <Reveal key={s.title + i} delay={(i % 4) * 60}>
-              <SolutionCard size="sm" title={s.title} items={s.items} imageSrc={s.image ? img(s.image) : undefined} imageAlt={s.alt} imageFit={s.fit} icon={s.icon} tone="green" />
+              <SolutionCard size="sm" title={s.title} items={s.items} {...cardImage(s.image)} imageAlt={s.alt} imageFit={s.fit} icon={s.icon} tone="green" />
             </Reveal>
           ))}
         </Grid>
@@ -70,7 +75,7 @@ export function SolutionsCatalog({ cta = true, heading = true }: SolutionsCatalo
         <Grid minColumn="240px" gap={4}>
           {AGUA.map((s, i) => (
             <Reveal key={s.title + i} delay={i * 60}>
-              <SolutionCard title={s.title} items={s.items} imageSrc={s.image ? img(s.image) : undefined} imageAlt={s.alt} imageFit={s.fit} icon={s.icon} tone="sky" />
+              <SolutionCard title={s.title} items={s.items} {...cardImage(s.image)} imageAlt={s.alt} imageFit={s.fit} icon={s.icon} tone="sky" />
             </Reveal>
           ))}
         </Grid>

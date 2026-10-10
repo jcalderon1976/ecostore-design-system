@@ -10,6 +10,8 @@ export interface DropItem {
   name: string
   collection: string
   imageSrc: string
+  imageSrcSet?: string
+  imageSizes?: string
   imageAlt?: string
   href?: string
 }
@@ -276,7 +278,16 @@ export function ProductDropCard({ title, subtitle, items, className }: ProductDr
               <>
                 <p className={styles.time}>{item.time}</p>
                 <div className={styles.media}>
-                  <img src={item.imageSrc} alt={item.imageAlt ?? item.name} className={styles.img} draggable={false} />
+                  <img
+                    src={item.imageSrc}
+                    srcSet={item.imageSrcSet}
+                    sizes={item.imageSrcSet ? item.imageSizes ?? '(max-width: 539px) 80vw, (max-width: 759px) 42vw, (max-width: 999px) 30vw, 18vw' : undefined}
+                    alt={item.imageAlt ?? item.name}
+                    className={styles.img}
+                    loading="lazy"
+                    decoding="async"
+                    draggable={false}
+                  />
                 </div>
                 <h4 className={styles.name}>{item.name}</h4>
                 <p className={styles.collection}>{item.collection}</p>

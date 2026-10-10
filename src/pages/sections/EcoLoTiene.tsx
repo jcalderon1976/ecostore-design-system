@@ -7,27 +7,28 @@ import {
   type MotionValue,
 } from "motion/react";
 import { Reveal, ProductDropCard, type DropItem } from "@ds";
-import { SITE, ROUTES } from "../site";
+import { ROUTES } from "../site";
+import { responsiveSrc, SIZES } from "../responsiveImage";
 import { ENERGIA, AGUA } from "./SolutionsCatalog";
 import styles from "./EcoLoTiene.module.css";
 
-const img = (name: string) => `${SITE.base}images/${name}`;
-
 function toDrops(list: typeof ENERGIA, collection: string): DropItem[] {
-  return list.flatMap((s) =>
-    s.image
-      ? [
-          {
-            time: collection,
-            name: s.title,
-            collection: s.items.slice(0, 2).join(" · "),
-            imageSrc: img(s.image),
-            imageAlt: s.alt ?? s.title,
-            href: DROP_HREF[s.title],
-          },
-        ]
-      : [],
-  );
+  return list.flatMap((s) => {
+    if (!s.image) return []
+    const pic = responsiveSrc("images", s.image)
+    return [
+      {
+        time: collection,
+        name: s.title,
+        collection: s.items.slice(0, 2).join(" · "),
+        imageSrc: pic.src,
+        imageSrcSet: pic.srcSet,
+        imageSizes: SIZES.productCard,
+        imageAlt: s.alt ?? s.title,
+        href: DROP_HREF[s.title],
+      },
+    ]
+  })
 }
 
 const DROP_HREF: Record<string, string> = {

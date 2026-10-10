@@ -8,6 +8,9 @@ export interface LogoProps {
   inverse?: boolean
   /** Ruta alternativa al archivo. Por defecto usa los logos oficiales en /public. */
   src?: string
+  srcSet?: string
+  sizes?: string
+  loading?: 'lazy' | 'eager'
   /** Fuerza el vector SVG interno en lugar del archivo oficial. */
   vector?: boolean
   className?: string
@@ -20,7 +23,9 @@ export const LOGO_INVERSE_SRC = `${BASE}images/logo-wordmark-190.webp`
 const LOGO_SRCSET = `${BASE}images/logo-wordmark-190.webp 190w, ${BASE}images/logo-wordmark-380.webp 380w`
 const LOGO_RATIO = 364 / 138
 /** Versión apilada en dos líneas para fondos oscuros (≈ 1.9 : 1). */
-export const LOGO_INVERSE_STACKED_SRC = `${BASE}logo-inverse-stacked.png`
+export const LOGO_INVERSE_STACKED_SRC = `${BASE}images/logo-inverse-stacked-280.webp`
+export const LOGO_INVERSE_STACKED_SRCSET = `${BASE}images/logo-inverse-stacked-280.webp 280w, ${BASE}images/logo-inverse-stacked-560.webp 560w`
+const STACKED_RATIO = 997 / 530
 
 /* Colores del logotipo (no son tokens: el logo no cambia con el tema). */
 const BRAND = { green: '#1E9E2E', greenDark: '#0E4D1F', orange: '#F7941D', yellow: '#FFD500' }
@@ -31,17 +36,21 @@ const FONT = 'Outfit, Montserrat, Inter, sans-serif'
  * Logotipo EcoStore. Usa el archivo oficial; `vector` dibuja una versión SVG aproximada
  * (útil como respaldo si el archivo no está disponible).
  */
-export function Logo({ height = 40, inverse, src, vector, className }: LogoProps) {
+export function Logo({ height = 40, inverse, src, srcSet, sizes, loading, vector, className }: LogoProps) {
   if (!vector) {
+    const resolved = src ?? (inverse ? LOGO_INVERSE_SRC : LOGO_SRC)
+    const stacked = resolved === LOGO_INVERSE_STACKED_SRC
+    const ratio = stacked ? STACKED_RATIO : LOGO_RATIO
     return (
       <img
-        src={src ?? (inverse ? LOGO_INVERSE_SRC : LOGO_SRC)}
-        srcSet={src ? undefined : LOGO_SRCSET}
-        sizes={src ? undefined : `${Math.round(height * LOGO_RATIO)}px`}
+        src={resolved}
+        srcSet={srcSet ?? (src ? (stacked ? LOGO_INVERSE_STACKED_SRCSET : undefined) : LOGO_SRCSET)}
+        sizes={sizes ?? `${Math.round(height * ratio)}px`}
         alt="EcoStore"
-        width={Math.round(height * LOGO_RATIO)}
+        width={Math.round(height * ratio)}
         height={height}
         className={cx(styles.logo, className)}
+        loading={loading}
         decoding="async"
       />
     )

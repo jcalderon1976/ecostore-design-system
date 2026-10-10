@@ -8,6 +8,7 @@ import styles from './FigurineCarousel.module.css'
 export interface FigurineItem {
   /** Recorte con transparencia (WebP/PNG). */
   src: string
+  srcSet?: string
   alt: string
   /** Nombre del producto (texto inferior izquierdo). */
   name: string
@@ -39,6 +40,7 @@ export interface FigurineCarouselProps {
 }
 
 const DURATION = 650
+const FIGURINE_SIZES = '(max-width: 639px) 70vw, min(42vw, 520px)'
 
 /**
  * Hero-carrusel de productos "figurine": el ítem activo grande al centro,
@@ -71,6 +73,10 @@ export function FigurineCarousel({
       const it = items[(i + n) % n]
       if (!it) return
       const im = new Image()
+      if (it.srcSet) {
+        im.sizes = FIGURINE_SIZES
+        im.srcset = it.srcSet
+      }
       im.src = it.src
     }
     warm(active)
@@ -219,7 +225,15 @@ export function FigurineCarousel({
         {items.map((it, i) => {
           const role = roleOf(i)
           const img = (
-            <img src={it.src} alt={role === 'center' ? it.alt : ''} draggable={false} decoding="async" />
+            <img
+              src={it.src}
+              srcSet={it.srcSet}
+              sizes={it.srcSet ? FIGURINE_SIZES : undefined}
+              alt={role === 'center' ? it.alt : ''}
+              loading={role === 'center' ? 'eager' : 'lazy'}
+              draggable={false}
+              decoding="async"
+            />
           )
           return (
             <div

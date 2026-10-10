@@ -34,6 +34,8 @@ export interface SolutionCardProps {
   items: ReactNode[]
   /** Imagen recortada (PNG/WebP con transparencia). */
   imageSrc?: string
+  imageSrcSet?: string
+  imageSizes?: string
   imageAlt?: string
   /** Ícono grande cuando no hay imagen. */
   icon?: ReactNode
@@ -48,12 +50,12 @@ export interface SolutionCardProps {
 }
 
 /** Tarjeta de solución: imagen sobre fondo pastel, título y lista con checks. */
-export function SolutionCard({ title, items, imageSrc, imageAlt = '', icon, tone = 'green', leaf = true, size = 'md', imageFit = 'contain', className }: SolutionCardProps) {
+export function SolutionCard({ title, items, imageSrc, imageSrcSet, imageSizes, imageAlt = '', icon, tone = 'green', leaf = true, size = 'md', imageFit = 'contain', className }: SolutionCardProps) {
   return (
     <article className={cx(styles.card, size === 'sm' && styles.compact, className)}>
       <div className={cx(styles.media, tone === 'sky' && styles.mediaSky)}>
         {imageSrc
-          ? <img src={imageSrc} alt={imageAlt} className={cx(styles.img, imageFit === 'cover' && styles.imgCover)} loading="lazy" decoding="async" />
+          ? <img src={imageSrc} srcSet={imageSrcSet} sizes={imageSrcSet ? imageSizes ?? '(max-width: 639px) 92vw, (max-width: 1023px) 44vw, 220px' : undefined} alt={imageAlt} className={cx(styles.img, imageFit === 'cover' && styles.imgCover)} loading="lazy" decoding="async" />
           : <span className={styles.mediaIcon} aria-hidden="true">{icon}</span>}
         {leaf && <LeafIcon size={18} className={styles.leaf} />}
       </div>

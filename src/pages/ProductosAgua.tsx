@@ -4,8 +4,7 @@ import { SEO, breadcrumbJsonLd, faqJsonLd } from './seo'
 import { SeoHead } from './SeoHead'
 import { ServiceGuide } from './ServiceGuide'
 import { EcoLoTiene } from './sections/EcoLoTiene'
-
-const agua = (name: string) => `${SITE.base}images/agua/${name}`
+import { responsiveSrc } from './responsiveImage'
 
 const BG = ['#3A9FD9', '#2E9E3E', '#5BB4E5', '#1E7F35'] as const
 
@@ -137,7 +136,7 @@ const AGUA_BLOCKS = [
 ]
 
 const FEATURED = PRODUCTS.map((p, i) => ({
-  src: agua(p.file),
+  ...responsiveSrc('images/agua', p.file),
   alt: p.alt,
   name: p.name,
   description: p.description,

@@ -11,8 +11,7 @@ import {
 import { SEO, breadcrumbJsonLd } from "./seo";
 import { SeoHead } from "./SeoHead";
 import { EcoLoTiene } from "./sections/EcoLoTiene";
-
-const energia = (name: string) => `${SITE.base}images/energia/${name}`;
+import { responsiveSrc } from "./responsiveImage";
 
 const BG = ["#2E9E3E", "#176A2C", "#E88F1A", "#3DB35F", "#5BB4E5"] as const;
 
@@ -125,7 +124,7 @@ const PRODUCTS = [
 ] as const;
 
 const FEATURED = PRODUCTS.map((p, i) => ({
-  src: energia(p.file),
+  ...responsiveSrc("images/energia", p.file),
   alt: p.alt,
   name: p.name,
   description: p.description,
