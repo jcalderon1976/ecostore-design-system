@@ -50,7 +50,7 @@ export function EcoHero() {
             className="intro__logo"
             data-el="heroLogo"
             src={img("hero-logo-320.webp")}
-            srcSet={`${img("hero-logo-320.webp")} 320w, ${img("hero-logo-640.webp")} 640w`}
+            srcSet={`${img("hero-logo-320.webp")} 320w, ${img("hero-logo-520.webp")} 520w, ${img("hero-logo-640.webp")} 640w`}
             sizes="(max-width: 760px) 62vw, 440px"
             alt="EcoStore"
             width={640}

@@ -281,7 +281,7 @@ export function ProductDropCard({ title, subtitle, items, className }: ProductDr
                   <img
                     src={item.imageSrc}
                     srcSet={item.imageSrcSet}
-                    sizes={item.imageSrcSet ? item.imageSizes ?? '(max-width: 539px) 80vw, (max-width: 759px) 42vw, (max-width: 999px) 30vw, 18vw' : undefined}
+                    sizes={item.imageSrcSet ? item.imageSizes ?? '(max-width: 539px) 56vw, (max-width: 759px) 36vw, (max-width: 999px) 26vw, 16vw' : undefined}
                     alt={item.imageAlt ?? item.name}
                     className={styles.img}
                     loading="lazy"

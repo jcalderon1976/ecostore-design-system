@@ -24,22 +24,23 @@ async function variants(input, widths, quality) {
   }
 }
 
-await webp('public/images/hero/house.png', 'public/images/hero/house-800.webp', { width: 800, quality: 56 })
-await webp('public/images/hero/house.png', 'public/images/hero/house-1200.webp', { width: 1200, quality: 58 })
-await webp('public/images/hero/house.png', 'public/images/hero/house-1600.webp', { width: 1536, quality: 58 })
+await webp('public/images/hero/house.png', 'public/images/hero/house-800.webp', { width: 800, quality: 36 })
+await webp('public/images/hero/house.png', 'public/images/hero/house-1200.webp', { width: 1200, quality: 54 })
+await webp('public/images/hero/house.png', 'public/images/hero/house-1600.webp', { width: 1536, quality: 54 })
 
-await webp('public/images/hero/hero-logo.png', 'public/images/hero/hero-logo-320.webp', { width: 320, quality: 72 })
-await webp('public/images/hero/hero-logo.png', 'public/images/hero/hero-logo-640.webp', { width: 640, quality: 72 })
+await webp('public/images/hero/hero-logo.png', 'public/images/hero/hero-logo-320.webp', { width: 320, quality: 68 })
+await webp('public/images/hero/hero-logo.png', 'public/images/hero/hero-logo-520.webp', { width: 520, quality: 68 })
+await webp('public/images/hero/hero-logo.png', 'public/images/hero/hero-logo-640.webp', { width: 640, quality: 68 })
 
-await webp('public/images/logo-wordmark.png', 'public/images/logo-wordmark-190.webp', { width: 190, quality: 72 })
-await webp('public/images/logo-wordmark.png', 'public/images/logo-wordmark-380.webp', { width: 380, quality: 72 })
+await webp('public/images/logo-wordmark.png', 'public/images/logo-wordmark-190.webp', { width: 190, quality: 48 })
+await webp('public/images/logo-wordmark.png', 'public/images/logo-wordmark-380.webp', { width: 380, quality: 48 })
 
 await webp('public/logo-inverse-stacked.png', 'public/images/logo-inverse-stacked-280.webp', { width: 280, quality: 78 })
 await webp('public/logo-inverse-stacked.png', 'public/images/logo-inverse-stacked-560.webp', { width: 560, quality: 78 })
 
 await webp('public/images/footer-leaf.png', 'public/images/footer-leaf-800.webp', { width: 800, quality: 62 })
 
-const PRODUCT_WIDTHS = [420, 840, 1200]
+const PRODUCT_WIDTHS = [420, 640, 840, 1200]
 const PRODUCTS = [
   'public/images/lavaseca.webp',
   'public/images/climatizacion.webp',
