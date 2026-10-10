@@ -1,40 +1,52 @@
-import { Navbar, Footer, MarqueeLogoScroller } from "@ds";
-import { SITE, NAV, SOCIAL, FOOTER, ROUTES } from "./site";
-import { SEO, webSiteJsonLd } from "./seo";
-import { SeoHead } from "./SeoHead";
-import { EcoLoTiene } from "./sections/EcoLoTiene";
-import { EcoHero } from "./sections/EcoHero";
-import { PARTNER_WIDTHS, responsiveSrc, SIZES } from "./responsiveImage";
+import { lazy, Suspense, useEffect, useState, type ReactNode } from 'react'
+import { Navbar } from '@ds'
+import { SITE, NAV, ROUTES } from './site'
+import { SEO, webSiteJsonLd } from './seo'
+import { SeoHead } from './SeoHead'
+import { EcoHero } from './sections/EcoHero'
 
-const partner = (file: string) => ({
-  ...responsiveSrc("images/partners", file, PARTNER_WIDTHS, 200),
-  sizes: SIZES.partner,
-});
+const HomeBelow = lazy(() => import('./sections/HomeBelow'))
 
-const PARTNERS = [
-  {
-    ...partner("ge.png"),
-    alt: "GE Appliances",
-    gradient: { from: "#8AA7FF", via: "#3B6FD4", to: "#1D3F99" },
-  },
-  {
-    ...partner("ge-pro.png"),
-    alt: "GE Appliances PRO Solutions Center",
-    gradient: { from: "#7EC8F0", via: "#1E6BB8", to: "#0B2E6B" },
-  },
-  {
-    ...partner("haier.png"),
-    alt: "Haier",
-    gradient: { from: "#4D8CFF", via: "#0050C8", to: "#00286B" },
-  },
-  {
-    ...partner("hotpoint.png"),
-    alt: "Hotpoint",
-    gradient: { from: "#FF8A7A", via: "#E03A2F", to: "#8F140C" },
-  },
-];
+function AfterHero({ children }: { children: ReactNode }) {
+  const [ready, setReady] = useState(false)
 
-/** Home: hero de scroll + marcas + ECO lo tiene + footer. */
+  useEffect(() => {
+    let done = false
+    const go = () => {
+      if (done) return
+      done = true
+      setReady(true)
+    }
+
+    const onScroll = () => {
+      if (window.scrollY > 48) go()
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+
+    let idleId = 0
+    if (typeof requestIdleCallback === 'function') {
+      idleId = requestIdleCallback(go, { timeout: 900 })
+    } else {
+      idleId = window.setTimeout(go, 1)
+    }
+
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (typeof cancelIdleCallback === 'function') cancelIdleCallback(idleId)
+      else window.clearTimeout(idleId)
+    }
+  }, [])
+
+  if (!ready) return <div style={{ minHeight: '90vh' }} aria-hidden="true" />
+
+  return (
+    <Suspense fallback={<div style={{ minHeight: '90vh' }} aria-hidden="true" />}>
+      {children}
+    </Suspense>
+  )
+}
+
+/** Home: hero de scroll; el resto espera al idle o al primer scroll. */
 export function Inicio() {
   return (
     <>
@@ -42,7 +54,7 @@ export function Inicio() {
       <Navbar
         overlay
         overlayUntil=".eco-hero-overlay-until"
-        items={NAV("inicio")}
+        items={NAV('inicio')}
         ctaHref={ROUTES.agenda}
         phone={SITE.phone}
         phoneHref={SITE.phoneHref}
@@ -50,15 +62,9 @@ export function Inicio() {
 
       <EcoHero />
 
-      <MarqueeLogoScroller
-        title="Somos representantes autorizados"
-        logos={PARTNERS}
-        speed="normal"
-      />
-
-      <EcoLoTiene />
-
-      <Footer {...FOOTER} social={SOCIAL} />
+      <AfterHero>
+        <HomeBelow />
+      </AfterHero>
     </>
-  );
+  )
 }

@@ -1,4 +1,6 @@
 import {
+  lazy,
+  Suspense,
   useEffect,
   useRef,
   useState,
@@ -9,7 +11,8 @@ import { cx } from "../../utils/cx";
 import { Container } from "../Layout/Layout";
 import { Logo, LOGO_INVERSE_STACKED_SRC } from "../Logo/Logo";
 import { SocialLinks, type SocialLink } from "../SocialLinks/SocialLinks";
-import { Velaris } from "../Velaris/Velaris";
+
+const Velaris = lazy(() => import("../Velaris/Velaris").then((m) => ({ default: m.Velaris })));
 import {
   ArrowUpIcon,
   ClockIcon,
@@ -99,15 +102,19 @@ export function Footer({
 
   return (
     <footer ref={ref} className={styles.footer} data-visible={visible}>
-      <Velaris
-        fill
-        playing={inView}
-        className={styles.velaris}
-        bg="#041209"
-        colors={VELARIS_COLORS}
-        speed={0.55}
-        grain={0.18}
-      />
+      {visible && (
+        <Suspense fallback={null}>
+          <Velaris
+            fill
+            playing={inView}
+            className={styles.velaris}
+            bg="#041209"
+            colors={VELARIS_COLORS}
+            speed={0.55}
+            grain={0.18}
+          />
+        </Suspense>
+      )}
       <div className={styles.glow} aria-hidden="true" />
       <div className={styles.grain} aria-hidden="true" />
       <img

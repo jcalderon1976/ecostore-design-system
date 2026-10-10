@@ -1,4 +1,4 @@
-import { lazy, Suspense, startTransition, useEffect, useState } from 'react'
+import { lazy, Suspense, startTransition, useEffect, useLayoutEffect, useState } from 'react'
 import { Inicio } from './pages/Inicio'
 import { currentPath, productSlugFromHash } from './pages/site'
 
@@ -71,6 +71,10 @@ function PageFallback() {
 export function App() {
   const [view, setView] = useState<View>(fromPath)
   const [slug, setSlug] = useState(productSlugFromHash)
+
+  useLayoutEffect(() => {
+    if (view !== 'inicio') document.querySelector('.lcp-house')?.setAttribute('hidden', '')
+  }, [view])
 
   useEffect(() => {
     const sync = () => {

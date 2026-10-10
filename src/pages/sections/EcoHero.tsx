@@ -1,6 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { SITE } from "../site";
-import { initEcoHero } from "./initEcoHero";
 import "./EcoHero.css";
 
 const img = (p: string) => `${SITE.base}images/hero/${p}`;
@@ -9,9 +8,23 @@ const img = (p: string) => `${SITE.base}images/hero/${p}`;
 export function EcoHero() {
   const rootRef = useRef<HTMLElement>(null);
 
+  useLayoutEffect(() => {
+    document.querySelector(".lcp-house")?.setAttribute("hidden", "");
+  }, []);
+
   useEffect(() => {
-    if (!rootRef.current) return;
-    return initEcoHero(rootRef.current);
+    const root = rootRef.current;
+    if (!root) return;
+    let dead = false;
+    let stop: void | (() => void);
+    import("./initEcoHero").then(({ initEcoHero }) => {
+      if (dead || rootRef.current !== root) return;
+      stop = initEcoHero(root);
+    });
+    return () => {
+      dead = true;
+      stop?.();
+    };
   }, []);
 
   return (
@@ -51,7 +64,7 @@ export function EcoHero() {
             data-el="heroLogo"
             src={img("hero-logo-320.webp")}
             srcSet={`${img("hero-logo-320.webp")} 320w, ${img("hero-logo-520.webp")} 520w, ${img("hero-logo-640.webp")} 640w`}
-            sizes="(max-width: 760px) 62vw, 440px"
+            sizes="(max-width: 760px) 36vw, 440px"
             alt="EcoStore"
             width={640}
             height={357}

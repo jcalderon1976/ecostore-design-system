@@ -34,11 +34,28 @@
       @font-face{font-family:Outfit;font-style:normal;font-weight:500 800;font-display:swap;src:url('/fonts/outfit.woff2') format('woff2')}
       html,body{margin:0;background:#fff;color:#0F2216;font-family:Inter,system-ui,sans-serif}
       #root{min-height:100dvh}
+      .lcp-house{position:fixed;left:50%;bottom:0;width:min(1180px,94vw);height:auto;aspect-ratio:1536/1024;transform:translateX(-50%);object-fit:contain;pointer-events:none;z-index:1}
+      @media (max-width:760px){.lcp-house{width:108vw}}
+      html.is-app .lcp-house{display:none}
     </style>
     <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/outfit.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body>
+    <script>
+      if (location.pathname !== '/' && location.pathname !== '/index.html') document.documentElement.classList.add('is-app')
+    </script>
+    <img
+      class="lcp-house"
+      src="/images/hero/house-800.webp"
+      srcset="/images/hero/house-800.webp 800w, /images/hero/house-1200.webp 1200w, /images/hero/house-1600.webp 1536w"
+      sizes="(max-width: 760px) 108vw, min(1180px, 94vw)"
+      alt="Casa equipada con productos EcoStore"
+      width="1536"
+      height="1024"
+      fetchpriority="high"
+      decoding="async"
+    />
     <noscript>
       <p>EcoStore — eficiencia energética y conservación de agua en Puerto Rico.</p>
       <p>1354 Avenida F.D. Roosevelt, San Juan, 00920. Tel. (787) 664-7676. info@ecostorepr.com</p>
