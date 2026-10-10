@@ -49,10 +49,12 @@ export function EcoHero() {
           <img
             className="intro__logo"
             data-el="heroLogo"
-            src={img("hero-logo.png?v=3")}
+            src={img("hero-logo-320.webp")}
+            srcSet={`${img("hero-logo-320.webp")} 320w, ${img("hero-logo-640.webp")} 640w`}
+            sizes="(max-width: 760px) 62vw, 440px"
             alt="EcoStore"
-            width={1678}
-            height={937}
+            width={640}
+            height={357}
             decoding="async"
           />
           <h1 data-el="headline">
@@ -72,7 +74,9 @@ export function EcoHero() {
           <div className="house" data-el="house">
             <div className="ground-glow" />
             <img
-              src={img("house.png")}
+              src={img("house-1200.webp")}
+              srcSet={`${img("house-800.webp")} 800w, ${img("house-1200.webp")} 1200w, ${img("house-1600.webp")} 1536w`}
+              sizes="(max-width: 760px) 108vw, min(1180px, 94vw)"
               alt="Casa equipada con productos EcoStore"
               width={1536}
               height={1024}

@@ -61,11 +61,29 @@ ${SITEMAP_PATHS.map((p) => `  <url><loc>${p === '/' ? `${base}/` : `${base}${p}`
   }
 }
 
+/** Evita que el CSS extraído bloquee el primer pintado (PageSpeed render-blocking). */
+function asyncCss(): Plugin {
+  return {
+    name: 'eco-async-css',
+    enforce: 'post',
+    transformIndexHtml: {
+      order: 'post',
+      handler(html) {
+        return html.replace(
+          /<link(?=[^>]*\srel="stylesheet")(?![^>]*\smedia=)[^>]*\shref="([^"]+\.css)"[^>]*>/g,
+          (_m, href: string) =>
+            `<link rel="stylesheet" href="${href}" media="print" onload="this.media='all'" /><noscript><link rel="stylesheet" href="${href}" /></noscript>`,
+        )
+      },
+    },
+  }
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const origin = (env.VITE_SITE_URL || 'https://www.ecostorepr.com').replace(/\/$/, '')
   return {
-    plugins: [react(), seoFiles(origin)],
+    plugins: [react(), seoFiles(origin), asyncCss()],
     base: '/',
     resolve: {
       alias: {

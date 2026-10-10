@@ -15,8 +15,10 @@ export interface LogoProps {
 
 /* Logos oficiales (public/logo.png y public/logo-inverse.png). Rutas relativas para funcionar con cualquier base. */
 const BASE = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/'
-export const LOGO_SRC = `${BASE}images/logo-wordmark.png?v=4`
-export const LOGO_INVERSE_SRC = `${BASE}images/logo-wordmark.png?v=4`
+export const LOGO_SRC = `${BASE}images/logo-wordmark-190.webp`
+export const LOGO_INVERSE_SRC = `${BASE}images/logo-wordmark-190.webp`
+const LOGO_SRCSET = `${BASE}images/logo-wordmark-190.webp 190w, ${BASE}images/logo-wordmark-380.webp 380w`
+const LOGO_RATIO = 364 / 138
 /** Versión apilada en dos líneas para fondos oscuros (≈ 1.9 : 1). */
 export const LOGO_INVERSE_STACKED_SRC = `${BASE}logo-inverse-stacked.png`
 
@@ -34,7 +36,10 @@ export function Logo({ height = 40, inverse, src, vector, className }: LogoProps
     return (
       <img
         src={src ?? (inverse ? LOGO_INVERSE_SRC : LOGO_SRC)}
+        srcSet={src ? undefined : LOGO_SRCSET}
+        sizes={src ? undefined : `${Math.round(height * LOGO_RATIO)}px`}
         alt="EcoStore"
+        width={Math.round(height * LOGO_RATIO)}
         height={height}
         className={cx(styles.logo, className)}
         decoding="async"
