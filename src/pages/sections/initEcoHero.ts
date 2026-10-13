@@ -63,6 +63,7 @@ export function initEcoHero(root: HTMLElement): () => void {
   const $ = (s: string) => root.querySelector(s) as HTMLElement | null
 
   const house = $('[data-el="house"]')
+  const houseImg = house?.querySelector('img')
   const rail = $('[data-el="rail"]')
   const mobileCard = $('[data-el="mobileCard"]')
   const bg = $('[data-el="bg"]')
@@ -271,6 +272,14 @@ export function initEcoHero(root: HTMLElement): () => void {
   addEventListener('scroll', onScroll, { passive: true })
   addEventListener('resize', onResize, { passive: true })
   document.addEventListener('visibilitychange', onVis)
+  if (houseImg) {
+    const onImg = () => {
+      lastP = -1
+      kick()
+    }
+    houseImg.addEventListener('load', onImg)
+    cleanups.push(() => houseImg.removeEventListener('load', onImg))
+  }
 
   const io = new IntersectionObserver(([entry]) => {
     inView = Boolean(entry?.isIntersecting)

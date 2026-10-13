@@ -1,5 +1,6 @@
 import { lazy, Suspense, startTransition, useEffect, useLayoutEffect, useState } from 'react'
 import { Inicio } from './pages/Inicio'
+import { dismissLcpHouse } from './pages/dismissLcpHouse'
 import { currentPath, productSlugFromHash } from './pages/site'
 
 const ProductosEnergia = lazy(() => import('./pages/ProductosEnergia').then((m) => ({ default: m.ProductosEnergia })))
@@ -73,7 +74,7 @@ export function App() {
   const [slug, setSlug] = useState(productSlugFromHash)
 
   useLayoutEffect(() => {
-    if (view !== 'inicio') document.querySelector('.lcp-house')?.setAttribute('hidden', '')
+    if (view !== 'inicio') dismissLcpHouse()
   }, [view])
 
   useEffect(() => {

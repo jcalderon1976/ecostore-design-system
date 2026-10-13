@@ -46,13 +46,13 @@
       .eco-hero .house{width:min(1180px,94vw);aspect-ratio:1536/1024;flex-shrink:0}
       .eco-hero .house img{width:100%;height:100%;display:block}
       .eco-hero .bg img{width:100%;height:auto;object-fit:cover;object-position:top}
-      .lcp-house{position:fixed;left:50%;bottom:0;width:min(1180px,94vw);height:auto;aspect-ratio:1536/1024;transform:translateX(-50%);object-fit:contain;pointer-events:none;z-index:1}
+      .lcp-house{position:fixed;left:50%;bottom:0;width:min(1180px,94vw);height:auto;aspect-ratio:1536/1024;transform:translateX(-50%);object-fit:contain;pointer-events:none;z-index:0}
+      .lcp-house[hidden],.lcp-house.is-done,html.is-app .lcp-house{display:none!important}
       @media (max-width:760px){
         .lcp-house,.eco-hero .house{width:108vw}
         .eco-hero .intro__logo{width:min(240px,62vw,18vh)}
         .eco-hero .intro h1{margin-top:8px}
       }
-      html.is-app .lcp-house{display:none}
     </style>
     <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/outfit.woff2" as="font" type="font/woff2" crossorigin />
@@ -60,6 +60,12 @@
   <body>
     <script>
       if (location.pathname !== '/' && location.pathname !== '/index.html') document.documentElement.classList.add('is-app')
+      addEventListener('scroll', function () {
+        var el = document.querySelector('.lcp-house')
+        if (!el) return
+        el.classList.add('is-done')
+        el.setAttribute('hidden', '')
+      }, { once: true, passive: true })
     </script>
     <img
       class="lcp-house"

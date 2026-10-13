@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { SITE } from "../site";
+import { dismissLcpHouse } from "../dismissLcpHouse";
 import { initEcoHero } from "./initEcoHero";
 import "./EcoHero.css";
 
@@ -10,7 +11,7 @@ export function EcoHero() {
   const rootRef = useRef<HTMLElement>(null);
 
   useLayoutEffect(() => {
-    document.querySelector(".lcp-house")?.setAttribute("hidden", "");
+    dismissLcpHouse();
   }, []);
 
   useEffect(() => {
