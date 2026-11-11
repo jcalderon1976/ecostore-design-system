@@ -11,6 +11,7 @@ const Auditoria = lazy(() => import('./pages/Auditoria').then((m) => ({ default:
 const Ingenieria = lazy(() => import('./pages/Ingenieria').then((m) => ({ default: m.Ingenieria })))
 const Nosotros = lazy(() => import('./pages/Nosotros').then((m) => ({ default: m.Nosotros })))
 const Contacto = lazy(() => import('./pages/Contacto').then((m) => ({ default: m.Contacto })))
+const Gracias = lazy(() => import('./pages/Gracias').then((m) => ({ default: m.Gracias })))
 const Privacidad = lazy(() => import('./pages/Legal').then((m) => ({ default: m.Privacidad })))
 const Terminos = lazy(() => import('./pages/Legal').then((m) => ({ default: m.Terminos })))
 const NotFound = lazy(() => import('./pages/NotFound').then((m) => ({ default: m.NotFound })))
@@ -20,6 +21,7 @@ const ContactPage = lazy(() => import('./showcase/ContactPage').then((m) => ({ d
 type View =
   | 'inicio'
   | 'contacto'
+  | 'gracias'
   | 'nosotros'
   | 'servicios'
   | 'ingenieria'
@@ -46,6 +48,7 @@ const PAGE_VIEW: Record<string, View> = {
   ingenieria: 'ingenieria',
   nosotros: 'nosotros',
   contacto: 'contacto',
+  gracias: 'gracias',
   privacidad: 'privacidad',
   terminos: 'terminos',
   'design-system': 'system',
@@ -124,6 +127,7 @@ export function App() {
       {view === 'ingenieria' && <Ingenieria />}
       {view === 'nosotros' && <Nosotros />}
       {view === 'contacto' && <Contacto />}
+      {view === 'gracias' && <Gracias />}
       {view === 'privacidad' && <Privacidad />}
       {view === 'terminos' && <Terminos />}
       {view === 'system' && <SystemPage />}

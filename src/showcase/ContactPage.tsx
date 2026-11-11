@@ -9,7 +9,7 @@ import {
   SunIcon, DropletIcon, ZapIcon, IconCircle, LeafIcon,
 } from '@ds'
 import { FOOTER, SOCIAL } from '../pages/site'
-import { payloadFromForm, consumeSentFlag, contactFormAction, thanksUrl, validateContact, type ContactErrors } from '../pages/contactForm'
+import { payloadFromForm, consumeSentFlag, contactFormAction, thanksUrl, prepareNativeSubmit, validateContact, type ContactErrors } from '../pages/contactForm'
 import { FloorPlan } from './FloorPlan'
 import { HeroVisual } from './HeroVisual'
 import styles from './ContactPage.module.css'
@@ -45,12 +45,7 @@ export function ContactPage() {
       if (control instanceof HTMLElement) control.focus()
       return
     }
-    const nextUrl = form.elements.namedItem('_next')
-    if (nextUrl instanceof HTMLInputElement) nextUrl.value = thanksUrl()
-    const subject = form.elements.namedItem('_subject')
-    if (subject instanceof HTMLInputElement) {
-      subject.value = `Solicitud de evaluación — ${payload.nombre.trim()}`
-    }
+    prepareNativeSubmit(form, payload)
     setLoading(true)
     form.submit()
   }
@@ -194,7 +189,7 @@ export function ContactPage() {
                     </Card>
                   ) : (
                     <form action={contactFormAction()} method="POST" onSubmit={onSubmit} noValidate>
-                      <input type="hidden" name="_next" value="" />
+                      <input type="hidden" name="_next" value={thanksUrl()} />
                       <input type="hidden" name="_subject" value="Solicitud de evaluación EcoStore" />
                       <input type="hidden" name="_template" value="table" />
                       <input type="hidden" name="_captcha" value="false" />

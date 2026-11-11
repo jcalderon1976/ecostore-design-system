@@ -10,7 +10,7 @@ import { SITE, NAV, SOCIAL, FOOTER, ROUTES } from './site'
 import { SEO } from './seo'
 import { SeoHead } from './SeoHead'
 import { EcoLoTiene } from './sections/EcoLoTiene'
-import { payloadFromForm, consumeSentFlag, contactFormAction, thanksUrl, validateContact, type ContactErrors } from './contactForm'
+import { payloadFromForm, consumeSentFlag, contactFormAction, thanksUrl, prepareNativeSubmit, validateContact, type ContactErrors } from './contactForm'
 import styles from './Contacto.module.css'
 
 const IMG = {
@@ -65,12 +65,7 @@ export function Contacto() {
       return
     }
 
-    const nextUrl = form.elements.namedItem('_next')
-    if (nextUrl instanceof HTMLInputElement) nextUrl.value = thanksUrl()
-    const subject = form.elements.namedItem('_subject')
-    if (subject instanceof HTMLInputElement) {
-      subject.value = `Solicitud de evaluación — ${payload.nombre.trim()}`
-    }
+    prepareNativeSubmit(form, payload)
     setLoading(true)
     form.submit()
   }
@@ -95,7 +90,7 @@ export function Contacto() {
         <TrustList>
           <TrustItem icon={<LeafIcon size={22} />} title="100% Gratis" description={<>Evaluación sin<br />compromiso</>} />
           <TrustItem icon={<ShieldIcon size={22} />} title="Asesoría experta" description={<>Más de 20 años<br />de experiencia</>} />
-          <TrustItem icon={<ClockIcon size={22} />} title="Respuesta rápida" description={<>Te contactaremos<br />en 24 horas</>} />
+          <TrustItem icon={<ClockIcon size={22} />} title="Respuesta rápida" description={<>Te contactaremos<br />pronto</>} />
         </TrustList>
       </Hero>
 
@@ -157,13 +152,13 @@ export function Contacto() {
                         <IconCircle tone="solid" size="md"><LeafIcon size={20} /></IconCircle>
                         <Stack gap={1}>
                           <Heading level="h4" tone="brand">¡Gracias! Recibimos tu solicitud.</Heading>
-                          <Text tone="muted" size="sm">Uno de nuestros especialistas te contactará en menos de 24 horas.</Text>
+                          <Text tone="muted" size="sm">Uno de nuestros especialistas te contactará pronto.</Text>
                         </Stack>
                       </Row>
                     </Card>
                   ) : (
                     <form action={contactFormAction()} method="POST" onSubmit={onSubmit} noValidate>
-                      <input type="hidden" name="_next" value="" />
+                      <input type="hidden" name="_next" value={thanksUrl()} />
                       <input type="hidden" name="_subject" value="Solicitud de evaluación EcoStore" />
                       <input type="hidden" name="_template" value="table" />
                       <input type="hidden" name="_captcha" value="false" />

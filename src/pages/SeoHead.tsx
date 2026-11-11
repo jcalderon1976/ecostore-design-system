@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { absoluteUrl } from './site'
 import { DEFAULT_OG_IMAGE, localBusinessJsonLd, type SeoPage } from './seo'
+import { trackPageView } from './analytics'
 
 function upsertMeta(selector: string, attrs: Record<string, string>) {
   let el = document.head.querySelector(selector) as HTMLMetaElement | null
@@ -49,6 +50,7 @@ export function SeoHead({ title, description, path, ogImage, noindex, jsonLd = [
     upsertMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' })
     upsertMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: title })
     upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: description })
+    trackPageView(title)
   }, [title, description, url, image, noindex])
 
   return (

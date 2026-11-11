@@ -75,6 +75,12 @@ export const SEO: Record<string, SeoPage> = {
       'Déjanos tus datos y un especialista de EcoStore te contacta para orientar tu proyecto de energía o agua en Puerto Rico.',
     path: '/contacto',
   },
+  gracias: {
+    title: 'Gracias · Recibimos tu solicitud | EcoStore',
+    description: 'Recibimos tu solicitud de evaluación. Un especialista de EcoStore te contactará pronto.',
+    path: '/gracias',
+    noindex: true,
+  },
   privacidad: {
     title: 'Privacidad · EcoStore',
     description: 'Aviso de privacidad del sitio de EcoStore en Puerto Rico.',

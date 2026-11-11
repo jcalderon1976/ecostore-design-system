@@ -59,6 +59,7 @@ export const ROUTES = {
   nosotros: '/nosotros',
   contacto: '/contacto',
   agenda: '/contacto#formulario',
+  gracias: '/gracias',
   privacidad: '/privacidad',
   terminos: '/terminos',
 } as const
@@ -67,6 +68,7 @@ const HASH_REDIRECT: Record<string, string> = {
   inicio: ROUTES.inicio,
   formulario: ROUTES.agenda,
   contacto: ROUTES.contacto,
+  gracias: ROUTES.gracias,
   productos: ROUTES.productosEnergia,
   'productos-energia': ROUTES.productosEnergia,
   'productos-agua': ROUTES.productosAgua,
