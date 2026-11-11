@@ -10,7 +10,9 @@ import { SITE, NAV, SOCIAL, FOOTER, ROUTES } from './site'
 import { SEO } from './seo'
 import { SeoHead } from './SeoHead'
 import { EcoLoTiene } from './sections/EcoLoTiene'
-import { payloadFromForm, consumeSentFlag, contactFormAction, thanksUrl, prepareNativeSubmit, validateContact, type ContactErrors } from './contactForm'
+import { payloadFromForm, consumeSentFlag, contactFormAction, thanksUrl, validateContact, type ContactErrors } from './contactForm'
+import { submitContactForm } from '../services/formSubmitService'
+import { trackGenerateLead } from './analytics'
 import styles from './Contacto.module.css'
 
 const IMG = {
@@ -51,7 +53,7 @@ export function Contacto() {
     return () => window.removeEventListener('hashchange', go)
   }, [])
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const form = e.currentTarget
     const payload = payloadFromForm(form, interes)
@@ -65,9 +67,21 @@ export function Contacto() {
       return
     }
 
-    prepareNativeSubmit(form, payload)
+    const subject = form.elements.namedItem('_subject')
+    if (subject instanceof HTMLInputElement) {
+      subject.value = `Solicitud de evaluación — ${payload.nombre.trim()}`
+    }
+
     setLoading(true)
-    form.submit()
+    const result = await submitContactForm(form)
+    if (!result.ok) {
+      setLoading(false)
+      setSubmitError(result.message)
+      return
+    }
+
+    await trackGenerateLead()
+    window.location.assign(ROUTES.gracias)
   }
 
   const clearError = (field: keyof ContactErrors) => {

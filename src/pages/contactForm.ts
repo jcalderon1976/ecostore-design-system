@@ -44,18 +44,6 @@ export function thanksUrl(): string {
   return absoluteUrl('/gracias')
 }
 
-/** Limpia el honeypot y fija _next/_subject antes del POST nativo a FormSubmit. */
-export function prepareNativeSubmit(form: HTMLFormElement, payload: ContactPayload) {
-  const honey = form.elements.namedItem('_honey')
-  if (honey instanceof HTMLInputElement) honey.value = ''
-  const nextUrl = form.elements.namedItem('_next')
-  if (nextUrl instanceof HTMLInputElement) nextUrl.value = thanksUrl()
-  const subject = form.elements.namedItem('_subject')
-  if (subject instanceof HTMLInputElement) {
-    subject.value = `Solicitud de evaluación — ${payload.nombre.trim()}`
-  }
-}
-
 /** Si FormSubmit redirige con ?enviado=1, muestra el éxito y limpia la URL. */
 export function consumeSentFlag(): boolean {
   const url = new URL(window.location.href)

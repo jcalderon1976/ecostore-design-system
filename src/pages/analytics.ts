@@ -36,3 +36,27 @@ export function trackPageView(title: string) {
   }
   window.dataLayer.push({ event: 'page_view', ...payload })
 }
+
+/** Solo tras confirmación de FormSubmit. No llamar al clic ni en /gracias. */
+export function trackGenerateLead(): Promise<void> {
+  if (typeof window === 'undefined') return Promise.resolve()
+  if (shouldSkip(window.location.pathname)) return Promise.resolve()
+  window.dataLayer = window.dataLayer || []
+  const payload = {
+    form_id: 'contacto',
+    form_name: 'Agenda tu orientación',
+  }
+  return new Promise((resolve) => {
+    let done = false
+    const finish = () => {
+      if (done) return
+      done = true
+      resolve()
+    }
+    window.dataLayer.push({ event: 'generate_lead', ...payload })
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'generate_lead', { ...payload, event_callback: finish, event_timeout: 2000 })
+    }
+    window.setTimeout(finish, 400)
+  })
+}

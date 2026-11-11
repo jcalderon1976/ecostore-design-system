@@ -9,7 +9,9 @@ import {
   SunIcon, DropletIcon, ZapIcon, IconCircle, LeafIcon,
 } from '@ds'
 import { FOOTER, SOCIAL } from '../pages/site'
-import { payloadFromForm, consumeSentFlag, contactFormAction, thanksUrl, prepareNativeSubmit, validateContact, type ContactErrors } from '../pages/contactForm'
+import { payloadFromForm, consumeSentFlag, contactFormAction, thanksUrl, validateContact, type ContactErrors } from '../pages/contactForm'
+import { submitContactForm } from '../services/formSubmitService'
+import { trackGenerateLead } from '../pages/analytics'
 import { FloorPlan } from './FloorPlan'
 import { HeroVisual } from './HeroVisual'
 import styles from './ContactPage.module.css'
@@ -32,7 +34,7 @@ export function ContactPage() {
     if (consumeSentFlag()) setSent(true)
   }, [])
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const form = e.currentTarget
     const payload = payloadFromForm(form)
@@ -45,9 +47,20 @@ export function ContactPage() {
       if (control instanceof HTMLElement) control.focus()
       return
     }
-    prepareNativeSubmit(form, payload)
+    const subject = form.elements.namedItem('_subject')
+    if (subject instanceof HTMLInputElement) {
+      subject.value = `Solicitud de evaluación — ${payload.nombre.trim()}`
+    }
     setLoading(true)
-    form.submit()
+    const result = await submitContactForm(form)
+    if (!result.ok) {
+      setLoading(false)
+      setSubmitError(result.message)
+      return
+    }
+    await trackGenerateLead()
+    setSent(true)
+    setLoading(false)
   }
 
   const clearError = (field: keyof ContactErrors) => {
